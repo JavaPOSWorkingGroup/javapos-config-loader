@@ -149,22 +149,6 @@ private void prependToFile(File file, String header) {
 }
 
 
-task addLicenseHeader << {
-	sourceSets.main.java.each { 
-		prependToFile(it, 
-'''\
-//////////////////////////////////////////////////////////////////////
-//
-// The JavaPOS Config/Loader (aka JCL) is now under the CPL license, which 
-// is an OSS Apache-like license.  The complete license is located at:
-//    http://www.ibm.com/developerworks/library/os-cpl.html
-//
-//////////////////////////////////////////////////////////////////////
-''')
-		logger.info "added license header to source file '${it}'." 
-	}
-}
-
 // since JCL version 2.2.0 a license note was put ino each source
 // however, the URL there is outdated; the following task updates it
  
@@ -182,6 +166,6 @@ task replaceLicenseURL << {
 		replaceInFile(it, 
 			'http://oss.software.ibm.com/developerworks/opensource/license-cpl.html', 
 			'http://www.ibm.com/developerworks/library/os-cpl.html')
-		logger.info("license URL updated in file '$file'")
+		logger.info("license URL updated in file '$it'")
 	} 
 }
