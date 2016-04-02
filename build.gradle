@@ -32,11 +32,14 @@ def version='2.2.0'
 ///////////////////////////////////////////////////////////////////////////////
 
 repositories {
-    maven {
-        url "file:$localTestFileRepositoryDir"
-        // localTestFileRepositoryDir must be defined in gradle.properties
-    }
 	jcenter()
+	if (project.plugins.hasPlugin('maven')) 
+	{ // evaluates only at development environment, not at travis-ci.org
+	    maven {
+	        url "file:$localTestFileRepositoryDir"
+	        // localTestFileRepositoryDir must be defined in gradle.properties
+	    }
+	}
 }
 
 dependencies {
