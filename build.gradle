@@ -127,38 +127,42 @@ if (project.plugins.hasPlugin('maven'))
 // The following is for importing the source code initially; it does not take 
 // part of a release build
   
-// javaposImportDir must be defined in the gradle.properties file
-def jclSourceDir ="$javaposImportDir/jcl${version}/src"
+if (project.hasProperty('javaposImportDir')) 
+{ // evaluate only at development environment, not at travis-ci.org
 
-task importSources {
-	description = 'Copies the sources from an official JCL source distribution archive into this projectout of the current version of the project.'
+	// javaposImportDir must be defined in the gradle.properties file
+	def jclSourceDir ="$javaposImportDir/jcl${version}/src"
 	
-	doLast {
-		assert file(jclSourceDir).exists(), "import archive '$jclSourceDir' does not exist"
-		copy {
-			from (jclSourceDir) {
-				exclude 'jpos/loader/JposServiceInstance.java' 	// is in project 'JavaPOSContracts' 
-				exclude 'jpos/config/simple/editor/**'			// is part of the JCL Editor, separated project 
-				exclude 'jpos/res/**' 							// will later be copied to src/main/resources, see below 
-				exclude 'META-INF/**'							// manifest will be genrated, see jar task
-				exclude 'README*'								// old build stuff, not needed anymore
+	task importSources {
+		description = 'Copies the sources from an official JCL source distribution archive into this projectout of the current version of the project.'
+		
+		doLast {
+			assert file(jclSourceDir).exists(), "import archive '$jclSourceDir' does not exist"
+			copy {
+				from (jclSourceDir) {
+					exclude 'jpos/loader/JposServiceInstance.java' 	// is in project 'JavaPOSContracts' 
+					exclude 'jpos/config/simple/editor/**'			// is part of the JCL Editor, separated project 
+					exclude 'jpos/res/**' 							// will later be copied to src/main/resources, see below 
+					exclude 'META-INF/**'							// manifest will be genrated, see jar task
+					exclude 'README*'								// old build stuff, not needed anymore
+				}
+				into "src/main/java"
 			}
-			into "src/main/java"
-		}
-		copy {
-			from (jclSourceDir) {
-				include 'jpos/res/**'
-				exclude 'jpos/res/images/**'					// is part of the JCL Editor, separated project 
-				exclude '**/jpos.properties'					// must not be in teh resulting jar as it is integration specific
+			copy {
+				from (jclSourceDir) {
+					include 'jpos/res/**'
+					exclude 'jpos/res/images/**'					// is part of the JCL Editor, separated project 
+					exclude '**/jpos.properties'					// must not be in teh resulting jar as it is integration specific
+				}
+				into "src/main/resources"
 			}
-			into "src/main/resources"
-		}
-		copy {
-			includeEmptyDirs = false
-			from (jclSourceDir) {
-				include '**/jpos.properties'					// for documentation purposes only
+			copy {
+				includeEmptyDirs = false
+				from (jclSourceDir) {
+					include '**/jpos.properties'					// for documentation purposes only
+				}
+				into "src/doc"
 			}
-			into "src/doc"
 		}
 	}
 }
