@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
 	compile 'xerces:xerces:1.2.3'
-	compile 'org.javapos:javapos-contracts:0.1.11'
+	compile 'org.javapos:javapos-contracts:0.1.12'
 }
 
 
