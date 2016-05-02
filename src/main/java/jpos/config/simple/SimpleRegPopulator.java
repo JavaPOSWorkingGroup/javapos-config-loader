@@ -171,11 +171,13 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     {
         URL url = null;
 
-        if( serInZipFile )
+        if( serInZipFile ){
             url = createURLFromFile( zipSerFile );
-        else
+        }else if(serFile != null){
             url = createURLFromFile( serFile );
-
+        }else{
+            url  = createURLFromFile( new File( getPopulatorFileName()));
+        }
         return url;
     }
 

@@ -230,8 +230,8 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
      */
     public void load() 
     { 
-        getRegPopulator().load();
         jposEntries.clear();
+        getRegPopulator().load();
 
         Enumeration entries = getRegPopulator().getEntries();
 

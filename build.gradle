@@ -24,7 +24,7 @@ task wrapper(type: Wrapper) {
 
 def artifactName = 'javapos-config-loader'
 def groupId='org.javapos'
-def version='2.2.0'
+def version='2.3.0-RC1'
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -198,4 +198,16 @@ task replaceLicenseURL << {
 			'http://www.ibm.com/developerworks/library/os-cpl.html')
 		logger.info("license URL updated in file '$it'")
 	} 
+}
+
+def normalizeEOL = { file ->
+		replaceInFile(file, 
+			'(\r\n)|\n|\r', 
+			'\r\n')
+		logger.info("normalized EOL in file '$file'")
+}
+
+task normalizeEOL << {
+	sourceSets.main.allSource.each { normalizeEOL(it) }
+	fileTree('src/doc').each { normalizeEOL(it) } 
 }

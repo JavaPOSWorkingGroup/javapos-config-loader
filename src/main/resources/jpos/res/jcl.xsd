@@ -57,12 +57,14 @@
     <!-- All xsd:simpleType definitions -->        
     <xsd:simpleType name="JposDevCatType">
         <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Biometrics"/>        
             <xsd:enumeration value="BumpBar"/>
             <xsd:enumeration value="CashChanger"/>
             <xsd:enumeration value="CashDrawer"/>
             <xsd:enumeration value="CheckScanner"/>
             <xsd:enumeration value="CAT"/>
             <xsd:enumeration value="CoinDispenser"/>
+            <xsd:enumeration value="ElectronicJournal"/>
             <xsd:enumeration value="FiscalPrinter"/>
             <xsd:enumeration value="HardTotals"/>            
             <xsd:enumeration value="Keylock"/>
@@ -79,6 +81,7 @@
             <xsd:enumeration value="Scale"/>
             <xsd:enumeration value="Scanner"/>
             <xsd:enumeration value="SignatureCapture"/>
+            <xsd:enumeration value="SmartCardRW"/>
             <xsd:enumeration value="ToneIndicator"/>                        
         </xsd:restriction>
     </xsd:simpleType>
@@ -104,6 +107,9 @@
             <xsd:enumeration value="1.5"/>
             <xsd:enumeration value="1.6"/>
             <xsd:enumeration value="1.7"/>            
+            <xsd:enumeration value="1.8"/> 
+            <xsd:enumeration value="1.9"/>             
+            <xsd:enumeration value="1.10"/>                         
         </xsd:restriction>
     </xsd:simpleType>
 </xsd:schema>
