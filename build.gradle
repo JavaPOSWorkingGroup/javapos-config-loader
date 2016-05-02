@@ -24,7 +24,7 @@ task wrapper(type: Wrapper) {
 
 def artifactName = 'javapos-config-loader'
 def groupId='org.javapos'
-def version='2.3.0-RC2'
+def version='2.3.0-RC3'
 
 
 ///////////////////////////////////////////////////////////////////////////////

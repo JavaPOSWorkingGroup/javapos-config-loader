@@ -366,7 +366,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 
         sb.append( "<JposEntry logicalName=\"" + getPropertyValue( JposEntry.LOGICAL_NAME_PROP_NAME ) + "\">\n" );
         sb.append( "\t<creation factoryClass=\"" + getPropertyValue( JposEntry.SI_FACTORY_CLASS_PROP_NAME ) + "\" serviceClass=\"" + getPropertyValue( JposEntry.SERVICE_CLASS_PROP_NAME ) + "\"/>\n" );
-        sb.append( "\t<vendor name=\"" + getPropertyValue( JposEntry.VENDOR_NAME_PROP_NAME ) + "\" url=" + getPropertyValue( JposEntry.VENDOR_URL_PROP_NAME ) + "\"/>\n" );
+        sb.append( "\t<vendor name=\"" + getPropertyValue( JposEntry.VENDOR_NAME_PROP_NAME ) + "\" url=\"" + getPropertyValue( JposEntry.VENDOR_URL_PROP_NAME ) + "\"/>\n" );
         sb.append( "\t<jpos category=\"" + getPropertyValue( JposEntry.DEVICE_CATEGORY_PROP_NAME ) + "\" version=\"" + getPropertyValue( JposEntry.JPOS_VERSION_PROP_NAME ) + "\"/>\n" );
         sb.append( "\t<product description=\"" + getPropertyValue( JposEntry.PRODUCT_DESCRIPTION_PROP_NAME ) + "\" name=\"" + getPropertyValue( JposEntry.PRODUCT_NAME_PROP_NAME ) + "\" url=\"" + getPropertyValue( JposEntry.PRODUCT_URL_PROP_NAME ) + "\"/>\n" );
 
@@ -377,7 +377,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 		{
 			String name = (String)otherPropNames.nextElement();
 			String value = getPropertyValue( name ).toString();
-			String typeClassName = JposEntryUtility.shortClassName( value.getClass() );
+			String typeClassName = JposEntryUtility.shortClassName( getPropertyValue( name ).getClass() );
 
 			sb.append( "\t<prop name=\"" + name + "\" value=\"" + value + 
 					   "\" type=\"" + typeClassName +"\"/>\n" );
