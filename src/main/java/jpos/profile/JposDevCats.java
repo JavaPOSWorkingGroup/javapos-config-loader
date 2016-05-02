@@ -42,7 +42,19 @@ public class JposDevCats extends Object
 	
 	public static final DevCat BUMPBAR_DEVCAT = 
 								 JposDevCats.BumpBar.getInstance();
+	
+	public static final DevCat BELT_DEVCAT = 
+		 JposDevCats.Belt.getInstance();
 
+	public static final DevCat BILLACCEPTOR_DEVCAT = 
+		 JposDevCats.BillAcceptor.getInstance();
+	
+	public static final DevCat BILLDISPENSER_DEVCAT = 
+		 JposDevCats.BillDispenser.getInstance();
+	
+	public static final DevCat BIOMETRICS_DEVCAT = 
+		 JposDevCats.Biometrics.getInstance();
+	
 	public static final DevCat CASHCHANGER_DEVCAT = 
 								 JposDevCats.CashChanger.getInstance();
 	
@@ -55,20 +67,41 @@ public class JposDevCats extends Object
 	public static final DevCat CAT_DEVCAT = 
 								 JposDevCats.CAT.getInstance();
 	
+	public static final DevCat COINACCEPTOR_DEVCAT = 
+		 						JposDevCats.CoinAcceptor.getInstance();
+	
 	public static final DevCat COINDISPENSER_DEVCAT = 
 								 JposDevCats.CoinDispenser.getInstance();
+	
+	public static final DevCat ELECTRONICJOURNAL_DEVCAT = 
+		 						JposDevCats.ElectronicJournal.getInstance();
+	
+	public static final DevCat ELECTRONICVALUERW_DEVCAT = 
+		 						JposDevCats.ElectronicValueRW.getInstance();
 	
 	public static final DevCat FISCALPRINTER_DEVCAT = 
 								 JposDevCats.FiscalPrinter.getInstance();
 	
+	public static final DevCat GATE_DEVCAT = 
+		 						JposDevCats.Gate.getInstance();
+	
 	public static final DevCat HARDTOTALS_DEVCAT = 
 								 JposDevCats.HardTotals.getInstance();
+
+	public static final DevCat IMAGESCANNER_DEVCAT = 
+		 						JposDevCats.ImageScanner.getInstance();	
+	
+	public static final DevCat ITEMDISPENSER_DEVCAT = 
+								JposDevCats.ItemDispenser.getInstance();	
 	
 	public static final DevCat KEYLOCK_DEVCAT = 
 								 JposDevCats.Keylock.getInstance();
 	
 	public static final DevCat LINEDISPLAY_DEVCAT = 
-								 JposDevCats.LineDisplay.getInstance();
+		 						JposDevCats.LineDisplay.getInstance();
+	
+	public static final DevCat LIGHTS_DEVCAT = 
+								 JposDevCats.Lights.getInstance();
 	
 	public static final DevCat MICR_DEVCAT = 
 								 JposDevCats.MICR.getInstance();
@@ -97,6 +130,9 @@ public class JposDevCats extends Object
 	public static final DevCat REMOTEORDERDISPLAY_DEVCAT = 
 								 JposDevCats.RemoteOrderDisplay.getInstance();
 	
+	public static final DevCat RFIDSCANNER_DEVCAT = 
+		 						JposDevCats.RFIDScanner.getInstance();
+	
 	public static final DevCat SCANNER_DEVCAT = 
 								 JposDevCats.Scanner.getInstance();
 	
@@ -105,6 +141,9 @@ public class JposDevCats extends Object
 	
 	public static final DevCat SIGNATURECAPTURE_DEVCAT = 
 								 JposDevCats.SignatureCapture.getInstance();
+
+	public static final DevCat SMARTCARDRW_DEVCAT = 
+		 						JposDevCats.SmartCardRW.getInstance();
 	
 	public static final DevCat TONEINDICATOR_DEVCAT = 
 								 JposDevCats.ToneIndicator.getInstance();
@@ -116,17 +155,19 @@ public class JposDevCats extends Object
 
 	/** An array of all of the JavaPOS DevCat */
 	public static final DevCat[] DEVCAT_ARRAY = 
-								   { BUMPBAR_DEVCAT, CASHCHANGER_DEVCAT,
+								   { BELT_DEVCAT, BUMPBAR_DEVCAT, BILLACCEPTOR_DEVCAT,
+									 BILLDISPENSER_DEVCAT, BIOMETRICS_DEVCAT, CASHCHANGER_DEVCAT,
 								   	 CASHDRAWER_DEVCAT, CHECKSCANNER_DEVCAT,
-								   	 CAT_DEVCAT, COINDISPENSER_DEVCAT, 
-								   	 FISCALPRINTER_DEVCAT, HARDTOTALS_DEVCAT,
-									 KEYLOCK_DEVCAT, LINEDISPLAY_DEVCAT, 
+								   	 CAT_DEVCAT, COINACCEPTOR_DEVCAT, COINDISPENSER_DEVCAT, 
+								   	 ELECTRONICJOURNAL_DEVCAT, ELECTRONICVALUERW_DEVCAT, FISCALPRINTER_DEVCAT, GATE_DEVCAT,
+								   	 HARDTOTALS_DEVCAT, IMAGESCANNER_DEVCAT, ITEMDISPENSER_DEVCAT,
+									 KEYLOCK_DEVCAT, LIGHTS_DEVCAT, LINEDISPLAY_DEVCAT, 
 									 MICR_DEVCAT, MOTIONSENSOR_DEVCAT,
 									 MSR_DEVCAT, PINPAD_DEVCAT, 
 									 POSKEYBOARD_DEVCAT, POSPOWER_DEVCAT, 
 									 POSPRINTER_DEVCAT, 
-									 REMOTEORDERDISPLAY_DEVCAT, SCANNER_DEVCAT,
-									 SCALE_DEVCAT, SIGNATURECAPTURE_DEVCAT, 
+									 RFIDSCANNER_DEVCAT, REMOTEORDERDISPLAY_DEVCAT, SCANNER_DEVCAT,
+									 SCALE_DEVCAT, SIGNATURECAPTURE_DEVCAT, SMARTCARDRW_DEVCAT, 
 									 TONEINDICATOR_DEVCAT,
 									 POINTCARDRW_DEVCAT };
 
@@ -136,17 +177,28 @@ public class JposDevCats extends Object
 	
 	static
 	{
+		DEVCAT_TABLE.put( BELT_DEVCAT.toString(), BELT_DEVCAT);
+		DEVCAT_TABLE.put( BILLACCEPTOR_DEVCAT.toString(), BILLACCEPTOR_DEVCAT);
+		DEVCAT_TABLE.put( BILLDISPENSER_DEVCAT.toString(), BILLDISPENSER_DEVCAT);
+		DEVCAT_TABLE.put( BIOMETRICS_DEVCAT.toString(), BIOMETRICS_DEVCAT);
 		DEVCAT_TABLE.put( BUMPBAR_DEVCAT.toString(), BUMPBAR_DEVCAT );
 		DEVCAT_TABLE.put( CASHCHANGER_DEVCAT.toString(), CASHCHANGER_DEVCAT );		
 		DEVCAT_TABLE.put( CASHDRAWER_DEVCAT.toString(), CASHDRAWER_DEVCAT );
 		DEVCAT_TABLE.put( CHECKSCANNER_DEVCAT.toString(), CHECKSCANNER_DEVCAT );
 		DEVCAT_TABLE.put( CAT_DEVCAT.toString(), CAT_DEVCAT );
+		DEVCAT_TABLE.put( COINACCEPTOR_DEVCAT.toString(), COINACCEPTOR_DEVCAT);
 		DEVCAT_TABLE.put( COINDISPENSER_DEVCAT.toString(), 
 						  COINDISPENSER_DEVCAT );
+		DEVCAT_TABLE.put( ELECTRONICJOURNAL_DEVCAT.toString(), ELECTRONICJOURNAL_DEVCAT);
+		DEVCAT_TABLE.put( ELECTRONICVALUERW_DEVCAT.toString(), ELECTRONICVALUERW_DEVCAT);
 		DEVCAT_TABLE.put( FISCALPRINTER_DEVCAT.toString(), 
 						  FISCALPRINTER_DEVCAT );
+		DEVCAT_TABLE.put( GATE_DEVCAT.toString(), GATE_DEVCAT);
 		DEVCAT_TABLE.put( HARDTOTALS_DEVCAT.toString(), HARDTOTALS_DEVCAT );
+		DEVCAT_TABLE.put( ITEMDISPENSER_DEVCAT.toString(), ITEMDISPENSER_DEVCAT);
+		DEVCAT_TABLE.put( IMAGESCANNER_DEVCAT.toString(), IMAGESCANNER_DEVCAT);
 		DEVCAT_TABLE.put( KEYLOCK_DEVCAT.toString(), KEYLOCK_DEVCAT );
+		DEVCAT_TABLE.put( LIGHTS_DEVCAT.toString(), LIGHTS_DEVCAT);
 		DEVCAT_TABLE.put( LINEDISPLAY_DEVCAT.toString(), LINEDISPLAY_DEVCAT );
 		DEVCAT_TABLE.put( MICR_DEVCAT.toString(), MICR_DEVCAT );
 		DEVCAT_TABLE.put( MOTIONSENSOR_DEVCAT.toString(), MOTIONSENSOR_DEVCAT );		
@@ -159,10 +211,12 @@ public class JposDevCats extends Object
 		DEVCAT_TABLE.put( POSPRINTER_DEVCAT.toString(), POSPRINTER_DEVCAT );
 		DEVCAT_TABLE.put( REMOTEORDERDISPLAY_DEVCAT.toString(), 
 						  REMOTEORDERDISPLAY_DEVCAT );
+		DEVCAT_TABLE.put( RFIDSCANNER_DEVCAT.toString(), RFIDSCANNER_DEVCAT);
 		DEVCAT_TABLE.put( SCANNER_DEVCAT.toString(), SCANNER_DEVCAT );
 		DEVCAT_TABLE.put( SCALE_DEVCAT.toString(), SCALE_DEVCAT );		
 		DEVCAT_TABLE.put( SIGNATURECAPTURE_DEVCAT.toString(), 
 						  SIGNATURECAPTURE_DEVCAT );
+		DEVCAT_TABLE.put( SMARTCARDRW_DEVCAT.toString(), SMARTCARDRW_DEVCAT);
 		DEVCAT_TABLE.put( TONEINDICATOR_DEVCAT.toString(), 
 						  TONEINDICATOR_DEVCAT );
 	}
@@ -263,6 +317,204 @@ public class JposDevCats extends Object
 
 		private static DevCat instance = null;
 	}
+	
+	/**
+	 * Defines an Belt DevCat
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr. (wilwhite@us.ibm.com)
+	 */
+	public static class Belt extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		Belt() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.Belt();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "Belt"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitBelt( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+
+		
+	}
+	
+	/**
+	 * Defines an BillAcceptor DevCat
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr. (wilwhite@us.ibm.com)
+	 */
+	public static class BillAcceptor extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		BillAcceptor() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.BillAcceptor();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "BillAcceptor"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitBillAcceptor( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+		
+	}
+	
+	/**
+	 * Defines an BillDispenser DevCat
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr. (wilwhite@us.ibm.com)
+	 */
+	public static class BillDispenser extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		BillDispenser() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.BillDispenser();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "BillDispenser"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitBillDispenser( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+		
+	}
+	
+	/**
+	 * Defines an Biometrics DevCat
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr. (wilwhite@us.ibm.com)
+	 */
+	public static class Biometrics extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		Biometrics() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.Biometrics();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "Biometrics"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitBiometrics( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+		
+	}
+
 	
 	/**
 	 * Defines the DevCat for BumpBar
@@ -555,6 +807,154 @@ public class JposDevCats extends Object
 	}
 
 	/**
+	 * Defines the DevCat for CoinAcceptor
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class CoinAcceptor extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		CoinAcceptor() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.CoinAcceptor();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "CoinAcceptor"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitCoinAcceptor( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for ElectronicJournal
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class ElectronicJournal extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		ElectronicJournal() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.ElectronicJournal();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "ElectronicJournal"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitElectronicJournal( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+	
+	
+	/**
+	 * Defines the DevCat for ElectronicValueRW
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class ElectronicValueRW extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		ElectronicValueRW() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.ElectronicValueRW();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "ElectronicValueRW"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitElectronicValueRW( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+
+	/**
 	 * Defines the DevCat for FiscalPrinter
 	 * @since 1.3 (SF 2K meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
@@ -602,6 +1002,56 @@ public class JposDevCats extends Object
 
 		private static DevCat instance = null;
 	}
+	
+	/**
+	 * Defines the DevCat for Gate
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class Gate extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		Gate() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.Gate();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "Gate"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitGate( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+	
 
 	/**
 	 * Defines the DevCat for HardTotals
@@ -650,7 +1100,106 @@ public class JposDevCats extends Object
 
 		private static DevCat instance = null;
 	}
+	
+	/**
+	 * Defines the DevCat for ItemDispenser
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class ItemDispenser extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
 
+		/** Make ctor package to avoid ctor */
+		ItemDispenser() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.ItemDispenser();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "ItemDispenser"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitItemDispenser( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+
+	/**
+	 * Defines the DevCat for ImageScanner
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class ImageScanner extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		ImageScanner() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.ImageScanner();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "ImageScanner"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitImageScanner( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+	
+	
 	/**
 	 * Defines the DevCat for Keylock
 	 * @since 1.3 (SF 2K meeting)
@@ -698,6 +1247,56 @@ public class JposDevCats extends Object
 
 		private static DevCat instance = null;
 	}
+	
+	/**
+	 * Defines the DevCat for Lights
+	 * @since 1.12 (SF 2K meeting)
+	 * @author E. William White, Jr (wilwhite@us.ibm.com)
+	 */
+	public static class Lights extends AbstractDevCat 
+										implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		Lights() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.Lights();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "Lights"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitLights( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+
 
 	/**
 	 * Defines the DevCat for LineDisplay
@@ -1132,6 +1731,56 @@ public class JposDevCats extends Object
 
 		private static DevCat instance = null;
 	}
+	
+	/**
+	 * Defines the DevCat for RFIDScanner
+	 * @since 1.12 
+	 * @author William White, Jr. (wilwhite@us.ibm.com)
+	 */
+	public static class RFIDScanner extends AbstractDevCat 
+											 implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		RFIDScanner() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.RFIDScanner();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "RFIDScanner"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitRFIDScanner( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+
 
 	/**
 	 * Defines the DevCat for Scanner
@@ -1277,6 +1926,55 @@ public class JposDevCats extends Object
 
 		private static DevCat instance = null;
 	}
+	
+	/**
+	 * Defines the DevCat for SmartCardRW
+	 * @since 1.12
+	 * @author William White, Jr. (wilwhite@us.ibm.com)
+	 */
+	public static class SmartCardRW extends AbstractDevCat implements DevCat 
+	{
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+
+		/** Make ctor package to avoid ctor */
+		SmartCardRW() {}
+
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.SmartCardRW();
+
+			return instance;
+		}
+
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+
+		/** @return the String representation of this DevCat */
+		public String toString() { return "SmartCardRW"; }
+
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitSmartCardRW( this ); }
+
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+
+		private static DevCat instance = null;
+	}
+
 
 	/**
 	 * Defines the DevCat for ToneIndicator

@@ -30,6 +30,30 @@ public class DefaultDevCatV extends Object implements DevCatVisitor
 	//
 
 	/**
+	 * Visits a  Belt DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitBelt( DevCat devCat ) {}
+	
+	/**
+	 * Visits a  BillAcceptor DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitBillAcceptor( DevCat devCat ) {}
+	
+	/**
+	 * Visits a  BillDispenser DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitBillDispenser( DevCat devCat ) {}
+
+	/**
+	 * Visits a  Biometrics DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitBiometrics( DevCat devCat ) {}
+	
+	/**
 	 * Visits a  DevCat
 	 * @param devCat the DevCat
 	 */
@@ -58,6 +82,12 @@ public class DefaultDevCatV extends Object implements DevCatVisitor
 	 * @param devCat the DevCat
 	 */
 	public void visitCAT( DevCat devCat ) {}
+	
+	/**
+	 * Visits a CoinAcceptor DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitCoinAcceptor( DevCat devCat ) {}
 
 	/**
 	 * Visits a CoinDispenser DevCat
@@ -66,23 +96,60 @@ public class DefaultDevCatV extends Object implements DevCatVisitor
 	public void visitCoinDispenser( DevCat devCat ) {}
 
 	/**
+	 * Visits a ElectronicJournal DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitElectronicJournal( DevCat devCat ) {}
+	
+	/**
+	 * Visits a ElectronicValueRW DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitElectronicValueRW( DevCat devCat ) {}
+	
+	/**
 	 * Visits a FiscalPrinter DevCat
 	 * @param devCat the DevCat
 	 */
 	public void visitFiscalPrinter( DevCat devCat ) {}
 
 	/**
+	 * Visits a Gate DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitGate( DevCat devCat ) {}
+	
+	/**
 	 * Visits a HardTotals DevCat
 	 * @param devCat the DevCat
 	 */
 	public void visitHardTotals( DevCat devCat ) {}
+	
+	/**
+	 * Visits a ItemDispenser DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitItemDispenser( DevCat devCat ) {}
+	
+	/**
+	 * Visits a ImageScanner DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitImageScanner( DevCat devCat ) {}
 
 	/**
 	 * Visits a Keylock DevCat
 	 * @param devCat the DevCat
 	 */
 	public void visitKeylock( DevCat devCat ) {}
-
+	
+	/**
+	 * Visits a Lights DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitLights( DevCat devCat ) {}
+	
+	
 	/**
 	 * Visits a LineDisplay DevCat
 	 * @param devCat the DevCat
@@ -138,6 +205,12 @@ public class DefaultDevCatV extends Object implements DevCatVisitor
 	public void visitRemoteOrderDisplay( DevCat devCat ) {}
 
 	/**
+	 * Visits a RFIDScanner DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitRFIDScanner( DevCat devCat ) {}
+	
+	/**
 	 * Visits a Scanner DevCat
 	 * @param devCat the DevCat
 	 */
@@ -154,6 +227,12 @@ public class DefaultDevCatV extends Object implements DevCatVisitor
 	 * @param devCat the DevCat
 	 */
 	public void visitScale( DevCat devCat ) {}
+	
+	/**
+	 * Visits a SmartCardRW DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitSmartCardRW( DevCat devCat ) {}
 
 	/**
 	 * Visits a ToneIndicator DevCat
