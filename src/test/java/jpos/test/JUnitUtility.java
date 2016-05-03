@@ -58,14 +58,14 @@ public class JUnitUtility extends Object
 
 	/**
 	 * @return a Vector with contents of the Enumeration 
-	 * @param enum the Enumeration object
+	 * @param e the Enumeration object
 	 */
-	public static Vector createVector( Enumeration enum )
+	public static Vector createVector( Enumeration e )
 	{
 		Vector v = new Vector();
 
-		while( enum.hasMoreElements() )
-			v.addElement( enum.nextElement() );
+		while( e.hasMoreElements() )
+			v.addElement( e.nextElement() );
 
 		return v;
 	}
@@ -162,11 +162,11 @@ public class JUnitUtility extends Object
 	/**
 	 * @return true if the two arguments have the same elements (don't need to be in same order)
 	 * @param array an Object[]
-	 * @param enum an Enumeration of Objects 
+	 * @param e an Enumeration of Objects 
 	 */
-	public static boolean isIdentical( Object[] array, Enumeration enum )
+	public static boolean isIdentical( Object[] array, Enumeration e )
 	{
-		return isIdentical( createVector( array ).elements(), enum );
+		return isIdentical( createVector( array ).elements(), e );
 	}
 
 	/**
@@ -184,9 +184,9 @@ public class JUnitUtility extends Object
 	 * @param array an Object[]
 	 * @param vector a Vector 
 	 */
-	public static boolean isEquals( Object[] array, Enumeration enum )
+	public static boolean isEquals( Object[] array, Enumeration e )
 	{
-		return isEquals( createVector( array ).elements(), enum );
+		return isEquals( createVector( array ).elements(), e );
 	}
 
 	/**
