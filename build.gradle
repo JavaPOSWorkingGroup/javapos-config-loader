@@ -45,6 +45,8 @@ repositories {
 dependencies {
 	compile 'xerces:xerces:1.2.3'
 	compile 'org.javapos:javapos-contracts:1.6.0'
+	
+	testCompile 'junit:junit:3.8.+'
 }
 
 
@@ -135,6 +137,7 @@ if (project.hasProperty('javaposImportDir'))
 
 	// javaposImportDir must be defined in the gradle.properties file
 	def jclSourceDir ="$javaposImportDir/jcl${version}/src"
+	def jclTestSourceDir ="$javaposImportDir/jcl${version}/test"	
 	
 	task importSources {
 		description = 'Copies the sources from an official JCL source distribution archive into this projectout of the current version of the project.'
@@ -166,6 +169,34 @@ if (project.hasProperty('javaposImportDir'))
 				}
 				into "src/doc"
 			}
+		}
+	}
+	
+	task importTestSources {
+		description = 'Copies the test sources from an official JCL source distribution archive into this project.'
+		
+		doLast {
+			assert file(jclSourceDir).exists(), "import archive '$jclSourceDir' does not exist"
+			copy {
+				from (jclTestSourceDir) {
+					exclude 'jpos/config/simple/editor/**'			// is part of the JCL Editor, separated project 
+					exclude 'jpos/util/SorterTestCase.java'			// is part of the JCL Editor, separated project; does not compile with editor sources
+					exclude '**/AllTests.java'						// not needed anymore with modern test runners 
+					exclude 'jpos/res/**' 							// will later be copied to src/main/resources, see below 
+					exclude 'jpos/test/data/**'						// will later be copied to src/main/resources, see below 
+					exclude 'README*'								// old build stuff, not needed anymore
+				}
+				into "src/test/java"
+			}
+			copy {
+				from (jclTestSourceDir) {
+					include 'jpos/res/**'
+				}
+				from "$jclTestSourceDir/jpos/test/data"
+				into "src/test/resources"
+				includeEmptyDirs = false
+			}
+			
 		}
 	}
 }
@@ -213,5 +244,6 @@ def normalizeEOL = { file ->
 
 task normalizeEOL << {
 	sourceSets.main.allSource.each { normalizeEOL(it) }
+	sourceSets.test.allSource.each { normalizeEOL(it) }
 	fileTree('src/doc').each { normalizeEOL(it) } 
 }
