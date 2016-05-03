@@ -28,7 +28,7 @@ import junit.framework.*;
  * Super class of all jpos.* TestCase classes
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class JposTestCase extends TestCase
+public abstract class JposTestCase extends TestCase
 {
 	//-------------------------------------------------------------------------
 	// Ctor(s)

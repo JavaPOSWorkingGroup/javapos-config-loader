@@ -20,7 +20,7 @@ import jpos.*;
  * Super class of all JposRegPopulatorTestCase
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class AbstractRegPopulatorTestCase extends JposTestCase
+public abstract class AbstractRegPopulatorTestCase extends JposTestCase
 {
 	//-------------------------------------------------------------------------
 	// Ctor(s)
