@@ -144,8 +144,8 @@ public class XercesProfileFactoryTestCase extends JposTestCase
 	// Class constants
 	//
 
-	private static final String PROFILE_FILE_NAME = TEST_DATA_PATH + "jcl_junit_profile.xml";
-	private static final String SCHEMA_PROFILE_FILE_NAME = TEST_DATA_PATH + "jcl_junit_schema_profile.xml";
+	private static final String PROFILE_FILE_NAME = loadResourceAsTemporaryFile("jcl_junit_profile.xml");
+	private static final String SCHEMA_PROFILE_FILE_NAME = loadResourceAsTemporaryFile("jcl_junit_schema_profile.xml");
 	
 	private static final String PROFILE_NAME = "JCL JUnit Corp. JavaPOS Profile";
 	private static final String PROFILE_VERSION = "1.0";

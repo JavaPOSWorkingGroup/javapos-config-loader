@@ -44,6 +44,7 @@ public class Xerces2RegPopulatorTestCase extends AbstractRegPopulatorTestCase
         pop = new Xerces2RegPopulator();
         createEntry0();
 
+        createDirectory(TEST_DATA_PATH);
 		addToClasspath( TEST_DATA_PATH );
     }
 
@@ -178,7 +179,5 @@ public class Xerces2RegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	// Class constants
 	//
 
-	public static final String JCL_JUNIT_XML_FILE_NAME = 
-							   RELATIVE_TEST_DATA_PATH + 
-							   "jcl-junit-schema.xml";
+	public static final String JCL_JUNIT_XML_FILE_NAME = loadResourceAsTemporaryFile("jcl-junit-schema.xml");
 }

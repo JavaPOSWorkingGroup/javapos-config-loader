@@ -68,6 +68,7 @@ public abstract class JposTestCase extends TestCase
 		deletePropFile();
 
 		File propFile = new File( JCL_PROPERTIES_FILE_NAME );
+		createParentDirectoryForFile(propFile);
 		propFile.deleteOnExit();
 
 		props.store( new FileOutputStream( propFile ),
@@ -115,6 +116,7 @@ public abstract class JposTestCase extends TestCase
 	{
 		SimpleRegPopulator simpleRegPopulator = new SimpleRegPopulator();
 
+		createParentDirectoryForFileName(fileName);
 		simpleRegPopulator.save( verifyCreateEntriesVector( entries ).elements(), fileName );
 
 		assertTrue( "Did not create serialized file: " + fileName + " as expected!",
@@ -209,6 +211,7 @@ public abstract class JposTestCase extends TestCase
 			entryList.add( createDefaultJposEntry( "logicalName" + 
 												  ( i + startIndex ) ) );
 
+		createParentDirectoryForFileName(fileName);
 		( new SimpleRegPopulator() ).
 		save( verifyCreateEntriesVector( entryList.iterator() ).elements(), 
 										 fileName );
@@ -231,6 +234,7 @@ public abstract class JposTestCase extends TestCase
 			entryList.add( createDefaultJposEntry( "logicalName" + 
 			                                       ( i + startIndex ) ) );
 
+		createParentDirectoryForFileName(fileName);
 		( new SimpleXmlRegPopulator() ).
 		save( verifyCreateEntriesVector( entryList.iterator() ).elements(), 
 		                                 fileName );
@@ -286,31 +290,97 @@ public abstract class JposTestCase extends TestCase
 
 	public static final String EMPTY_TEST_STRING_MSG = "EMPTY TEST";
 
+	public static final String TEST_RESOURCE_PATH = 
+								 System.getProperty( "java.io.tmpdir" ) + 
+								 "javapos-config-loader-test" + File.separator + 
+								 "resources";
+
 	public static final String JCL_PROPERTIES_FILE_NAME = 
-								 System.getProperty( "user.dir" ) + 
-								 File.separator + "jpos" + File.separator +
-								 "res" + File.separator +
+								 TEST_RESOURCE_PATH + File.separator + 
+								 "jpos" +  File.separator + 
+								 "res" + File.separator + 
 								 "jpos.properties";
 
 	public static final String JCL_BACKUP_PROPERTIES_FILE_NAME = 
-								 System.getProperty( "user.dir" ) + 
-								 File.separator + "jpos" + File.separator + 
-								 "res" + File.separator + 
+								 TEST_RESOURCE_PATH + File.separator + 
+								 "jpos" + File.separator + 
+								 "res" +  File.separator + 
 								 "jpos_backup.properties";
 
-	public static final String RELATIVE_TEST_DATA_PATH = 
-								 System.getProperty( "user.dir" ) +  
-								 File.separator + "test" +
-								 File.separator + "jpos" + 
-								 File.separator + "test" +
-								 File.separator + "data" + File.separator;
-
 	public static final String TEST_DATA_PATH = 
-								 System.getProperty( "user.dir" ) + 
-								 File.separator + "jpos" + 
-								 File.separator + "test" +
-								 File.separator + "data" + File.separator;
+								 System.getProperty( "java.io.tmpdir" ) + 
+								 "javapos-config-loader-test" + File.separator + 
+								 "data" + File.separator ;
 
 	public static final boolean CONSOLE_OUTPUT_ENABLED = false;
-	public static final String JPOS_UTIL_TRACING_VALUE = "OFF";
+	public static final String JPOS_UTIL_TRACING_VALUE = "OFF"; 
+	
+    /**
+     * Loads a resource and creates an identical temporary file
+     * @param resourceName The name of the file that is able to be loaded as a resource
+     * @return The absolute Path of the created temporary file
+     */
+	public static final String loadResourceAsTemporaryFile(String resourceName) {
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		String prefix, suffix;
+		try {
+			if (resourceName.contains(".")) {
+				prefix = resourceName.substring(0, resourceName.lastIndexOf('.'));
+				prefix = prefix.replace('/', '_');
+				suffix = resourceName.substring(resourceName.lastIndexOf('.'));
+			} else {
+				prefix = resourceName;
+				suffix = "";
+			}
+			File tempfile = File.createTempFile(prefix, suffix);
+			tempfile.deleteOnExit();
+			inputStream = ClassLoader.getSystemResourceAsStream(resourceName);
+			if (inputStream == null) {
+				fail("Resource " + resourceName + " does not exist or is empty");
+			}
+			outputStream = new FileOutputStream(tempfile);
+			int read = 0;
+			byte[] bytes = new byte[1024];
+
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+			return tempfile.getAbsolutePath();
+		} catch (IOException e) {
+			fail(e.getMessage());
+			return null;
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					fail(e.getMessage());
+				}
+			}
+			if (outputStream != null) {
+				try {
+					outputStream.flush();
+					outputStream.close();
+				} catch (IOException e) {
+					fail(e.getMessage());
+				}
+			}
+		}
+	}
+
+	private static void createParentDirectoryForFile(File file) {
+		if (!file.getParentFile().exists())
+			file.getParentFile().mkdirs();
+	}
+	
+	public static void createParentDirectoryForFileName(String fileName) {
+		File file = new File(fileName);
+		createParentDirectoryForFile(file);
+	}
+
+	public static void createDirectory(String dirPathName) {
+        File dir = new File(dirPathName);
+        if (!dir.exists()) dir.mkdirs();
+	}
 }
