@@ -90,18 +90,23 @@ sourceJar {
 ///////////////////////////////////////////////////////////////////////////////
 
 
-task prepareTestConfiguration << {
-	testResourceDir.mkdirs()
-	copy {
-		from ("$projectDir/src/test/resources/") {
-			include "jpos/res/jpos_junit.properties"
+task prepareTestConfiguration {
+    description = 'copies the initial jpos.properties file to the resource directory where generated jpos.properties files are written to'
+    doLast {
+		testResourceDir.mkdirs()
+		copy {
+			from ("$projectDir/src/test/resources/") {
+				include "jpos/res/jpos_junit.properties"
+			}
+			into testResourceDir
+			rename 'jpos_junit.properties', 'jpos.properties'
 		}
-		into testResourceDir
-		rename 'jpos_junit.properties', 'jpos.properties'
 	}
 }
 
 test.dependsOn prepareTestConfiguration
+
+// Note: prepareTestConfiguration is needed to be called too before JUnit tests are started in Eclipse
 
 
 ///////////////////////////////////////////////////////////////////////////////
