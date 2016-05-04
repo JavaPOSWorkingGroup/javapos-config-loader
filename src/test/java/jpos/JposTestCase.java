@@ -291,7 +291,7 @@ public abstract class JposTestCase extends TestCase
 	public static final String EMPTY_TEST_STRING_MSG = "EMPTY TEST";
 
 	public static final String TEST_RESOURCE_PATH = 
-								 System.getProperty( "java.io.tmpdir" ) + 
+								 System.getProperty( "java.io.tmpdir" ) + File.separator +
 								 "javapos-config-loader-test" + File.separator + 
 								 "resources";
 
@@ -308,13 +308,13 @@ public abstract class JposTestCase extends TestCase
 								 "jpos_backup.properties";
 
 	public static final String TEST_DATA_PATH = 
-								 System.getProperty( "java.io.tmpdir" ) + 
+								 System.getProperty( "java.io.tmpdir" ) + File.separator +
 								 "javapos-config-loader-test" + File.separator + 
 								 "data" + File.separator ;
 
 	public static final boolean CONSOLE_OUTPUT_ENABLED = false;
 	public static final String JPOS_UTIL_TRACING_VALUE = "OFF"; 
-	
+		
     /**
      * Loads a resource and creates an identical temporary file
      * @param resourceName The name of the file that is able to be loaded as a resource
