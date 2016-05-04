@@ -42,11 +42,15 @@ repositories {
 	}
 }
 
+def testResourceDir = file("${System.properties['java.io.tmpdir']}/javapos-config-loader-test/resources")
+
 dependencies {
 	compile 'xerces:xerces:1.2.3'
 	compile 'org.javapos:javapos-contracts:1.6.0'
 	
 	testCompile 'junit:junit:3.8.+'
+	
+	testRuntime files(testResourceDir)
 }
 
 
@@ -80,6 +84,25 @@ jar {
 sourceJar {
 	manifest = javaposManifest
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Test Tasks
+///////////////////////////////////////////////////////////////////////////////
+
+
+task prepareTestConfiguration << {
+	testResourceDir.mkdirs()
+	copy {
+		from ("$projectDir/src/test/resources/") {
+			include "jpos/res/jpos_junit.properties"
+		}
+		into testResourceDir
+		rename 'jpos_junit.properties', 'jpos.properties'
+	}
+}
+
+test.dependsOn prepareTestConfiguration
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Artifact Upload
@@ -138,6 +161,7 @@ if (project.hasProperty('javaposImportDir'))
 	// javaposImportDir must be defined in the gradle.properties file
 	def jclSourceDir ="$javaposImportDir/jcl${version}/src"
 	def jclTestSourceDir ="$javaposImportDir/jcl${version}/test"	
+	def jclTestSampleSourceDir ="$javaposImportDir/jcl${version}/sample"	
 	
 	task importSources {
 		description = 'Copies the sources from an official JCL source distribution archive into this projectout of the current version of the project.'
@@ -176,7 +200,7 @@ if (project.hasProperty('javaposImportDir'))
 		description = 'Copies the test sources from an official JCL source distribution archive into this project.'
 		
 		doLast {
-			assert file(jclSourceDir).exists(), "import archive '$jclSourceDir' does not exist"
+			assert file(jclTestSourceDir).exists(), "import archive '$jclTestSourceDir' does not exist"
 			copy {
 				from (jclTestSourceDir) {
 					exclude 'jpos/config/simple/editor/**'			// is part of the JCL Editor, separated project 
@@ -195,6 +219,14 @@ if (project.hasProperty('javaposImportDir'))
 				from "$jclTestSourceDir/jpos/test/data"
 				into "src/test/resources"
 				includeEmptyDirs = false
+			}
+			
+			assert file(jclTestSampleSourceDir).exists(), "import archive '$jclTestSampleSourceDir' does not exist"
+			copy {
+				from (jclTestSampleSourceDir) {
+					include 'com/xyz/jpos/**'
+				}
+				into "src/test/java"
 			}
 			
 		}

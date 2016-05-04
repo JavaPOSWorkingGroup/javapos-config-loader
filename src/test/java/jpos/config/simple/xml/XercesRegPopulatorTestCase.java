@@ -52,6 +52,7 @@ public class XercesRegPopulatorTestCase extends AbstractRegPopulatorTestCase
             println( "   Exception message = " + se.getMessage() );
         }
 
+        createDirectory(TEST_DATA_PATH);
 		addToClasspath( TEST_DATA_PATH );
     }
 
@@ -220,8 +221,8 @@ public class XercesRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	{
         try
         {
-			assertTrue( "Expected file: " + TEST_DATA_PATH + DEFECT_6562_XML_FILE + " to exist",
-						( new File( TEST_DATA_PATH + DEFECT_6562_XML_FILE ) ).exists() );
+			assertTrue( "Expected file: " + DEFECT_6562_XML_FILE + " to exist",
+						( new File( DEFECT_6562_XML_FILE ) ).exists() );
 
             xercesRegPopulator.load( DEFECT_6562_XML_FILE );
             Enumeration entries = xercesRegPopulator.getEntries();
@@ -240,8 +241,8 @@ public class XercesRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	{
         try
         {
-            assertTrue( "Expected file: " + TEST_DATA_PATH + JCL_JUNIT_TEST_PROP_TYPE_XML_FILE + " to exist",
-						( new File( TEST_DATA_PATH + JCL_JUNIT_TEST_PROP_TYPE_XML_FILE ) ).exists() );
+            assertTrue( "Expected file: " + JCL_JUNIT_TEST_PROP_TYPE_XML_FILE + " to exist",
+						( new File( JCL_JUNIT_TEST_PROP_TYPE_XML_FILE ) ).exists() );
 
             xercesRegPopulator.load( JCL_JUNIT_TEST_PROP_TYPE_XML_FILE );
             Enumeration entries = xercesRegPopulator.getEntries();
@@ -308,9 +309,7 @@ public class XercesRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 
     public static final String JUNIT_CORP_STRING = "JUnit Corp.";
     
-	public static final String JCL_JUNIT_XML_FILE_NAME = TEST_DATA_PATH + 
-														   "jcl-junit.xml";
-	public static final String DEFECT_6562_XML_FILE = "defect6562.xml";
-	public static final String JCL_JUNIT_TEST_PROP_TYPE_XML_FILE = 
-								 "jcl_junit_test_prop_type.xml";
+	public static final String JCL_JUNIT_XML_FILE_NAME = loadResourceAsTemporaryFile("jcl-junit.xml");
+	public static final String DEFECT_6562_XML_FILE = loadResourceAsTemporaryFile("defect6562.xml");
+	public static final String JCL_JUNIT_TEST_PROP_TYPE_XML_FILE = loadResourceAsTemporaryFile("jcl_junit_test_prop_type.xml");
 }
