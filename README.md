@@ -6,7 +6,7 @@ JavaPOS Configuration Loader (aka JCL) for loading JavaPOS configurations and pr
 ## Note for Test execution
 
 If starting tests another way than with Gradle (e.g., with Eclipse's JUnit test runner), the Gradle task *prepareTestConfiguration* has 
-to be executed first. This will copy the file [ javapos-config-loader/src/test/resources/jpos/res/jpos_junit.properties ]( javapos-config-loader/src/test/resources/jpos/res/jpos_junit.properties )
+to be executed first. This will copy the file [ javapos-config-loader/src/test/resources/jpos/res/jpos_junit.properties ](src/test/resources/jpos/res/jpos_junit.properties)
 as initial *jpos.properties* file to the appropriate temporary resource test directory.
 
 If starting the test with Gradle, this is not needed as Gradle's *test* task depends on it and will automatically execute this task before 
