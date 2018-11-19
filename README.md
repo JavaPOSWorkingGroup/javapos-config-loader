@@ -11,3 +11,8 @@ as initial *jpos.properties* file to the appropriate temporary resource test dir
 
 If starting the test with Gradle, this is not needed as Gradle's *test* task depends on it and will automatically execute this task before 
 starting the tests.
+
+
+*Note*: This project may be edited directly in the browser using the gitpod application which is provides a full blown IDE.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/JavaPOSWorkingGroup/javapos-config-loader)
