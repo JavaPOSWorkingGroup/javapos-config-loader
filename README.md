@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/JavaPOSWorkingGroup/javapos-config-loader)
+
 JavaPOS Configuration Loader [![Build Status](https://travis-ci.org/JavaPOSWorkingGroup/javapos-config-loader.svg?branch=master)](https://travis-ci.org/JavaPOSWorkingGroup/javapos-config-loader) [ ![Download](https://api.bintray.com/packages/javaposworkinggroup/maven/javapos-config-loader/images/download.svg) ](https://bintray.com/javaposworkinggroup/maven/javapos-config-loader/_latestVersion)
 ============================
 
@@ -11,8 +13,3 @@ as initial *jpos.properties* file to the appropriate temporary resource test dir
 
 If starting the test with Gradle, this is not needed as Gradle's *test* task depends on it and will automatically execute this task before 
 starting the tests.
-
-
-*Note*: This project may be edited directly in the browser using the gitpod application which is provides a full blown IDE.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/JavaPOSWorkingGroup/javapos-config-loader)
