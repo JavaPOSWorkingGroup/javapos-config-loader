@@ -34,10 +34,12 @@
           
 <!ATTLIST jpos
           version CDATA #REQUIRED
-          category ( BumpBar | CashChanger | CashDrawer | CoinDispenser | FiscalPrinter |
-                     HardTotals | Keylock | RemoteOrderDisplay | Scale | Scanner | SignatureCapture |
-                     ToneIndicator | LineDisplay | MICR | MSR | PinPad | POSKeyboard |
-                     POSPrinter ) #REQUIRED>
+          category ( Biometrics | BumpBar | CashChanger | CashDrawer | CAT | CheckScanner | 
+                     CoinDispenser | ElectronicJournal | FiscalPrinter | HardTotals | 
+                     Keylock | LineDisplay | MICR | MotionSensor | MSR |  PINPad | 
+                     PointCardRW | POSKeyboard | POSPower |  POSPrinter | RemoteOrderDisplay | 
+                     Scale | Scanner | SignatureCapture | SmartCardRW | ToneIndicator
+                     ) #REQUIRED>
                      
 <!ATTLIST product 
           name CDATA #REQUIRED
