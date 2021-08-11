@@ -2,30 +2,21 @@
 //
 // Build Script for building JavaPOS Configuration Loader (JCL) Library
 //
-// Author: denis.kuniss@wincor-nixdorf.com (2016)
+// Author: denis.kuniss@dieboldnixdorf.com (2021)
 //
 ///////////////////////////////////////////////////////////////////////////////
 
 plugins {
-    id 'com.gradle.build-scan' version '3.1.1'
-	id 'java'
+	id 'java-library'
 	id 'eclipse'
 //  id 'maven' // comment this in and the next line out for populating to a local Maven repository for testing purposes
     id 'com.github.oehme.sobula.bintray-release' version '0.6.7'
 }
 
 ext.githubProjectUrl = 'https://github.com/JavaPOSWorkingGroup/javapos-config-loader'
-ext.travisProjectUrl = 'https://travis-ci.org/JavaPOSWorkingGroup/javapos-config-loader'
-
-buildScan {
-    termsOfServiceUrl = "https://gradle.com/terms-of-service"
-    termsOfServiceAgree = "yes"
-
-	apply from: 'buildScan.gradle'
-}
 
 wrapper {
-	gradleVersion = '5.6.1'
+	gradleVersion = '7.1.1'
 }
 
 
@@ -43,7 +34,7 @@ def version='2.3.1'
 ///////////////////////////////////////////////////////////////////////////////
 
 repositories {
-	jcenter()
+	mavenCentral()
 	if (project.plugins.hasPlugin('maven')) 
 	{ // evaluates only at development environment, not at travis-ci.org
 	    maven {
@@ -56,36 +47,19 @@ repositories {
 def testResourceDir = file("${System.properties['java.io.tmpdir']}/javapos-config-loader-test/resources")
 
 dependencies {
-	compile 'xerces:xerces:1.2.3'
-	compile 'org.javapos:javapos-contracts:1.6.0'
+	api 'xerces:xerces:1.2.3'
+	api 'org.javapos:javapos-contracts:1.6.0'
 	
-	testCompile 'junit:junit:3.8.+'
+	testImplementation 'junit:junit:3.8.+'
 	
-	testRuntime files(testResourceDir)
+	testRuntimeOnly files(testResourceDir)
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
-// Build Tasks
+// Project Configurations
 ///////////////////////////////////////////////////////////////////////////////
 
-// when running on travis-ci.org, always the environment variable TRAVIS is set
-def boolean isRunningOnBuildServer = System.getenv('TRAVIS')
-
-if (isRunningOnBuildServer) {
-	sourceCompatibility = '1.6' // this defines the lowest JVM version this library may be used with
-	
-	// this is to request the best matching JDK (currently 1.6) for compiling in Eclipse 
-	// it is recommended to install a JDK which matches best to avoid applying APIs methods and types not available in specified JVM compatibility version  
-	eclipse.classpath {
-		containers.clear()
-        containers "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-$sourceCompatibility"
-	}
-}
-else { // to be compliant to javapos-contracts during library development in Eclipse 
-	sourceCompatibility = '1.8' 
-}
-
+sourceCompatibility = 8
 
 def javaposManifest = 	manifest {
         attributes('Specification-Title': 'UnifiedPOS Standard',
@@ -95,6 +69,10 @@ def javaposManifest = 	manifest {
                    'Implementation-Version': version,
                    'Main-Class': 'jpos.config.Version')
 }
+
+///////////////////////////////////////////////////////////////////////////////
+// Build Tasks
+///////////////////////////////////////////////////////////////////////////////
 
 jar {
 	baseName = artifactName
