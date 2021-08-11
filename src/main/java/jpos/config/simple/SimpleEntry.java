@@ -302,7 +302,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 	public boolean hasProp( JposEntry.Prop prop ) { return hasPropertyWithName( prop.getName() ); }
 
 	/** 
-	 * @return a JposEntry.Prop object created with the <name, value, type> tripplet
+	 * @return a JposEntry.Prop object created with the &lt;name, value, type&gt; tripplet
 	 * passed as arguments
 	 * @param propName the property name
 	 * @param propValue the property value
@@ -341,8 +341,8 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 
 	/**
 	 * @return 0 if two entries are the same -1 if this is less or 1 of more than other
-	 * the comparison for > and < uses the logicalName of the entry to decide
-	 * @param otherEntry the other JposEntry
+	 * the comparison for &gt; and &lt; uses the logicalName of the entry to decide
+	 * @param other the other JposEntry
 	 */
 	public int compareTo( Object other )
 	{
@@ -542,8 +542,8 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 		
 		/**
 		 * @return 0 if two entries are the same -1 if this is less or 1 of more than other
-		 * the comparison for > and < uses the logicalName of the entry to decide
-		 * @param otherEntry the other JposEntry
+		 * the comparison for &gt; and &lt; uses the logicalName of the entry to decide
+		 * @param other the other JposEntry
 		 */
 		public int compareTo( Object other )
 		{

@@ -59,7 +59,7 @@ public class BooleanPropType extends AbstractPropType implements PropType, Seria
 
 	/**
 	 * @return true if the object passed is of this PropType
-	 * @param boolean the boolean primitive type
+	 * @param b the boolean primitive type
 	 */
 	public boolean isValidValue( boolean b ) { return true; }
 

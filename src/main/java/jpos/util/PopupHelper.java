@@ -93,6 +93,7 @@ public class PopupHelper
         
     /**
      * unregisters a component from listen to mouse events for the popupMenu
+     * @param mouseEvtComp mouse event component
      * @since 1.3 (SF 2K meeting)
      */
     public static void removePopup( JComponent mouseEvtComp ) { dictionary.remove( mouseEvtComp ); } 

@@ -37,7 +37,7 @@ import java.io.PrintStream;
  * properties file be turned OFF
  * </li>
  * </ol>
- * @see com.ibm.jutil.Tracer#getInstance
+ * @see Tracer#getInstance()
  * @author E. Michael Maximilien
  * @since 2.1.0
  */

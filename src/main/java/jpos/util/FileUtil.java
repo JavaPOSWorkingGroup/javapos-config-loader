@@ -125,7 +125,6 @@ public class FileUtil extends Object
     /** 
      * @return the File object if found otherwise returns null
 	 * @param fileName the relative fileName to search for
-	 * @param searchInClassPath if true the file will be searched in all 
 	 * directories specified by CLASSPATH
      */
     protected synchronized static JarFile lookForFileInJars( String fileName )

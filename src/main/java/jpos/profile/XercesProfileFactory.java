@@ -213,7 +213,7 @@ public class XercesProfileFactory extends Object implements ProfileFactory
 
 	/**
 	 * @return a Profile object created parsing the XML file provided
-	 * @param xmlProfileFile the XML profile file
+	 * @param xmlProfileFileName the XML profile file
 	 * @exception jpos.profile.ProfileException if there is an error loading the profile
 	 */
 	public Profile createProfile( String xmlProfileFileName ) throws ProfileException

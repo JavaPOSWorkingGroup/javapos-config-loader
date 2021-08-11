@@ -367,7 +367,7 @@ public class DefaultCompositeRegPopulator extends Object
 	}
 
 	/**
-	 * @retun true if this populator is a composite populator or false otherwise
+	 * @return true if this populator is a composite populator or false otherwise
 	 * @since 1.3 (Washington DC 2001 meeting)
 	 */
 	public boolean isComposite() { return true; }

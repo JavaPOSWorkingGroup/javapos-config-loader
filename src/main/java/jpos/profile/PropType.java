@@ -42,7 +42,7 @@ public interface PropType
 
 	/**
 	 * @return true if the PropValue passed is of this PropType
-	 * @param propValue the PropValue
+	 * @param obj the PropValue
 	 */
 	public boolean isValidValue( PropValue obj );
 }

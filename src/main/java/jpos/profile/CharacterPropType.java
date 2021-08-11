@@ -59,7 +59,7 @@ public class CharacterPropType extends AbstractPropType implements PropType, Ser
 
 	/**
 	 * @return true if the object passed is of this PropType
-	 * @param char the char primitive type
+	 * @param c the char primitive type
 	 */
 	public boolean isValidValue( char c ) { return true; }
 

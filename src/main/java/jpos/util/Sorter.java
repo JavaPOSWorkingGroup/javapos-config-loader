@@ -41,6 +41,7 @@ public final class Sorter extends Object
     /**
      * @return the smallest Comparable element in this Vector
      * <b>NOTE:</b>implements a simple one pass algorithm in O(n) time
+     * @param comparables what to compare with
      */
     public static Comparable min( Vector comparables )
     {
@@ -66,6 +67,7 @@ public final class Sorter extends Object
     /**
      * @return the greatest Comparable element in this Vector
      * <b>NOTE:</b>implements a simple one pass algorithm in O(n) time
+     * @param comparables what to compare with
      */
     public static Comparable max( Vector comparables )
     {
@@ -92,7 +94,7 @@ public final class Sorter extends Object
      * @return a Vector of sorted Comparable objects
      * <b>NOTE:</b>implements a simple Insertion Sort algorithm
      *         Sorts n element in place in O(n^2) worst-case time
-     * @param elements a Vector with the initial Comparable objects
+     * @param comparables a Vector with the initial Comparable objects
      */
     public static Vector insertionSort( Vector comparables )
     {
@@ -119,7 +121,7 @@ public final class Sorter extends Object
      * @return a Vector of sorted Comparable objects
      * <b>NOTE:</b>implements the Merge Sort algorithm
      *         Sorts n element in O(nlgn) worst-case time
-     * @param elements a Vector with the initial Comparable objects
+     * @param comparables a Vector with the initial Comparable objects
      */
     public static Vector mergeSort( Vector comparables )
     {

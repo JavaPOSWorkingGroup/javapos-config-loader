@@ -38,7 +38,7 @@ public class ProfileException extends Exception
 	/** 
 	 * 2 args ctor 
 	 * @param msg the exception's message
-	 * @param origException the original exception causing this one
+	 * @param e the original exception causing this one
 	 */
 	public ProfileException( String msg, Exception e ) { this( msg ); origException = e; }
 

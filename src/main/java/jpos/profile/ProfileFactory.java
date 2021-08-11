@@ -27,7 +27,7 @@ public interface ProfileFactory
 {
 	/**
 	 * @return a Profile object created parsing the XML file provided
-	 * @param xmlProfileFile the XML profile file
+	 * @param xmlProfileFileName the XML profile file
 	 * @exception jpos.profile.ProfileException if there is an error loading the profile
 	 * @since 1.3 (SF 2K meeting)
 	 */

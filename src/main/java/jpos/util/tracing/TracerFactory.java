@@ -38,7 +38,7 @@ import jpos.util.*;
  * same named Tracer will return the same Tracer object
  * </li>
  * </ol>
- * @see com.ibm.jutil.tracing.Tracer#getInstance
+ * @see Tracer#getInstance()
  * @author E. Michael Maximilien
  * @since 2.1.0
  */
@@ -145,7 +145,6 @@ public class TracerFactory extends Object
      * Finalizes this Tracer by closing the TracerOutput.  This is useful
      * if the TracerOutput is printing to a file.  This method would then
      * close that file
-     * @throws java.lang.Thowable any exception occuring while finalizing
      */
     protected void finalize()
     {

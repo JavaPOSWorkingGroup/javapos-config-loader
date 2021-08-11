@@ -304,10 +304,10 @@ public class XercesRegPopulator extends AbstractXercesRegPopulator
     }
 
     /**
-     * Get the <creation> element attributes and adds corresponding 
+     * Get the &lt;creation&gt; element attributes and adds corresponding 
      * properties to JposEntry
      * @param jposEntry the entry to add properties to
-     * @param element the <creation> XML element
+     * @param element the &lt;creation&gt; XML element
      * @since 1.2 (NY 2K meeting)
      */
     protected void extractCreationAttr( JposEntry jposEntry, Element element )
@@ -320,10 +320,10 @@ public class XercesRegPopulator extends AbstractXercesRegPopulator
     }
 
     /**
-     * Get the <vendor> element attributes and adds corresponding 
+     * Get the &lt;vendor&gt; element attributes and adds corresponding 
      * properties to JposEntry
      * @param jposEntry the entry to add properties to
-     * @param element the <vendor> XML element
+     * @param element the &lt;vendor&gt; XML element
      * @since 1.2 (NY 2K meeting)
      */
     protected void extractVendorAttr( JposEntry jposEntry, Element element )
@@ -333,10 +333,10 @@ public class XercesRegPopulator extends AbstractXercesRegPopulator
     }
 
     /**
-     * Get the <jpos> element attributes and adds corresponding properties 
+     * Get the &lt;jpos&gt; element attributes and adds corresponding properties 
      * to JposEntry
      * @param jposEntry the entry to add properties to
-     * @param element the <jpos> XML element
+     * @param element the &lt;jpos&gt; XML element
      * @since 1.2 (NY 2K meeting)
      */
     protected void extractJposAttr( JposEntry jposEntry, Element element )
@@ -349,10 +349,10 @@ public class XercesRegPopulator extends AbstractXercesRegPopulator
     }
 
     /**
-     * Get the <product> element attributes and adds corresponding 
+     * Get the &lt;product&gt; element attributes and adds corresponding 
      * properties to JposEntry
      * @param jposEntry the entry to add properties to
-     * @param element the <product> XML element
+     * @param element the &lt;product&gt; XML element
      * @since 1.2 (NY 2K meeting)
      */
     protected void extractProductAttr( JposEntry jposEntry, Element element )
@@ -366,10 +366,10 @@ public class XercesRegPopulator extends AbstractXercesRegPopulator
     }
 
     /**
-     * Get the <prop> element attributes and adds corresponding properties 
+     * Get the &lt;prop&gt; element attributes and adds corresponding properties 
      * to JposEntry
      * @param jposEntry the entry to add properties to
-     * @param element the <prop> XML element
+     * @param element the &lt;prop&gt; XML element
      * @since 1.2 (NY 2K meeting)
 	 * @throws jpos.config.JposConfigException if the property value does 
 	 * not match the type or is not a valid value (like for instance 

@@ -163,7 +163,7 @@ implements JposServiceManager
      * @return a ServiceConnection used to connect to the service
      * @param logicalName the logical name of the service to find
      * @since 0.1 (Philly 99 meeting)
-     * @throws jpos.config.JposException 
+     * @throws JposException 
      */
     public JposServiceConnection createConnection( String logicalName ) 
     throws JposException

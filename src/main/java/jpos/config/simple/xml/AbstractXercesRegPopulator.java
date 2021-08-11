@@ -283,9 +283,9 @@ public abstract class AbstractXercesRegPopulator
     }
     
     /**
-     * Appends the <creation> element to the document
+     * Appends the &lt;creation&gt; element to the document
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param jposEntry the JposEntry object
      * @since 1.2 (NY 2K meeting)
      */
@@ -314,9 +314,9 @@ public abstract class AbstractXercesRegPopulator
     }
 
     /**
-     * Appends the <vendor> element to the document
+     * Appends the &lt;vendor&gt; element to the document
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param jposEntry the JposEntry object
      * @since 1.2 (NY 2K meeting)
      */
@@ -341,9 +341,9 @@ public abstract class AbstractXercesRegPopulator
     }
 
     /**
-     * Appends the <jpos> element to the document
+     * Appends the &lt;jpos&gt; element to the document
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param jposEntry the JposEntry object
      * @since 1.2 (NY 2K meeting)
      */
@@ -371,9 +371,9 @@ public abstract class AbstractXercesRegPopulator
     }
 
     /**
-     * Appends the <product> element to the document
+     * Appends the &lt;product&gt; element to the document
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param jposEntry the JposEntry object
      * @since 1.2 (NY 2K meeting)
      */
@@ -405,9 +405,9 @@ public abstract class AbstractXercesRegPopulator
     }
 
     /**
-     * Appends the <prop> element to the document
+     * Appends the &lt;prop&gt; element to the document
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param propName the property name
      * @param propValue the property value
      * @since 1.2 (NY 2K meeting)
@@ -439,7 +439,7 @@ public abstract class AbstractXercesRegPopulator
     /**
      * Appends non-required properties name and value
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param jposEntry the JposEntry object
      * @since 1.2 (NY 2K meeting)
      */
@@ -470,9 +470,9 @@ public abstract class AbstractXercesRegPopulator
     }
 
     /**
-     * Insert the <JposEntryElement> in the XML document object
+     * Insert the &lt;JposEntryElement&gt; in the XML document object
      * @param doc the XML Document object
-     * @param jposEntryElement the <JposEntryElement> XML Element object
+     * @param jposEntryElement the &lt;JposEntryElement&gt; XML Element object
      * @param jposEntry the JposEntry object
      * @since 1.2 (NY 2K meeting)
      */
@@ -494,7 +494,7 @@ public abstract class AbstractXercesRegPopulator
     }
 
     /**
-     * Insert an Enumeration of <JposEntryElement> objects in the XML document
+     * Insert an Enumeration of &lt;JposEntryElement&gt; objects in the XML document
      * @param doc the XML Document object
      * @param entries an Enumeration of JposEntry objects
      * @since 1.2 (NY 2K meeting)

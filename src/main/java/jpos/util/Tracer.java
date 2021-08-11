@@ -22,7 +22,7 @@ package jpos.util;
  * Tracing class to help in the debugging of the JCL and JavaPOS controls:
  * This class is a Singleton (see GoF Design Pattern book)
  * <b>This class is superceded by the classes in the jpos.util.tracing package
- * access the sole instance by doing: Tracer.getInstance() call
+ * access the sole instance by doing: Tracer.getInstance() call</b>
  * @see jpos.util.tracing.Tracer
  * @see jpos.util.tracing.TracerFactory
  * @deprecated see the classes in the jpos.util.tracing package

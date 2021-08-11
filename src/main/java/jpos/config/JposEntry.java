@@ -25,7 +25,7 @@ import java.util.Iterator;
 
 /**
  * Defines the minimal set of methods for a JposEntry object
- * It allows the entries to contain properties <key, value> pairs
+ * It allows the entries to contain properties &lt;key, value&gt; pairs
  * The key being a String and the value any serializable Java objects
  * NOTE: JposEntry implementation can be easily implemented using a 
  * java.util.Hashtable
@@ -158,8 +158,7 @@ public interface JposEntry extends Serializable, Comparable
     /**
      * Looks for a property with name specified and removes it.  If none exist then 
 	 * does nothing and return null
-	 * @return the value for the name passed
-     * @param name the name String of the property to remove
+     * @param prop the name String of the property to remove
      * @since 0.1 (Philly 99 meeting)
      */
 	public void remove( JposEntry.Prop prop );
@@ -181,7 +180,7 @@ public interface JposEntry extends Serializable, Comparable
 	public boolean hasProp( JposEntry.Prop prop );
 
 	/** 
-	 * @return a JposEntry.Prop object created with the <name, value, type> tripplet
+	 * @return a JposEntry.Prop object created with the &lt;name, value, type&gt; tripplet
 	 * passed as arguments
 	 * @param propName the property name
 	 * @param propValue the property value

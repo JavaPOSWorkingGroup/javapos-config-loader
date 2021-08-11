@@ -227,7 +227,7 @@ public class JposDevCats extends Object
 
 	/**
 	 * @return the DevCat for the String name passed
-	 * @param devCatString the String name for this DevCat
+	 * @param devCatName the String name for this DevCat
 	 */
 	public static DevCat getDevCatForName( String devCatName )
 	{

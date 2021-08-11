@@ -128,7 +128,7 @@ public abstract class AbstractRegPopulator extends Object
 	}
 
 	/**
-	 * @retun true if this populator is a composite populator or false otherwise
+	 * @return true if this populator is a composite populator or false otherwise
 	 * @since 1.3 (Washington DC 2001 meeting)
 	 */
 	public boolean isComposite() { return false; }
@@ -414,7 +414,7 @@ public abstract class AbstractRegPopulator extends Object
     /**
      * Finds the occurrence of the fileName in the JAR or Zip files
 	 * @param fileName the file to find
-     * @param jarFilesVector a vector of JAR/Zip file names
+     * @param jarZipFilesVector a vector of JAR/Zip file names
      * @since 2.0 (Long Beach 2001)
      */
     protected InputStream findFileInJarZipFiles( String fileName, 

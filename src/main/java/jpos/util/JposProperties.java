@@ -77,7 +77,7 @@ public interface JposProperties extends JposPropertiesConst
 
 	/**
 	 * @return the MultiProperty by the name passed.  MultiProperty are properties
-	 * named like <propName>.<n> where n = 0, 1, ...  If the multi-property does not
+	 * named like &lt;propName&gt;.&lt;n&gt; where n = 0, 1, ...  If the multi-property does not
 	 * exist then null is returned
 	 * @param multiPropName the multi-property name
 	 * @since 1.3 (Wahington DC 2001 meeting)
@@ -111,16 +111,16 @@ public interface JposProperties extends JposPropertiesConst
 
 	/**
 	 * Speficies an interface used for returning multi properties.  That is
-	 * properties that are named like <name>.x where x = 0, 1, ...x
+	 * properties that are named like &lt;name&gt;.x where x = 0, 1, ...x
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 * @since 1.3 (Washington DC 2001 meeting)
 	 */
 	public interface MultiProperty
 	{
 		/** 
-		 * @return the number of this property name that is for property <propName>.x returns x 
+		 * @return the number of this property name that is for property &lt;propName&gt;.x returns x 
 		 * @param propName the property name to get the number of
-		 * @throws java.lang.IllegalArgumentException if the property name does not follow the <propName>.x name pattern
+		 * @throws java.lang.IllegalArgumentException if the property name does not follow the &lt;propName&gt;.x name pattern
 		 */
 		public int propertyNumber( String propName ) throws IllegalArgumentException;
 
@@ -141,13 +141,13 @@ public interface JposProperties extends JposPropertiesConst
 
 		/**
 		 * @return the value for this property from the full property name
-		 * @param propName the full property name <name>.x
+		 * @param propName the full property name &lt;name&gt;.x
 		 */
 		public String getPropertyString( String propName );
 
 		/**
 		 * @return the value for this property from the full property name
-		 * @param number suffix for the property name
+		 * @param i suffix for the property name
 		 * @throws java.lang.IllegalArgumentException if the i negative
 		 */
 		public String getPropertyString( int i ) throws IllegalArgumentException;
@@ -157,7 +157,7 @@ public interface JposProperties extends JposPropertiesConst
 	}
 
 	/**
-	 * Simple wrapper class for a property pair <name, value>
+	 * Simple wrapper class for a property pair &lt;name, value&gt;
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 * @since 1.3 (Washington DC 2001)
 	 */

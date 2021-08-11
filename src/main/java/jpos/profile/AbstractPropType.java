@@ -53,7 +53,7 @@ public abstract class AbstractPropType extends Object
 
 	/**
 	 * @return true if the PropValue passed is of this PropType
-	 * @param propValue the PropValue
+	 * @param obj the PropValue
 	 */
 	public abstract boolean isValidValue( PropValue obj );
 

@@ -36,7 +36,7 @@ public interface PropValue
 
 	/**
 	 * @return true if this and the other value are equal 
-	 * @param other the other PropValue
+	 * @param propValue the other PropValue
 	 */
 	public boolean equals( Object propValue );
 }
