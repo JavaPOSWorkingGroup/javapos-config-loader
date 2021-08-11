@@ -1,6 +1,6 @@
 rootProject.name = 'javapos-config-loader'
 
-def boolean isRunningOnBuildServer = System.getenv('TRAVIS')
+def boolean isRunningOnBuildServer = System.getenv('CI')
 def boolean isDevHost = !isRunningOnBuildServer && !hasProperty('disableIDEDependencySubstitution')
 
 if (startParameter.searchUpwards && isDevHost)
