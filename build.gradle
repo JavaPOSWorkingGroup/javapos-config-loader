@@ -83,6 +83,9 @@ java {
 jar {
 	baseName = artifactName
 	manifest = javaposManifest
+	from ('CHANGELOG.md') {
+		into 'META-INF'
+	}
 }
 
 sourcesJar {
