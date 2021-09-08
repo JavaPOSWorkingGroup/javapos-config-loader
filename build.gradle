@@ -36,7 +36,7 @@ version='3.0.0-SNAPSHOT'
 
 repositories {
 	mavenCentral()
-	
+
     if (!System.getenv('CI')) 
     { // evaluates only at development environment, not at CI
 	    maven {
@@ -81,7 +81,7 @@ java {
 }
 
 jar {
-	baseName = artifactName
+	archiveBaseName = artifactName
 	manifest = javaposManifest
 	from ('CHANGELOG.md') {
 		into 'META-INF'
