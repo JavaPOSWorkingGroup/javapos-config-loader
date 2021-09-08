@@ -3,6 +3,7 @@
 ## 3.0.0
 
 - requires Java 8 runtime (therefore the major version change)
+- publishes to MavenCentral only, not Bintray (as Bintray has been shut down)
 - added missing device catgeories to _jpos/res/jcl.dtd_ to be UnifiedPOS 1.14 compliant (solved [#3](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/3), contribution by [mjpcger](https://github.com/mjpcger))
 - switched to MavenCentral publishing after Bintray's JCenter has been shut down (solved [#5](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/5))
 - added this change log
