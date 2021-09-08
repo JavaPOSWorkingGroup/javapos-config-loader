@@ -36,11 +36,11 @@ version='3.0.0-SNAPSHOT'
 
 repositories {
 	mavenCentral()
-	if (project.plugins.hasPlugin('maven')) 
-	{ // evaluates only at development environment, not at travis-ci.org
+	
+    if (!System.getenv('CI')) 
+    { // evaluates only at development environment, not at CI
 	    maven {
-	        url "file:$localTestFileRepositoryDir"
-	        // localTestFileRepositoryDir must be defined in gradle.properties
+	        url "file:$localMavenRepo" // must be defined in gradle.properties
 	    }
 	}
 }
