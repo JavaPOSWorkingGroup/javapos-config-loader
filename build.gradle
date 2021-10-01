@@ -36,12 +36,9 @@ version='3.0.0-SNAPSHOT'
 repositories {
 	mavenCentral()
 
-    if (!System.getenv('CI') && project.hasProperty('localMavenRepo')) 
-    { // evaluates only at development environment, not at CI
-	    maven {
-	        url "file:$localMavenRepo" // must be defined in gradle.properties
-	    }
-	}
+    if (!System.getenv('CI')) {
+        mavenLocal()
+    }
 }
 
 def testResourceDir = file("${System.properties['java.io.tmpdir']}/javapos-config-loader-test/resources")
