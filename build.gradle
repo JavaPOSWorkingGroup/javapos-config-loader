@@ -89,6 +89,9 @@ jar {
 
 sourcesJar {
 	manifest = javaposManifest
+    from ('CHANGELOG.md') {
+        into 'META-INF'
+    }
 }
 
 
