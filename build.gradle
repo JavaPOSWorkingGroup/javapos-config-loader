@@ -26,7 +26,7 @@ wrapper {
 
 def artifactName = 'javapos-config-loader'
 group='org.javapos'
-version='3.0.0-SNAPSHOT'
+version='3.0.0'
 
 
 ///////////////////////////////////////////////////////////////////////////////
