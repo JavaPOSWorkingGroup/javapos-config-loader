@@ -23,6 +23,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
            arguments: |
+             -Pgithub.event.action=${{github.event.action}}
              --scan
              dependencyReport
              build
@@ -33,6 +34,7 @@ jobs:
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
         with: 
           arguments: |
+             -Pgithub.event.action=${{github.event.action}}
              --scan
              signMavenJavaPublication
       - name: Store Dependency Report
