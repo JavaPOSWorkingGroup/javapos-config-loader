@@ -57,17 +57,26 @@
     <!-- All xsd:simpleType definitions -->        
     <xsd:simpleType name="JposDevCatType">
         <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Belt"/>
+            <xsd:enumeration value="BillAcceptor"/>
+            <xsd:enumeration value="BillDispenser"/>
             <xsd:enumeration value="Biometrics"/>        
             <xsd:enumeration value="BumpBar"/>
             <xsd:enumeration value="CashChanger"/>
             <xsd:enumeration value="CashDrawer"/>
             <xsd:enumeration value="CheckScanner"/>
             <xsd:enumeration value="CAT"/>
+            <xsd:enumeration value="CoinAcceptor"/>
             <xsd:enumeration value="CoinDispenser"/>
             <xsd:enumeration value="ElectronicJournal"/>
+            <xsd:enumeration value="ElectronicValueRW"/>
             <xsd:enumeration value="FiscalPrinter"/>
+            <xsd:enumeration value="Gate"/>            
             <xsd:enumeration value="HardTotals"/>            
+            <xsd:enumeration value="ImageScanner"/>
+            <xsd:enumeration value="ItemDispenser"/>
             <xsd:enumeration value="Keylock"/>
+            <xsd:enumeration value="Lights"/>
             <xsd:enumeration value="LineDisplay"/>
             <xsd:enumeration value="MICR"/>
             <xsd:enumeration value="MotionSensor"/>                        
@@ -78,6 +87,7 @@
             <xsd:enumeration value="POSPower"/>                        
             <xsd:enumeration value="POSPrinter"/>
             <xsd:enumeration value="RemoteOrderDisplay"/>
+            <xsd:enumeration value="RFIDScanner"/>
             <xsd:enumeration value="Scale"/>
             <xsd:enumeration value="Scanner"/>
             <xsd:enumeration value="SignatureCapture"/>
@@ -110,6 +120,11 @@
             <xsd:enumeration value="1.8"/> 
             <xsd:enumeration value="1.9"/>             
             <xsd:enumeration value="1.10"/>                         
+            <xsd:enumeration value="1.11"/>
+            <xsd:enumeration value="1.12"/>
+            <xsd:enumeration value="1.13"/>
+            <xsd:enumeration value="1.14"/>
+            <xsd:enumeration value="1.15"/>
         </xsd:restriction>
     </xsd:simpleType>
 </xsd:schema>
