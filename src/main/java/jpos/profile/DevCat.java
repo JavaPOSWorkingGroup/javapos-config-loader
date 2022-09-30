@@ -30,7 +30,7 @@ public interface DevCat
 	//
 
 	/** Indicates the version of JavaPOS that these DevCat apply to */
-	public static final String JPOS_VERSION_STRING = "1.5";
+	public static final String JPOS_VERSION_STRING = "1.15";
 
 	//-------------------------------------------------------------------------
 	// Public methods
@@ -49,12 +49,27 @@ public interface DevCat
 	// Inner interfaces
 	//
 
+	/** Defines the DevCat for Belt */
+	public interface Belt extends DevCat {}
+
+	/** Defines the DevCat for BillAcceptor */
+	public interface BillAcceptor extends DevCat {}
+
+	/** Defines the DevCat for BillDispenser */
+	public interface BillDispenser extends DevCat {}
+	
+	/** Defines the DevCat for Biometrics */
+	public interface Biometrics extends DevCat {} 
+
 	/**
 	 * Defines the DevCat for BumpBar
 	 * @since 1.3 (SF 2K meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
 	public interface BumpBar extends DevCat {}
+ 
+	/** Defines the DevCat for CashChanger */
+	public interface CashChanger extends DevCat {}
 
 	/**
 	 * Defines the DevCat for POSPrinter
@@ -70,12 +85,24 @@ public interface DevCat
 	 */
 	public interface CAT extends DevCat {}
 
+	/** Defines the DevCat for CheckScanner */
+	public interface CheckScanner extends DevCat {}
+
+	/** Defines the DevCat for CoinAcceptor */
+	public interface CoinAcceptor extends DevCat {}
+
 	/**
 	 * Defines the DevCat for CoinDispenser
 	 * @since 1.3 (SF 2K meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
 	public interface CoinDispenser extends DevCat {}
+
+	/** Defines the DevCat for ElectronicJournal */
+	public interface ElectronicJournal extends DevCat {}
+
+	/** Defines the DevCat for ElectronicValueRW */
+	public interface ElectronicValueRW extends DevCat {}
 
 	/**
 	 * Defines the DevCat for FiscalPrinter
@@ -84,6 +111,9 @@ public interface DevCat
 	 */
 	public interface FiscalPrinter extends DevCat {}
 
+	/** Defines the DevCat for Gate */
+	public interface Gate extends DevCat {} 
+
 	/**
 	 * Defines the DevCat for HardTotals
 	 * @since 1.3 (SF 2K meeting)
@@ -91,12 +121,21 @@ public interface DevCat
 	 */
 	public interface HardTotals extends DevCat {}
 
+	/** Defines the DevCat for ImageScanner */
+	public interface ImageScanner extends DevCat {}
+
+	/** Defines the DevCat for ItemDispenser */
+	public interface ItemDispenser extends DevCat {}
+
 	/**
 	 * Defines the DevCat for Keylock
 	 * @since 1.3 (SF 2K meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
 	public interface Keylock extends DevCat {}
+
+	/** Defines the DevCat for Lights */
+	public interface Lights extends DevCat {}
 
 	/**
 	 * Defines the DevCat for POSPrinter
@@ -112,6 +151,9 @@ public interface DevCat
 	 */
 	public interface MICR extends DevCat {}
 
+	/** Defines the DevCat for MotionSensor */
+	public interface MotionSensor extends DevCat {} 
+
 	/**
 	 * Defines the DevCat for MSR
 	 * @since 1.3 (SF 2K meeting)
@@ -125,6 +167,9 @@ public interface DevCat
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
 	public interface Pinpad extends DevCat {}
+
+	/** Defines the DevCat for PointCardRW */
+	public interface PointCardRW extends DevCat {}
 
 	/**
 	 * Defines the DevCat for POSKeyboard
@@ -154,6 +199,12 @@ public interface DevCat
 	 */
 	public interface RemoteOrderDisplay extends DevCat {}
 
+	/** Defines the DevCat for RFIDScanner */
+	public interface RFIDScanner extends DevCat {}
+
+	/** Defines the DevCat for Scale */
+	public interface Scale extends DevCat {}
+
 	/**
 	 * Defines the DevCat for Scanner
 	 * @since 1.3 (SF 2K meeting)
@@ -167,6 +218,9 @@ public interface DevCat
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
 	public interface SignatureCapture extends DevCat {}
+
+	/** Defines the DevCat for SmartCardRW */
+	public interface SmartCardRW extends DevCat {}
 
 	/**
 	 * Defines the DevCat for ToneIndicator
