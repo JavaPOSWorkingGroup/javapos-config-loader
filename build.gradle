@@ -27,7 +27,7 @@ wrapper {
 
 def artifactName = 'javapos-config-loader'
 group='org.javapos'
-version='3.0.0'
+version='3.1.0-SNAPSHOT' // if version is changed, first add "-SNAPSHOT" ot test publishing to MacenCentral'S snapshot repo
 
 
 ///////////////////////////////////////////////////////////////////////////////
