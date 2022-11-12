@@ -3,9 +3,9 @@
 ## 3.1.0
 
 - Added missing devices to XML schema/DTD files and as DevCat interfaces (contribution by [@dougberkland](https://github.com/dougberkland))
-    - jcl.xsd: added devices and versions for 1.11 through 1.15
-    - jcl_profile.dtd: added new devices through 1.15
-    - DevCat.java: added missing devices up to 1.15
+    - jcl.xsd: added devices and versions for UnifiedPOS 1.11 through 1.15
+    - jcl_profile.dtd: added new devices through UnifiedPOS 1.15
+    - DevCat.java: added missing devices up to UnifiedPOS 1.15
 
 ## 3.0.0
 
