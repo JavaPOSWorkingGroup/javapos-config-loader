@@ -27,7 +27,7 @@ wrapper {
 
 def artifactName = 'javapos-config-loader'
 group='org.javapos'
-version='3.1.0-SNAPSHOT' // if version is changed, first add "-SNAPSHOT" ot test publishing to MacenCentral'S snapshot repo
+version='3.1.0' // if version is changed, first add "-SNAPSHOT" ot test publishing to MacenCentral's Snapshot repo
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ repositories {
     // for resolving snapshots from MavenCentral if not going for a real release
     if (!isReleaseRun()) 
     {
-   		logger.warn("WARN: Seems not to be a release, so Maven Central snapshot repository is fetched!");
+   		logger.warn("WARN: Seems not to be a release, so Maven Central SNAPSHOT repository is fetched!");
 	    maven {
 	        url 'https://oss.sonatype.org/content/repositories/snapshots'
 	    }
