@@ -2,7 +2,7 @@
 
 ## 3.1.0
 
-- Added missing devices to XML schema/DTD files and as DevCat interfaces (contribution by @dougberkland)
+- Added missing devices to XML schema/DTD files and as DevCat interfaces (contribution by [@dougberkland](https://github.com/dougberkland))
     - jcl.xsd: added devices and versions for 1.11 through 1.15
     - jcl_profile.dtd: added new devices through 1.15
     - DevCat.java: added missing devices up to 1.15
@@ -11,7 +11,7 @@
 
 - requires Java 8 runtime (therefore the major version change)
 - publishes to MavenCentral only, not Bintray (as Bintray has been shut down)
-- added missing device catgeories to _jpos/res/jcl.dtd_ to be UnifiedPOS 1.14 compliant (solved [#3](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/3), contribution by [mjpcger](https://github.com/mjpcger))
+- added missing device catgeories to _jpos/res/jcl.dtd_ to be UnifiedPOS 1.14 compliant (solved [#3](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/3), contribution by [@mjpcger](https://github.com/mjpcger))
 - switched to MavenCentral publishing after Bintray's JCenter has been shut down (solved [#5](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/5))
 - added this change log
 
