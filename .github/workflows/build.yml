@@ -19,9 +19,6 @@ jobs:
            java-version: 8
            java-package: jdk
            cache: 'gradle'
-      - id: get_version
-        name: Get Version
-        uses: battila7/get-version-action@v2
       - name: Build
         uses: gradle/gradle-build-action@v2
         with:
