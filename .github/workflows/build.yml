@@ -1,6 +1,7 @@
 name: Build On Push
 
-on: [push]
+on: 
+   push: [branches]
 
 jobs:
   build:
