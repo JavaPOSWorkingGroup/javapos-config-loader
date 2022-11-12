@@ -8,3 +8,19 @@ if (startParameter.searchUpwards && isDevHost)
 // comment this out if you want to use binary dependencies
 	if (file('../javapos-contracts').exists()) 		includeBuild '../javapos-contracts'
 }
+
+// for enabling Gradle scan at GitHub Actions
+plugins {
+    id("com.gradle.enterprise") version("3.9")
+}
+
+gradleEnterprise {
+    if (System.getenv("CI") != null) {
+        buildScan {
+            publishAlways()
+            termsOfServiceUrl = "https://gradle.com/terms-of-service"
+            termsOfServiceAgree = "yes"
+        }
+    }
+}
+
