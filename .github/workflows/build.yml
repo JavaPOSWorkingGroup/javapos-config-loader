@@ -1,6 +1,6 @@
-name: Build Main
+name: Build On Push
 
-on: push
+on: [push]
 
 jobs:
   build:
