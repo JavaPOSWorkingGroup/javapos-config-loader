@@ -1,5 +1,5 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/JavaPOSWorkingGroup/javapos-config-loader)
-[![Build Status](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/workflows/Build/badge.svg)](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions)
+[![Build Status](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions/workflows/build.yml/badge.svg)](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.javapos/javapos-config-loader/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.javapos/javapos-config-loader/)
 
 JavaPOS Configuration Loader 
