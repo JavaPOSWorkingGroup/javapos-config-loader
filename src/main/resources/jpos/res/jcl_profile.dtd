@@ -30,13 +30,44 @@
 <!ATTLIST JposEntryInfo
           name CDATA #REQUIRED 
           jposVersion CDATA #REQUIRED
-          deviceCategory ( Belt | BillAcceptor | BillDispenser | Biometrics | BumpBar | 
-                           CashChanger | CashDrawer | CheckScanner | CAT | CoinAcceptor | 
-                           CoinDispenser | ElectronicJournal | ElectronicValueRW | FiscalPrinter | 
-                           Gate | HardTotals | ImageScanner | ItemDispenser | Keylock | Lights | 
-                           LineDisplay | MICR | MotionSensor | MSR | PINPad | PointCardRW | 
-                           POSKeyboard | POSPower | POSPrinter | RemoteOrderDisplay | RFIDScanner | 
-                           Scale | Scanner | SignatureCapture | SmartCardRW | ToneIndicator  ) #REQUIRED
+          deviceCategory ( 
+              Belt | 
+              BillAcceptor | 
+              BillDispenser | 
+              Biometrics | 
+              BumpBar | 
+              CAT | 
+              CashChanger | 
+              CashDrawer | 
+              CheckScanner | 
+              CoinAcceptor | 
+              CoinDispenser | 
+              ElectronicJournal | 
+              ElectronicValueRW | 
+              FiscalPrinter | 
+              Gate | 
+              HardTotals | 
+              ImageScanner | 
+              ItemDispenser | 
+              Keylock | 
+              Lights | 
+              LineDisplay | 
+              MICR | 
+              MSR | 
+              MotionSensor | 
+              PINPad | 
+              POSKeyboard | 
+              POSPower | 
+              POSPrinter | 
+              PointCardRW | 
+              RFIDScanner | 
+              RemoteOrderDisplay | 
+              Scale | 
+              Scanner | 
+              SignatureCapture | 
+              SmartCardRW | 
+              ToneIndicator
+          ) #REQUIRED
           imageFile CDATA #IMPLIED>
 
 <!ATTLIST PropInfo
