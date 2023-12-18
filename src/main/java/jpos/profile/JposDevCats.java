@@ -63,6 +63,8 @@ public class JposDevCats
 									 JposDevCats.CoinAcceptor.getInstance();
 	public static final DevCat COINDISPENSER_DEVCAT = 
 									 JposDevCats.CoinDispenser.getInstance();
+	public static final DevCat DEVICEMONITOR_DEVCAT = 
+									 JposDevCats.DeviceMonitor.getInstance();
 	public static final DevCat ELECTRONICJOURNAL_DEVCAT = 
 									 JposDevCats.ElectronicJournal.getInstance();
 	public static final DevCat ELECTRONICVALUERW_DEVCAT = 
@@ -71,10 +73,16 @@ public class JposDevCats
 									 JposDevCats.FiscalPrinter.getInstance();
 	public static final DevCat GATE_DEVCAT = 
 									 JposDevCats.Gate.getInstance();
+	public static final DevCat GESTURECONTROL_DEVCAT = 
+									 JposDevCats.GestureControl.getInstance();
+	public static final DevCat GRAPHICDISPLAY_DEVCAT = 
+									 JposDevCats.GraphicDisplay.getInstance();
 	public static final DevCat HARDTOTALS_DEVCAT = 
 									 JposDevCats.HardTotals.getInstance();
 	public static final DevCat IMAGESCANNER_DEVCAT = 
 									 JposDevCats.ImageScanner.getInstance();
+	public static final DevCat INDIVIDUALRECOGNITION_DEVCAT = 
+									 JposDevCats.IndividualRecognition.getInstance();
 	public static final DevCat ITEMDISPENSER_DEVCAT = 
 									 JposDevCats.ItemDispenser.getInstance();
 	public static final DevCat KEYLOCK_DEVCAT = 
@@ -111,8 +119,18 @@ public class JposDevCats
 									 JposDevCats.SignatureCapture.getInstance();
 	public static final DevCat SMARTCARDRW_DEVCAT = 
 									 JposDevCats.SmartCardRW.getInstance();
+	public static final DevCat SOUNDPLAYER_DEVCAT = 
+									 JposDevCats.SoundPlayer.getInstance();
+	public static final DevCat SOUNDRECORDER_DEVCAT = 
+									 JposDevCats.SoundRecorder.getInstance();
+	public static final DevCat SPEECHSYNTHESIS_DEVCAT = 
+									 JposDevCats.SpeechSynthesis.getInstance();
 	public static final DevCat TONEINDICATOR_DEVCAT = 
 									 JposDevCats.ToneIndicator.getInstance();
+	public static final DevCat VIDEOCAPTURE_DEVCAT = 
+									 JposDevCats.VideoCapture.getInstance();
+	public static final DevCat VOICERECOGNITION_DEVCAT = 
+									 JposDevCats.VoiceRecognition.getInstance();
 
 	//-------------------------------------------------------------------------
 	// Class constants
@@ -131,12 +149,16 @@ public class JposDevCats
 		CHECKSCANNER_DEVCAT,
 		COINACCEPTOR_DEVCAT,
 		COINDISPENSER_DEVCAT,
+		DEVICEMONITOR_DEVCAT,
 		ELECTRONICJOURNAL_DEVCAT,
 		ELECTRONICVALUERW_DEVCAT,
 		FISCALPRINTER_DEVCAT,
 		GATE_DEVCAT,
+		GESTURECONTROL_DEVCAT,
+		GRAPHICDISPLAY_DEVCAT,
 		HARDTOTALS_DEVCAT,
 		IMAGESCANNER_DEVCAT,
+		INDIVIDUALRECOGNITION_DEVCAT,
 		ITEMDISPENSER_DEVCAT,
 		KEYLOCK_DEVCAT,
 		LIGHTS_DEVCAT,
@@ -155,7 +177,12 @@ public class JposDevCats
 		SCANNER_DEVCAT,
 		SIGNATURECAPTURE_DEVCAT,
 		SMARTCARDRW_DEVCAT,
-		TONEINDICATOR_DEVCAT
+		SOUNDPLAYER_DEVCAT,
+		SOUNDRECORDER_DEVCAT,
+		SPEECHSYNTHESIS_DEVCAT,
+		TONEINDICATOR_DEVCAT,
+		VIDEOCAPTURE_DEVCAT,
+		VOICERECOGNITION_DEVCAT
 	};
 
 	//-------------------------------------------------------------------------
@@ -175,12 +202,16 @@ public class JposDevCats
 		DEVCAT_TABLE.put( CHECKSCANNER_DEVCAT.toString(), CHECKSCANNER_DEVCAT);
 		DEVCAT_TABLE.put( COINACCEPTOR_DEVCAT.toString(), COINACCEPTOR_DEVCAT);
 		DEVCAT_TABLE.put( COINDISPENSER_DEVCAT.toString(), COINDISPENSER_DEVCAT);
+		DEVCAT_TABLE.put( DEVICEMONITOR_DEVCAT.toString(), DEVICEMONITOR_DEVCAT);
 		DEVCAT_TABLE.put( ELECTRONICJOURNAL_DEVCAT.toString(), ELECTRONICJOURNAL_DEVCAT);
 		DEVCAT_TABLE.put( ELECTRONICVALUERW_DEVCAT.toString(), ELECTRONICVALUERW_DEVCAT);
 		DEVCAT_TABLE.put( FISCALPRINTER_DEVCAT.toString(), FISCALPRINTER_DEVCAT);
 		DEVCAT_TABLE.put( GATE_DEVCAT.toString(), GATE_DEVCAT);
+		DEVCAT_TABLE.put( GESTURECONTROL_DEVCAT.toString(), GESTURECONTROL_DEVCAT);
+		DEVCAT_TABLE.put( GRAPHICDISPLAY_DEVCAT.toString(), GRAPHICDISPLAY_DEVCAT);
 		DEVCAT_TABLE.put( HARDTOTALS_DEVCAT.toString(), HARDTOTALS_DEVCAT);
 		DEVCAT_TABLE.put( IMAGESCANNER_DEVCAT.toString(), IMAGESCANNER_DEVCAT);
+		DEVCAT_TABLE.put( INDIVIDUALRECOGNITION_DEVCAT.toString(), INDIVIDUALRECOGNITION_DEVCAT);
 		DEVCAT_TABLE.put( ITEMDISPENSER_DEVCAT.toString(), ITEMDISPENSER_DEVCAT);
 		DEVCAT_TABLE.put( KEYLOCK_DEVCAT.toString(), KEYLOCK_DEVCAT);
 		DEVCAT_TABLE.put( LIGHTS_DEVCAT.toString(), LIGHTS_DEVCAT);
@@ -199,7 +230,12 @@ public class JposDevCats
 		DEVCAT_TABLE.put( SCANNER_DEVCAT.toString(), SCANNER_DEVCAT);
 		DEVCAT_TABLE.put( SIGNATURECAPTURE_DEVCAT.toString(), SIGNATURECAPTURE_DEVCAT);
 		DEVCAT_TABLE.put( SMARTCARDRW_DEVCAT.toString(), SMARTCARDRW_DEVCAT);
+		DEVCAT_TABLE.put( SOUNDPLAYER_DEVCAT.toString(), SOUNDPLAYER_DEVCAT);
+		DEVCAT_TABLE.put( SOUNDRECORDER_DEVCAT.toString(), SOUNDRECORDER_DEVCAT);
+		DEVCAT_TABLE.put( SPEECHSYNTHESIS_DEVCAT.toString(), SPEECHSYNTHESIS_DEVCAT);
 		DEVCAT_TABLE.put( TONEINDICATOR_DEVCAT.toString(), TONEINDICATOR_DEVCAT);
+		DEVCAT_TABLE.put( VIDEOCAPTURE_DEVCAT.toString(), VIDEOCAPTURE_DEVCAT);
+		DEVCAT_TABLE.put( VOICERECOGNITION_DEVCAT.toString(), VOICERECOGNITION_DEVCAT);
 	}
 	
 	//-------------------------------------------------------------------------
@@ -806,6 +842,52 @@ public class JposDevCats
 	}
 	
 	/**
+	 * Defines the DevCat for DeviceMonitor
+	 */
+	public static class DeviceMonitor extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		DeviceMonitor() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.DeviceMonitor();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "DeviceMonitor"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitDeviceMonitor( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
 	 * Defines the DevCat for ElectronicJournal
 	 */
 	public static class ElectronicJournal extends AbstractDevCat implements DevCat
@@ -990,6 +1072,98 @@ public class JposDevCats
 	}
 	
 	/**
+	 * Defines the DevCat for GestureControl
+	 */
+	public static class GestureControl extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		GestureControl() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.GestureControl();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "GestureControl"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitGestureControl( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for GraphicDisplay
+	 */
+	public static class GraphicDisplay extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		GraphicDisplay() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.GraphicDisplay();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "GraphicDisplay"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitGraphicDisplay( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
 	 * Defines the DevCat for HardTotals
 	 */
 	public static class HardTotals extends AbstractDevCat implements DevCat
@@ -1073,6 +1247,52 @@ public class JposDevCats
 		 */
 		public void accept( DevCatVisitor visitor ) 
 		{ visitor.visitImageScanner( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for IndividualRecognition
+	 */
+	public static class IndividualRecognition extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		IndividualRecognition() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.IndividualRecognition();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "IndividualRecognition"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitIndividualRecognition( this ); }
 		
 		//---------------------------------------------------------------------
 		// Class instance
@@ -1910,6 +2130,144 @@ public class JposDevCats
 	}
 	
 	/**
+	 * Defines the DevCat for SoundPlayer
+	 */
+	public static class SoundPlayer extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		SoundPlayer() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.SoundPlayer();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "SoundPlayer"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitSoundPlayer( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for SoundRecorder
+	 */
+	public static class SoundRecorder extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		SoundRecorder() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.SoundRecorder();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "SoundRecorder"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitSoundRecorder( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for SpeechSynthesis
+	 */
+	public static class SpeechSynthesis extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		SpeechSynthesis() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.SpeechSynthesis();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "SpeechSynthesis"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitSpeechSynthesis( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
 	 * Defines the DevCat for ToneIndicator
 	 */
 	public static class ToneIndicator extends AbstractDevCat implements DevCat
@@ -1947,6 +2305,98 @@ public class JposDevCats
 		 */
 		public void accept( DevCatVisitor visitor ) 
 		{ visitor.visitToneIndicator( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for VideoCapture
+	 */
+	public static class VideoCapture extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		VideoCapture() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.VideoCapture();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "VideoCapture"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitVideoCapture( this ); }
+		
+		//---------------------------------------------------------------------
+		// Class instance
+		//
+		
+		private static DevCat instance = null;
+	}
+	
+	/**
+	 * Defines the DevCat for VoiceRecognition
+	 */
+	public static class VoiceRecognition extends AbstractDevCat implements DevCat
+	{		
+		//---------------------------------------------------------------------
+		// Ctor(s)
+		//
+		
+		/** Make ctor package to avoid ctor */
+		VoiceRecognition() {}
+		
+		//---------------------------------------------------------------------
+		// Class methods
+		//
+		
+		/** @return the unique instance of this class (create if necessary) */
+		public static DevCat getInstance()
+		{
+			if( instance == null )
+				instance = new JposDevCats.VoiceRecognition();
+		
+			return instance;
+		}
+		
+		//---------------------------------------------------------------------
+		// Public methods
+		//
+		
+		/** @return the String representation of this DevCat */
+		public String toString() { return "VoiceRecognition"; }
+		
+		/**
+		 * Accepts a DevCat Visitor object
+		 * @param visitor the DevCat Visitor object
+		 */
+		public void accept( DevCatVisitor visitor ) 
+		{ visitor.visitVoiceRecognition( this ); }
 		
 		//---------------------------------------------------------------------
 		// Class instance

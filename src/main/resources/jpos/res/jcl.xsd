@@ -69,12 +69,16 @@
             <xsd:enumeration value="CheckScanner"/>
             <xsd:enumeration value="CoinAcceptor"/>
             <xsd:enumeration value="CoinDispenser"/>
+            <xsd:enumeration value="DeviceMonitor"/>
             <xsd:enumeration value="ElectronicJournal"/>
             <xsd:enumeration value="ElectronicValueRW"/>
             <xsd:enumeration value="FiscalPrinter"/>
             <xsd:enumeration value="Gate"/>
+            <xsd:enumeration value="GestureControl"/>
+            <xsd:enumeration value="GraphicDisplay"/>
             <xsd:enumeration value="HardTotals"/>
             <xsd:enumeration value="ImageScanner"/>
+            <xsd:enumeration value="IndividualRecognition"/>
             <xsd:enumeration value="ItemDispenser"/>
             <xsd:enumeration value="Keylock"/>
             <xsd:enumeration value="Lights"/>
@@ -93,7 +97,12 @@
             <xsd:enumeration value="Scanner"/>
             <xsd:enumeration value="SignatureCapture"/>
             <xsd:enumeration value="SmartCardRW"/>
+            <xsd:enumeration value="SoundPlayer"/>
+            <xsd:enumeration value="SoundRecorder"/>
+            <xsd:enumeration value="SpeechSynthesis"/>
             <xsd:enumeration value="ToneIndicator"/>
+            <xsd:enumeration value="VideoCapture"/>
+            <xsd:enumeration value="VoiceRecognition"/>
         </xsd:restriction>
     </xsd:simpleType>
     

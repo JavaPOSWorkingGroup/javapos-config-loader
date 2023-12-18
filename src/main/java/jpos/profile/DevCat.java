@@ -83,6 +83,9 @@ public interface DevCat
 	/** Defines the DevCat for CoinDispenser */
 	public interface CoinDispenser extends DevCat {}
 	
+	/** Defines the DevCat for DeviceMonitor */
+	public interface DeviceMonitor extends DevCat {}
+	
 	/** Defines the DevCat for ElectronicJournal */
 	public interface ElectronicJournal extends DevCat {}
 	
@@ -95,11 +98,20 @@ public interface DevCat
 	/** Defines the DevCat for Gate */
 	public interface Gate extends DevCat {}
 	
+	/** Defines the DevCat for GestureControl */
+	public interface GestureControl extends DevCat {}
+	
+	/** Defines the DevCat for GraphicDisplay */
+	public interface GraphicDisplay extends DevCat {}
+	
 	/** Defines the DevCat for HardTotals */
 	public interface HardTotals extends DevCat {}
 	
 	/** Defines the DevCat for ImageScanner */
 	public interface ImageScanner extends DevCat {}
+	
+	/** Defines the DevCat for IndividualRecognition */
+	public interface IndividualRecognition extends DevCat {}
 	
 	/** Defines the DevCat for ItemDispenser */
 	public interface ItemDispenser extends DevCat {}
@@ -155,7 +167,22 @@ public interface DevCat
 	/** Defines the DevCat for SmartCardRW */
 	public interface SmartCardRW extends DevCat {}
 	
+	/** Defines the DevCat for SoundPlayer */
+	public interface SoundPlayer extends DevCat {}
+	
+	/** Defines the DevCat for SoundRecorder */
+	public interface SoundRecorder extends DevCat {}
+	
+	/** Defines the DevCat for SpeechSynthesis */
+	public interface SpeechSynthesis extends DevCat {}
+	
 	/** Defines the DevCat for ToneIndicator */
 	public interface ToneIndicator extends DevCat {}
+	
+	/** Defines the DevCat for VideoCapture */
+	public interface VideoCapture extends DevCat {}
+	
+	/** Defines the DevCat for VoiceRecognition */
+	public interface VoiceRecognition extends DevCat {}
 	
 }

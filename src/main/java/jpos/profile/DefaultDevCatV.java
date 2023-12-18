@@ -98,6 +98,12 @@ public class DefaultDevCatV implements DevCatVisitor
 	public void visitCoinDispenser( DevCat devCat ) {}
 	
 	/**
+	 * Visits a DeviceMonitor DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitDeviceMonitor( DevCat devCat ) {}
+	
+	/**
 	 * Visits a ElectronicJournal DevCat
 	 * @param devCat the DevCat
 	 */
@@ -122,6 +128,18 @@ public class DefaultDevCatV implements DevCatVisitor
 	public void visitGate( DevCat devCat ) {}
 	
 	/**
+	 * Visits a GestureControl DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitGestureControl( DevCat devCat ) {}
+	
+	/**
+	 * Visits a GraphicDisplay DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitGraphicDisplay( DevCat devCat ) {}
+	
+	/**
 	 * Visits a HardTotals DevCat
 	 * @param devCat the DevCat
 	 */
@@ -132,6 +150,12 @@ public class DefaultDevCatV implements DevCatVisitor
 	 * @param devCat the DevCat
 	 */
 	public void visitImageScanner( DevCat devCat ) {}
+	
+	/**
+	 * Visits a IndividualRecognition DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitIndividualRecognition( DevCat devCat ) {}
 	
 	/**
 	 * Visits a ItemDispenser DevCat
@@ -242,9 +266,39 @@ public class DefaultDevCatV implements DevCatVisitor
 	public void visitSmartCardRW( DevCat devCat ) {}
 	
 	/**
+	 * Visits a SoundPlayer DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitSoundPlayer( DevCat devCat ) {}
+	
+	/**
+	 * Visits a SoundRecorder DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitSoundRecorder( DevCat devCat ) {}
+	
+	/**
+	 * Visits a SpeechSynthesis DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitSpeechSynthesis( DevCat devCat ) {}
+	
+	/**
 	 * Visits a ToneIndicator DevCat
 	 * @param devCat the DevCat
 	 */
 	public void visitToneIndicator( DevCat devCat ) {}
+	
+	/**
+	 * Visits a VideoCapture DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitVideoCapture( DevCat devCat ) {}
+	
+	/**
+	 * Visits a VoiceRecognition DevCat
+	 * @param devCat the DevCat
+	 */
+	public void visitVoiceRecognition( DevCat devCat ) {}
 	
 }
