@@ -27,7 +27,7 @@ package jpos.profile;
 public interface DevCatVisitor
 {
 	//-------------------------------------------------------------------------
-	// Public methodsW
+	// Public methods
 	//
 
 	/**

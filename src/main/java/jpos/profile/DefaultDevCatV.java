@@ -25,7 +25,7 @@ package jpos.profile;
  *         originally created by E. Michael Maximilien (maxim@us.ibm.com) 
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class DefaultDevCatV extends Object implements DevCatVisitor
+public class DefaultDevCatV implements DevCatVisitor
 {
 	//-------------------------------------------------------------------------
 	// Public methods
