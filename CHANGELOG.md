@@ -4,7 +4,7 @@
 
 - added profile classes for categories new in UnifiedPOS 1.16, i.e. DeviceMonitor, GestureControl, GraphicDisplay, IndividualRecognition,
   SoundPlayer, SoundRecorder, SpeechSynthesis, VideoCapture, VoiceRecognition
-- switched from `Hashtable` to `HashMap` implementation for optimization reasons
+- switched from `Hashtable` to `HashMap` at profile implementation for optimization reasons
 
 ## 3.1.0
 
