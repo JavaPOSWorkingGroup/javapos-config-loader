@@ -32,7 +32,7 @@ public class JposDevCats
 	// Private class constants
 	//
 
-	private static final Hashtable DEVCAT_TABLE = new Hashtable();
+	private static final Map<String, DevCat> DEVCAT_TABLE = new HashMap<>();
 
 	//-------------------------------------------------------------------------
 	// Class constants

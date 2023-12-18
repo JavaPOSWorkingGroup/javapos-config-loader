@@ -1,5 +1,9 @@
 # Change Log for javapos-config-loader
 
+## 3.2.0
+
+- switched from `Hashtable` to `HashMap` implementation for optimization reasons
+
 ## 3.1.0
 
 - Added missing devices to XML schema/DTD files and as DevCat interfaces (contribution by [@dougberkland](https://github.com/dougberkland))
