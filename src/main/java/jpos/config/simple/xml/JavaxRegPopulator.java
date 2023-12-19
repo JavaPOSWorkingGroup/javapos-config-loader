@@ -41,7 +41,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.util.*;
 
@@ -107,14 +106,9 @@ public class JavaxRegPopulator
     @Override
     public void load()
     {
-        try
+        try( InputStream is = isPopulatorFileDefined() ? new FileInputStream( DEFAULT_XML_FILE_NAME ) : getPopulatorFileIS() )
         {
-            //<temp>NEED TO REPLACE WITH A METHOD THAT FIGURES OUT FILE NAME</temp>
-            //<temp>needed to set file name</temp>
-            InputStream is = getPopulatorFileIS();
-            //<temp/>
-            load( getPopulatorFileName() );
-            //<temp/>
+            load( is );
         }
         catch( Exception e )
         {
@@ -127,6 +121,20 @@ public class JavaxRegPopulator
     @Override
     public void load( String fileName )
     {
+        try( InputStream is = new File( fileName ).exists() ? new FileInputStream( fileName ) : findFileInClasspath( fileName ) )
+        {
+            load( is );
+        }
+        catch( Exception e )
+        {
+            tracer.println( "Error while loading populator file Exception.message: " +
+                    e.getMessage() );
+            lastLoadException = e;
+        }
+    }
+
+    private void load( InputStream inputStream )
+    {
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         JavaxSaxHandler saxHandler = new JavaxSaxHandler();
 
@@ -134,15 +142,10 @@ public class JavaxRegPopulator
         parserFactory.setValidating( true );
         jposEntryList.clear();
         try
-        { parserFactory.newSAXParser().parse( new File( fileName ), saxHandler ); }
+        { parserFactory.newSAXParser().parse( inputStream, saxHandler ); }
         catch (SAXException e)
         {
             tracer.println( "SAX Parser error, msg=" + e.getMessage() );
-            lastLoadException = e;
-        }
-        catch ( FileNotFoundException e )
-        {
-            tracer.println( "File not found for " + fileName );
             lastLoadException = e;
         }
         catch ( IOException e )
@@ -309,12 +312,13 @@ public class JavaxRegPopulator
         if( prop.getName().equals( propName ) )
         {
             String value = prop.getValueAsString();
-
+            /* Change /* to //* to generate implicit attribute values only if value is not empty.
             if( value.length() > 0 ||
                     ( !JposEntry.PRODUCT_URL_PROP_NAME.equals(propName) &&
                             !JposEntry.VENDOR_URL_PROP_NAME.equals(propName)
                     )
             )
+                //*/
                 elem.setAttribute( attrName, prop.getValueAsString() );
             return false;
         }
@@ -341,7 +345,7 @@ public class JavaxRegPopulator
     }
 
     private Tracer tracer = TracerFactory.getInstance().createTracer( "JavaxRegPopulator" );
-    private static final String JAVAX_REG_POPULATOR_NAME_STRING = "JCL XML Entries Populator";
+    private static final String JAVAX_REG_POPULATOR_NAME_STRING = "JAVAX XML Entries Populator";
 
     private List jposEntryList = new LinkedList();
 
