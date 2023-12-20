@@ -26,13 +26,12 @@ import jpos.util.JposEntryUtility;
 import jpos.util.tracing.Tracer;
 import jpos.util.tracing.TracerFactory;
 import org.w3c.dom.*;
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -78,6 +77,35 @@ public class JavaxRegPopulator
     //
 
     @Override
+    public String getClassName() { return JavaxRegPopulator.class.getName(); }
+
+    @Override
+    public URL getEntriesURL()
+    {
+        URL url = null;
+
+        if( getPopulatorFileURL() != null &&
+                !getPopulatorFileURL().equals( "" ) )
+            try
+            { url =  new URL( getPopulatorFileURL() ); }
+            catch( Exception e )
+            {
+                tracer.println( "getEntriesURL: Exception.message=" +
+                        e.getMessage() );
+            }
+        else
+            url = createURLFromFile( new File( getPopulatorFileName() ) );
+
+        //<temp>
+        tracer.println( "getPopulatorFileURL()=" + getPopulatorFileURL() );
+        tracer.println( "getPopulatorFileName()=" + getPopulatorFileName() );
+        //</temp>
+
+        return url;
+    }
+
+
+    @Override
     public void save( Enumeration entries )
             throws Exception
     {
@@ -99,9 +127,6 @@ public class JavaxRegPopulator
         catch ( Exception e )
         { throw e; }
     }
-
-    @Override
-    public String getClassName() { return JavaxRegPopulator.class.getName(); }
 
     @Override
     public void load()
@@ -133,66 +158,6 @@ public class JavaxRegPopulator
         }
     }
 
-    private void load( InputStream inputStream )
-    {
-        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-        JavaxSaxHandler saxHandler = new JavaxSaxHandler();
-
-        parserFactory.setNamespaceAware( true );
-        parserFactory.setValidating( true );
-        jposEntryList.clear();
-        try
-        { parserFactory.newSAXParser().parse( inputStream, saxHandler ); }
-        catch (SAXException e)
-        {
-            tracer.println( "SAX Parser error, msg=" + e.getMessage() );
-            lastLoadException = e;
-        }
-        catch ( IOException e )
-        {
-            tracer.println( "XML file access error, msg=" + e.getMessage() );
-            lastLoadException = e;
-        }
-        catch ( ParserConfigurationException e )
-        {
-            tracer.println( "SAX Parser configuration error, msg=" + e.getMessage() );
-            lastLoadException = e;
-        }
-        Iterator entries = jposEntryList.iterator();
-        while( entries.hasNext() )
-        {
-            JposEntry jposEntry = (JposEntry) entries.next();
-            getJposEntries().put( jposEntry.getLogicalName(), jposEntry );
-        }
-    }
-
-    @Override
-    public URL getEntriesURL()
-    {
-        //------------------------------------------------
-        // Copied from AbstractXercesRegPopulator
-        URL url = null;
-
-        if( getPopulatorFileURL() != null &&
-                !getPopulatorFileURL().equals( "" ) )
-            try
-            { url =  new URL( getPopulatorFileURL() ); }
-            catch( Exception e )
-            {
-                tracer.println( "getEntriesURL: Exception.message=" +
-                        e.getMessage() );
-            }
-        else
-            url = createURLFromFile( new File( getPopulatorFileName() ) );
-
-        //<temp>
-        tracer.println( "getPopulatorFileURL()=" + getPopulatorFileURL() );
-        tracer.println( "getPopulatorFileName()=" + getPopulatorFileName() );
-        //</temp>
-
-        return url;
-    }
-
     @Override
     public String getName() { return JAVAX_REG_POPULATOR_NAME_STRING; }
 
@@ -200,16 +165,15 @@ public class JavaxRegPopulator
     // Protected methods
     //
 
+
     /** @return the Tracer object */
     protected Tracer getTracer() { return tracer; }
 
     /**
-     * @return a String with the document type definition value.  For DTD this
-     * would be the DTD relative path/file and for schemas the XSD
-     * relative path/file
-     * @since 2.1.0
+     * @return the default XML file name that this populator will save
+     * entries to
      */
-    protected String getDoctypeValue() { return "jpos/res/jcl.dtd"; }
+    protected String getDefaultXmlFileName() { return xmlFileName; }
 
     private void save( Enumeration entries, OutputStream outputStream )
             throws Exception
@@ -233,10 +197,11 @@ public class JavaxRegPopulator
             throws ParserConfigurationException
     {
         DOMImplementation domImpl = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation();
-        DocumentType docType = domImpl.createDocumentType( "JposEntries", "-//JavaPOS//DTD//EN", getDoctypeValue() );
+        DocumentType docType = domImpl.createDocumentType( "JposEntries", DTD_DOC_TYPE_VALUE, DTD_FILE_NAME );
 
         return domImpl.createDocument(null, "JposEntries", docType);
     }
+
 
     private void insertJposEntriesInDoc( Enumeration entries, Document doc )
     {
@@ -319,7 +284,7 @@ public class JavaxRegPopulator
                     )
             )
                 //*/
-                elem.setAttribute( attrName, prop.getValueAsString() );
+            elem.setAttribute( attrName, prop.getValueAsString() );
             return false;
         }
         return true;
@@ -344,16 +309,53 @@ public class JavaxRegPopulator
         document.getDocumentElement().insertBefore( comment, document.getDocumentElement().getFirstChild() );
     }
 
-    private Tracer tracer = TracerFactory.getInstance().createTracer( "JavaxRegPopulator" );
-    private static final String JAVAX_REG_POPULATOR_NAME_STRING = "JAVAX XML Entries Populator";
+    private void load( InputStream inputStream )
+    {
+        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+        JavaxSaxHandler saxHandler = new JavaxSaxHandler();
 
-    private List jposEntryList = new LinkedList();
+        parserFactory.setNamespaceAware( true );
+        parserFactory.setValidating( true );
+        jposEntryList.clear();
+        try
+        {
+            parserFactory.newSAXParser().parse( inputStream, saxHandler );
+        }
+        catch (SAXException e)
+        {
+            tracer.println( "SAX Parser error, msg=" + e.getMessage() );
+            lastLoadException = e;
+        }
+        catch ( IOException e )
+        {
+            tracer.println( "XML file access error, msg=" + e.getMessage() );
+            lastLoadException = e;
+        }
+        catch ( ParserConfigurationException e )
+        {
+            tracer.println( "SAX Parser configuration error, msg=" + e.getMessage() );
+            lastLoadException = e;
+        }
+        Iterator entries = jposEntryList.iterator();
+        while( entries.hasNext() )
+        {
+            JposEntry jposEntry = (JposEntry) entries.next();
+            getJposEntries().put( jposEntry.getLogicalName(), jposEntry );
+        }
+    }
+
+    //--------------------------------------------------------------------------
+    // Private inner classes
+    //
 
     private class JavaxSaxHandler
             extends DefaultHandler
     {
         private JposEntry CurrentEntry = null;
         private SAXException TheException = null;
+
+        //----------------------------------------------------------------
+        // ContentHandler
 
         @Override
         public void startElement( String uri, String lname, String qname, Attributes attrs )
@@ -442,6 +444,9 @@ public class JavaxRegPopulator
             }
         }
 
+        //----------------------------------------------------------------
+        // ErrorHandler
+
         @Override
         public void error( SAXParseException e )
         {
@@ -455,5 +460,54 @@ public class JavaxRegPopulator
             CurrentEntry = null;
             TheException = e;
         }
+
+        //----------------------------------------------------------------
+        // EntityResolver
+
+        @Override
+        public InputSource resolveEntity(String publicId, String systemId )
+        {
+            tracer.println( "JposEntityResolver:resolveEntity:publicId=" +
+                    publicId );
+
+            tracer.println( "JposEntityResolver:resolveEntity:systemId=" +
+                    systemId );
+
+            if( publicId.equals( DTD_DOC_TYPE_VALUE ) )
+            {
+                InputStream is =
+                        getClass().getResourceAsStream( DTD_FILE_NAME );
+
+                if ( is == null )
+                    is = findFileInClasspath( DTD_FILE_NAME );
+
+                if( is != null )
+                    return new InputSource( new InputStreamReader( is ) );
+            }
+
+            return null;
+        }
     }
+
+    //--------------------------------------------------------------------------
+    // Instance variables
+    //
+
+    protected String xmlFileName = DEFAULT_XML_FILE_NAME;
+
+    private List jposEntryList = new LinkedList();
+
+    private Tracer tracer = TracerFactory.getInstance().
+            createTracer( this.getClass().getSimpleName() );
+
+    //--------------------------------------------------------------------------
+    // Constants
+    //
+
+    public static final String DTD_FILE_PATH = "jpos/res";
+    public static final String DTD_FILE_NAME = DTD_FILE_PATH + "/jcl.dtd";
+
+    public static final String DTD_DOC_TYPE_VALUE = "-//JavaPOS//DTD//EN";
+
+    private static final String JAVAX_REG_POPULATOR_NAME_STRING = "JAVAX XML Entries Populator";
 }
