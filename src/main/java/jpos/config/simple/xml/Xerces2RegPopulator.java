@@ -367,7 +367,7 @@ public class Xerces2RegPopulator extends AbstractXercesRegPopulator
 									  factoryClass );
 									  
 			currentEntry.addProperty( JposEntry.VENDOR_URL_PROP_NAME, 
-									  serviceClass );			
+									  serviceClass == null ? "" : serviceClass );
 		}	    								
 		
 	    protected void addJposProp( JposEntry entry, 
@@ -403,7 +403,7 @@ public class Xerces2RegPopulator extends AbstractXercesRegPopulator
 									  name );						
 			
 			currentEntry.addProperty( JposEntry.PRODUCT_URL_PROP_NAME,
-						  			  url );						
+						  			  url == null ? "" : url);
 		}
 			    								
 	    protected void addProp( JposEntry entry, 
@@ -421,7 +421,7 @@ public class Xerces2RegPopulator extends AbstractXercesRegPopulator
 			{
 			
 				Class typeClass = JposEntryUtility.
-				propTypeFromString( attributes.getValue( "type" ) );
+				propTypeFromString( typeString );
 				
 				Object value = JposEntryUtility.parsePropValue( valueString, typeClass );
 				
