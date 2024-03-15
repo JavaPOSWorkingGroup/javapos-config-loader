@@ -165,8 +165,8 @@ public class JavaxRegPopulator
 
         DOMSource source = new DOMSource(document);
         TransformerFactory factory = TransformerFactory.newInstance();
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "file,jar:file");
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file,jar:file");
+  //      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "file,jar:file");
+  //      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file,jar:file");
         Transformer transformer = factory.newTransformer();
 
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
