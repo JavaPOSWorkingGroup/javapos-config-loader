@@ -35,11 +35,12 @@
 <!ATTLIST jpos
           version CDATA #REQUIRED
           category ( Belt | BillAcceptor | BillDispenser | Biometrics | BumpBar | CashChanger | CashDrawer | CAT |
-                     CheckScanner | CoinAcceptor | CoinDispenser | ElectronicJournal | ElectronicValueRW |
-                     FiscalPrinter | Gate | HardTotals | ImageScanner | ItemDispenser | Keylock | Lights |
-                     LineDisplay | MICR | MotionSensor | MSR |  PINPad | PointCardRW | POSKeyboard | POSPower |
-                     POSPrinter | RemoteOrderDisplay | RFIDScanner | Scale | Scanner | SignatureCapture |
-                     SmartCardRW | ToneIndicator
+                     CheckScanner | CoinAcceptor | CoinDispenser | DeviceMonitor | ElectronicJournal |
+                     ElectronicValueRW | FiscalPrinter | Gate | GestureControl | GraphicDisplay | HardTotals |
+                     ImageScanner | IndividualRecognition | ItemDispenser | Keylock | Lights | LineDisplay | MICR |
+                     MotionSensor | MSR |  PINPad | PointCardRW | POSKeyboard | POSPower | POSPrinter |
+                     RemoteOrderDisplay | RFIDScanner | Scale | Scanner | SignatureCapture | SmartCardRW |
+                     SoundPlayer | SoundRecorder | SpeechSynthesis | ToneIndicator | VideoCapture | VoiceRecognition
                    ) #REQUIRED>
                      
 <!ATTLIST product 
