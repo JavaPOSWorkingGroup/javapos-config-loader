@@ -105,7 +105,7 @@ public class JavaxRegPopulator
         return url;
     }
 
-
+    @SuppressWarnings("unchecked")
     @Override
     public void save(Enumeration entries)
             throws Exception {
@@ -117,6 +117,7 @@ public class JavaxRegPopulator
             }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void save(Enumeration entries, String fileName)
             throws Exception {
@@ -165,8 +166,8 @@ public class JavaxRegPopulator
 
         DOMSource source = new DOMSource(document);
         TransformerFactory factory = TransformerFactory.newInstance();
-  //      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "file,jar:file");
-  //      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file,jar:file");
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "file,jar:file");
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file,jar:file");
         Transformer transformer = factory.newTransformer();
 
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -179,9 +180,9 @@ public class JavaxRegPopulator
     private Document createEmptyDocument()
             throws ParserConfigurationException {
         DOMImplementation domImpl = DocumentBuilderFactory.newInstance().newDocumentBuilder().getDOMImplementation();
-        DocumentType docType = domImpl.createDocumentType("JposEntries", DTD_DOC_TYPE_VALUE, DTD_FILE_NAME);
+        DocumentType docType = domImpl.createDocumentType(XML_TAG_JPOSENTRIES, DTD_DOC_TYPE_VALUE, DTD_FILE_NAME);
 
-        return domImpl.createDocument(null, "JposEntries", docType);
+        return domImpl.createDocument(null, XML_TAG_JPOSENTRIES, docType);
     }
 
 
@@ -190,7 +191,7 @@ public class JavaxRegPopulator
             JposEntry jposEntry = entries.nextElement();
 
             if (JposEntryUtility.isValidJposEntry(jposEntry)) {
-                Element jposEntryElement = doc.createElement("JposEntry");
+                Element jposEntryElement = doc.createElement(XML_TAG_JPOSENTRY);
 
                 jposEntryElement.setAttribute("logicalName", jposEntry.getLogicalName());
                 insertJposPropertiesInElement(doc, jposEntry, jposEntryElement);
@@ -199,66 +200,84 @@ public class JavaxRegPopulator
         }
     }
 
+    /**
+     * Insert JposEntry tag for a given JposEntry object into an XML document. For better readability, first the
+     * tags creation, jpos, product and vendor will be created, followed by (optional) prop tags in alphabetic
+     * order.<br>
+     * Keep in mind that elements of the JposEntry object represent either an attribute of tag creation, jpos, product
+     * or vendor or a complete prop tag. Method checkAndSetAttributeOfTagIsTrue will be used to add the specific
+     * attribute into the corresponding tag if the element represents the specified attribute. If
+     * checkAndSetAttributeOfTagIsTrue fails for all specified attributes, a prop tag will be created and added to
+     * JposEntry tag.
+     * @param doc              The XML document to be modified.
+     * @param jposEntry        The JposEntry object to be added.
+     * @param jposEntryElement The XML element the JposEntry tag shall be added to. This should be the JposEntries
+     *                         tag of the document.
+     */
     private void insertJposPropertiesInElement(Document doc, JposEntry jposEntry, Element jposEntryElement) {
-        Element creation = doc.createElement("creation");
-        Element jpos = doc.createElement("jpos");
-        Element product = doc.createElement("product");
-        Element vendor = doc.createElement("vendor");
+        Element creation = doc.createElement(XML_TAG_CREATION);
+        Element jpos = doc.createElement(XML_TAG_JPOS);
+        Element product = doc.createElement(XML_TAG_PRODUCT);
+        Element vendor = doc.createElement(XML_TAG_VENDOR);
 
         for (Element tag : new Element[]{creation, vendor, jpos, product})
             jposEntryElement.appendChild(tag);
 
-        List<JposEntry.Prop> sortedProps = getSortedList(jposEntry.getProps());
+        List<JposEntry.Prop> sortedProps = new LinkedList<>();
+        ((Iterator<JposEntry.Prop>)jposEntry.getProps()).forEachRemaining(sortedProps::add);
+        Collections.sort(sortedProps,
+                (JposEntry.Prop p1, JposEntry.Prop p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
+
         for (JposEntry.Prop prop : sortedProps) {
-            if (notAttribute(prop, creation, JposEntry.SERVICE_CLASS_PROP_NAME, "serviceClass") &&
-                    notAttribute(prop, creation, JposEntry.SI_FACTORY_CLASS_PROP_NAME, "factoryClass") &&
-                    notAttribute(prop, vendor, JposEntry.VENDOR_NAME_PROP_NAME, "name") &&
-                    notAttribute(prop, vendor, JposEntry.VENDOR_URL_PROP_NAME, "url") &&
-                    notAttribute(prop, jpos, JposEntry.JPOS_VERSION_PROP_NAME, "version") &&
-                    notAttribute(prop, jpos, JposEntry.DEVICE_CATEGORY_PROP_NAME, "category") &&
-                    notAttribute(prop, product, JposEntry.PRODUCT_NAME_PROP_NAME, "name") &&
-                    notAttribute(prop, product, JposEntry.PRODUCT_DESCRIPTION_PROP_NAME, "description") &&
-                    notAttribute(prop, product, JposEntry.PRODUCT_URL_PROP_NAME, "url")
+            if (cannotSetAttributeOfTag(prop, creation, JposEntry.SERVICE_CLASS_PROP_NAME, XML_ATTR_SERVICECLASS) &&
+                    cannotSetAttributeOfTag(prop, creation, JposEntry.SI_FACTORY_CLASS_PROP_NAME, XML_ATTR_FACTORYCLASS) &&
+                    cannotSetAttributeOfTag(prop, vendor, JposEntry.VENDOR_NAME_PROP_NAME, XML_ATTR_NAME) &&
+                    cannotSetAttributeOfTag(prop, vendor, JposEntry.VENDOR_URL_PROP_NAME, XML_ATTR_URL) &&
+                    cannotSetAttributeOfTag(prop, jpos, JposEntry.JPOS_VERSION_PROP_NAME, XML_ATTR_VERSION) &&
+                    cannotSetAttributeOfTag(prop, jpos, JposEntry.DEVICE_CATEGORY_PROP_NAME, XML_ATTR_CATEGORY) &&
+                    cannotSetAttributeOfTag(prop, product, JposEntry.PRODUCT_NAME_PROP_NAME, XML_ATTR_NAME) &&
+                    cannotSetAttributeOfTag(prop, product, JposEntry.PRODUCT_DESCRIPTION_PROP_NAME, XML_ATTR_DESCRIPTION) &&
+                    cannotSetAttributeOfTag(prop, product, JposEntry.PRODUCT_URL_PROP_NAME, XML_ATTR_URL)
             )
                 addPropElement(doc, jposEntryElement, prop);
         }
     }
 
-    private List<JposEntry.Prop> getSortedList(Iterator<JposEntry.Prop> props) {
-        ArrayList<JposEntry.Prop> sortedProps = new ArrayList<>();
-        props.forEachRemaining(sortedProps::add);
-        Collections.sort(sortedProps, new Comparator<JposEntry.Prop>() {
-            @Override
-            public int compare(JposEntry.Prop o1, JposEntry.Prop o2) {
-                return o1.getName().compareToIgnoreCase(o2.getName());
-            }
-        });
-        return sortedProps;
-    }
-
-    private boolean notAttribute(JposEntry.Prop prop, Element elem, String propName, String attrName) {
+    /**
+     * Checks whether the given JposEntry element represents an attribute of the given tag. If so, the attribute will be
+     * added to the tag. This method returns true if the element did not represent the specified attribute.
+     * @param prop     Prop element of an JposEntry object.
+     * @param elem     XML tag to be used to store the specified attribute, if prop represents thit attribute.
+     * @param propName Name of the Prop element.
+     * @param attrName Attribute name to be used in XML tag.
+     * @return true if prop does not represent the specified attribute and no attribute has been added to elem. false
+     * if the specified attribute has been added to elem.
+     */
+    private boolean cannotSetAttributeOfTag(JposEntry.Prop prop, Element elem, String propName, String attrName) {
         if (prop.getName().equals(propName)) {
-            String value = prop.getValueAsString();
             /* Change /* to //* to generate implicit attribute values only if value is not empty.
+            String value = prop.getValueAsString();
             if( value.length() > 0 ||
                     ( !JposEntry.PRODUCT_URL_PROP_NAME.equals(propName) &&
                             !JposEntry.VENDOR_URL_PROP_NAME.equals(propName)
                     )
             )
-                //*/
-            elem.setAttribute(attrName, prop.getValueAsString());
+            //*/
+            {
+                elem.setAttribute(attrName, prop.getValueAsString());
+            }
             return false;
         }
         return true;
     }
 
     private static void addPropElement(Document doc, Element jposEntryElement, JposEntry.Prop prop) {
-        Element propElement = doc.createElement("prop");
+        Element propElement = doc.createElement(XML_TAG_PROP);
         jposEntryElement.appendChild(propElement);
-        propElement.setAttribute("name", prop.getName());
-        propElement.setAttribute("value", prop.getValueAsString());
+        propElement.setAttribute(XML_ATTR_NAME, prop.getName());
+        propElement.setAttribute(XML_ATTR_VALUE, prop.getValueAsString());
         if (!(prop.getValue() instanceof String))
-            propElement.setAttribute("type", prop.getValue().getClass().getSimpleName());
+            propElement.setAttribute(XML_ATTR_TYPE, prop.getValue().getClass().getSimpleName());
     }
 
     private void insertDateSavedComment(Document document) {
@@ -325,37 +344,37 @@ public class JavaxRegPopulator
                 theException = null;
                 return;
             }
-            if (qname.equals("JposEntries"))
+            if (qname.equals(XML_TAG_JPOSENTRIES))
                 jposEntryList.clear();
-            else if (qname.equals("JposEntry"))
+            else if (qname.equals(XML_TAG_JPOSENTRY))
                 currentEntry = new SimpleEntry(attrs.getValue("logicalName"), JavaxRegPopulator.this);
             else if (currentEntry != null) {
                 String temp;
 
-                if (qname.equals("creation")) {
-                    currentEntry.addProperty(JposEntry.SI_FACTORY_CLASS_PROP_NAME, attrs.getValue("factoryClass"));
-                    currentEntry.addProperty(JposEntry.SERVICE_CLASS_PROP_NAME, attrs.getValue("serviceClass"));
-                } else if (qname.equals("vendor")) {
-                    currentEntry.addProperty(JposEntry.VENDOR_NAME_PROP_NAME, attrs.getValue("name"));
-                    addOptionalProperty(JposEntry.VENDOR_URL_PROP_NAME, attrs.getValue("url"));
-                } else if (qname.equals("jpos")) {
-                    currentEntry.addProperty(JposEntry.JPOS_VERSION_PROP_NAME, attrs.getValue("version"));
-                    currentEntry.addProperty(JposEntry.DEVICE_CATEGORY_PROP_NAME, attrs.getValue("category"));
-                } else if (qname.equals("product")) {
-                    currentEntry.addProperty(JposEntry.PRODUCT_NAME_PROP_NAME, attrs.getValue("name"));
-                    currentEntry.addProperty(JposEntry.PRODUCT_DESCRIPTION_PROP_NAME, attrs.getValue("description"));
-                    addOptionalProperty(JposEntry.PRODUCT_URL_PROP_NAME, attrs.getValue("url"));
-                } else if (qname.equals("prop")) {
-                    temp = attrs.getValue("type");
+                if (qname.equals(XML_TAG_CREATION)) {
+                    currentEntry.addProperty(JposEntry.SI_FACTORY_CLASS_PROP_NAME, attrs.getValue(XML_ATTR_FACTORYCLASS));
+                    currentEntry.addProperty(JposEntry.SERVICE_CLASS_PROP_NAME, attrs.getValue(XML_ATTR_SERVICECLASS));
+                } else if (qname.equals(XML_TAG_VENDOR)) {
+                    currentEntry.addProperty(JposEntry.VENDOR_NAME_PROP_NAME, attrs.getValue(XML_ATTR_NAME));
+                    addOptionalProperty(JposEntry.VENDOR_URL_PROP_NAME, attrs.getValue(XML_ATTR_URL));
+                } else if (qname.equals(XML_TAG_JPOS)) {
+                    currentEntry.addProperty(JposEntry.JPOS_VERSION_PROP_NAME, attrs.getValue(XML_ATTR_VERSION));
+                    currentEntry.addProperty(JposEntry.DEVICE_CATEGORY_PROP_NAME, attrs.getValue(XML_ATTR_CATEGORY));
+                } else if (qname.equals(XML_TAG_PRODUCT)) {
+                    currentEntry.addProperty(JposEntry.PRODUCT_NAME_PROP_NAME, attrs.getValue(XML_ATTR_NAME));
+                    currentEntry.addProperty(JposEntry.PRODUCT_DESCRIPTION_PROP_NAME, attrs.getValue(XML_ATTR_DESCRIPTION));
+                    addOptionalProperty(JposEntry.PRODUCT_URL_PROP_NAME, attrs.getValue(XML_ATTR_URL));
+                } else if (qname.equals(XML_TAG_PROP)) {
+                    temp = attrs.getValue(XML_ATTR_TYPE);
                     try {
                         Class<?> type = temp == null ? String.class : Class.forName("java.lang." + temp);
                         Object obj = null;
-                        obj = JposEntryUtility.parsePropValue(attrs.getValue("value"), type);
-                        currentEntry.addProperty(attrs.getValue("name"), obj);
+                        obj = JposEntryUtility.parsePropValue(attrs.getValue(XML_ATTR_VALUE), type);
+                        currentEntry.addProperty(attrs.getValue(XML_ATTR_NAME), obj);
                     } catch (Exception e) {
                         currentEntry = null;
-                        String msg = "Invalid prop: name=" + attrs.getValue("name")
-                                + ":value=" + attrs.getValue("value");
+                        String msg = "Invalid prop: name=" + attrs.getValue(XML_ATTR_NAME)
+                                + ":value=" + attrs.getValue(XML_ATTR_VALUE);
                         tracer.println(": " + msg);
                         lastLoadException = new SAXException(msg, e);
                     }
@@ -377,7 +396,7 @@ public class JavaxRegPopulator
                 tracer.println("EndElement: " + theException.getMessage());
                 theException = null;
             }
-            if (qname.equals("JposEntry")) {
+            if (qname.equals(XML_TAG_JPOSENTRY)) {
                 if (currentEntry != null)
                     jposEntryList.add(currentEntry);
                 currentEntry = null;
@@ -430,7 +449,7 @@ public class JavaxRegPopulator
     // Instance variables
     //
 
-    private List<JposEntry> jposEntryList = new LinkedList<>();
+    private List<JposEntry> jposEntryList = new ArrayList<>();
 
     private Tracer tracer = TracerFactory.getInstance().
             createTracer(this.getClass().getSimpleName());
@@ -438,13 +457,6 @@ public class JavaxRegPopulator
     //--------------------------------------------------------------------------
     // Constants
     //
-
-    public static final String DTD_FILE_PATH = "jpos/res";
-    public static final String DTD_FILE_NAME = DTD_FILE_PATH + "/jcl.dtd";
-
-    public static final String XSD_FILE_NAME = DTD_FILE_PATH + "/jcl.xsd";
-
-    public static final String DTD_DOC_TYPE_VALUE = "-//JavaPOS//DTD//EN";
 
     private static final String JAVAX_REG_POPULATOR_NAME_STRING = "JAVAX XML Entries Populator";
 }

@@ -37,4 +37,123 @@ public interface XmlRegPopulator extends JposRegPopulator
      * @since 1.2 (NY 2K meeting)
      */
     public static final String DEFAULT_XML_FILE_NAME = "jpos.xml";
+
+    /**
+     * Default path for dtd and / or xsd file
+     * @since 4.0
+     */
+    public static final String DTD_FILE_PATH = "jpos/res";
+
+    /**
+     * Default name for dtd file
+     * @since 4.0
+     */
+    public static final String DTD_FILE_NAME = DTD_FILE_PATH + "/jcl.dtd";
+
+    /**
+     * Default name for xsd file
+     * @since 4.0
+     */
+    public static final String XSD_FILE_NAME = DTD_FILE_PATH + "/jcl.xsd";
+
+    /**
+     * Default DTD document type value
+     */
+    public static final String DTD_DOC_TYPE_VALUE = "-//JavaPOS//DTD//EN";
+
+    /**
+     * Define for tag name <i>JposEntries</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_JPOSENTRIES = "JposEntries";
+
+    /**
+     * Define for tag name <i>JposEntry</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_JPOSENTRY = "JposEntry";
+
+    /**
+     * Define for tag name <i>creation</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_CREATION = "creation";
+
+    /**
+     * Define for tag name <i>vendor</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_VENDOR = "vendor";
+
+    /**
+     * Define for tag name <i>jpos</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_JPOS = "jpos";
+
+    /**
+     * Define for tag name <i>product</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_PRODUCT = "product";
+
+    /**
+     * Define for tag name <i>prop</i>
+     * @since 4.0
+     */
+    public static final String XML_TAG_PROP = "prop";
+
+    /**
+     * Define for attribute name <i>serviceClass</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_SERVICECLASS = "serviceClass";
+
+    /**
+     * Define for attribute name <i>factoryClass</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_FACTORYCLASS= "factoryClass";
+
+    /**
+     * Define for attribute name <i>name</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_NAME = "name";
+
+    /**
+     * Define for attribute name <i>url</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_URL = "url";
+
+    /**
+     * Define for attribute name <i>name</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_VERSION = "version";
+
+    /**
+     * Define for attribute name <i>category</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_CATEGORY = "category";
+
+    /**
+     * Define for attribute name <i>description</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_DESCRIPTION = "description";
+
+    /**
+     * Define for attribute name <i>value</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_VALUE = "value";
+
+    /**
+     * Define for attribute name <i>type</i>
+     * @since 4.0
+     */
+    public static final String XML_ATTR_TYPE = "type";
 }
