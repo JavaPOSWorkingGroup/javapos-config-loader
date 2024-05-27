@@ -22,6 +22,7 @@ import java.util.*;
 
 import jpos.config.JposEntry;
 import jpos.config.JposEntryConst;
+import jpos.config.RS232Const;
 import jpos.config.JposConfigException;
 import jpos.config.simple.SimpleEntry;
 
@@ -98,12 +99,12 @@ public class JposEntryUtility extends Object
     {
         boolean valid = false;
         
-		if( name.equals( JposEntryConst.RS232_PORT_NAME_PROP_NAME ) ||
-            name.equals( JposEntryConst.RS232_BAUD_RATE_PROP_NAME ) ||
-            name.equals( JposEntryConst.RS232_DATA_BITS_PROP_NAME ) ||
-            name.equals( JposEntryConst.RS232_PARITY_PROP_NAME ) ||
-            name.equals( JposEntryConst.RS232_STOP_BITS_PROP_NAME ) ||
-            name.equals( JposEntryConst.RS232_FLOW_CONTROL_PROP_NAME ) )
+		if( name.equals( RS232Const.RS232_PORT_NAME_PROP_NAME ) ||
+            name.equals( RS232Const.RS232_BAUD_RATE_PROP_NAME ) ||
+            name.equals( RS232Const.RS232_DATA_BITS_PROP_NAME ) ||
+            name.equals( RS232Const.RS232_PARITY_PROP_NAME ) ||
+            name.equals( RS232Const.RS232_STOP_BITS_PROP_NAME ) ||
+            name.equals( RS232Const.RS232_FLOW_CONTROL_PROP_NAME ) )
 			valid = true;
 
         return valid;
@@ -115,12 +116,12 @@ public class JposEntryUtility extends Object
 	 */
 	public static void removeAllRS232Props( JposEntry jposEntry )
 	{
-		jposEntry.removeProperty( JposEntryConst.RS232_PORT_NAME_PROP_NAME );
-		jposEntry.removeProperty( JposEntryConst.RS232_BAUD_RATE_PROP_NAME );
-		jposEntry.removeProperty( JposEntryConst.RS232_DATA_BITS_PROP_NAME );
-		jposEntry.removeProperty( JposEntryConst.RS232_PARITY_PROP_NAME );
-		jposEntry.removeProperty( JposEntryConst.RS232_STOP_BITS_PROP_NAME );
-		jposEntry.removeProperty( JposEntryConst.RS232_FLOW_CONTROL_PROP_NAME );
+		jposEntry.removeProperty( RS232Const.RS232_PORT_NAME_PROP_NAME );
+		jposEntry.removeProperty( RS232Const.RS232_BAUD_RATE_PROP_NAME );
+		jposEntry.removeProperty( RS232Const.RS232_DATA_BITS_PROP_NAME );
+		jposEntry.removeProperty( RS232Const.RS232_PARITY_PROP_NAME );
+		jposEntry.removeProperty( RS232Const.RS232_STOP_BITS_PROP_NAME );
+		jposEntry.removeProperty( RS232Const.RS232_FLOW_CONTROL_PROP_NAME );
 	}
 	 
 
@@ -133,18 +134,18 @@ public class JposEntryUtility extends Object
 	 */
 	public static Enumeration getNonRequiredPropNames( JposEntry jposEntry )
 	{
-		Vector vector = new Vector();
+		List<String> list = new ArrayList<>();
 
-		Enumeration names = jposEntry.getPropertyNames();
+		Enumeration<String> names = jposEntry.getPropertyNames();
 		while( names.hasMoreElements() )
 		{
-			String name = (String)names.nextElement();
+			String name = names.nextElement();
 
 			if( isRequiredPropName( name ) == false )
-				vector.add( name );
+				list.add( name );
 		}
 
-		return vector.elements();
+		return Collections.enumeration(list);
 	}
 
     /**
@@ -154,39 +155,39 @@ public class JposEntryUtility extends Object
      */
     public static Enumeration getMissingRequiredPropNames( JposEntry jposEntry )
     {
-		Vector vector = new Vector();
+		List<String> list = new ArrayList<>();
 
-        if( !jposEntry.hasPropertyWithName( JposEntry.LOGICAL_NAME_PROP_NAME ) )
-			vector.add( JposEntry.LOGICAL_NAME_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( JposEntry.LOGICAL_NAME_PROP_NAME ) )
+			list.add( JposEntry.LOGICAL_NAME_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.SI_FACTORY_CLASS_PROP_NAME ) )
-			vector.add( JposEntry.SI_FACTORY_CLASS_PROP_NAME );
+			list.add( JposEntry.SI_FACTORY_CLASS_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.SERVICE_CLASS_PROP_NAME ) )
-			vector.add( JposEntry.SERVICE_CLASS_PROP_NAME );
+			list.add( JposEntry.SERVICE_CLASS_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.DEVICE_CATEGORY_PROP_NAME ) )
-			vector.add( JposEntry.DEVICE_CATEGORY_PROP_NAME );
+			list.add( JposEntry.DEVICE_CATEGORY_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.JPOS_VERSION_PROP_NAME ) )
-			vector.add( JposEntry.JPOS_VERSION_PROP_NAME );
+			list.add( JposEntry.JPOS_VERSION_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.VENDOR_NAME_PROP_NAME ) )
-			vector.add( JposEntry.VENDOR_NAME_PROP_NAME );
+			list.add( JposEntry.VENDOR_NAME_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.VENDOR_URL_PROP_NAME )  )
-			vector.add( JposEntry.VENDOR_URL_PROP_NAME );
+			list.add( JposEntry.VENDOR_URL_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.PRODUCT_NAME_PROP_NAME )  )
-			vector.add( JposEntry.PRODUCT_NAME_PROP_NAME );
+			list.add( JposEntry.PRODUCT_NAME_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.PRODUCT_URL_PROP_NAME )  )
-			vector.add( JposEntry.PRODUCT_URL_PROP_NAME );
+			list.add( JposEntry.PRODUCT_URL_PROP_NAME );
 
 		if( !jposEntry.hasPropertyWithName( JposEntry.PRODUCT_DESCRIPTION_PROP_NAME ) )
-			vector.add( JposEntry.PRODUCT_DESCRIPTION_PROP_NAME );
+			list.add( JposEntry.PRODUCT_DESCRIPTION_PROP_NAME );
 
-        return vector.elements();
+        return Collections.enumeration(list);
     }
 
     /**
@@ -196,27 +197,27 @@ public class JposEntryUtility extends Object
      */
     public static Enumeration getMissingRS232PropNames( JposEntry jposEntry )
     {
-		Vector vector = new Vector();
+		List<String> list = new ArrayList<>();
 
-        if( !jposEntry.hasPropertyWithName( JposEntryConst.RS232_PORT_NAME_PROP_NAME ) )
-			vector.add( JposEntryConst.RS232_PORT_NAME_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( RS232Const.RS232_PORT_NAME_PROP_NAME ) )
+			list.add( RS232Const.RS232_PORT_NAME_PROP_NAME );
 
-		if( !jposEntry.hasPropertyWithName( JposEntryConst.RS232_BAUD_RATE_PROP_NAME ) )
-			vector.add( JposEntryConst.RS232_BAUD_RATE_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( RS232Const.RS232_BAUD_RATE_PROP_NAME ) )
+			list.add( RS232Const.RS232_BAUD_RATE_PROP_NAME );
 
-		if( !jposEntry.hasPropertyWithName( JposEntryConst.RS232_DATA_BITS_PROP_NAME ) )
-			vector.add( JposEntryConst.RS232_DATA_BITS_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( RS232Const.RS232_DATA_BITS_PROP_NAME ) )
+			list.add( RS232Const.RS232_DATA_BITS_PROP_NAME );
 
-		if( !jposEntry.hasPropertyWithName( JposEntryConst.RS232_PARITY_PROP_NAME ) )
-			vector.add( JposEntryConst.RS232_PARITY_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( RS232Const.RS232_PARITY_PROP_NAME ) )
+			list.add( RS232Const.RS232_PARITY_PROP_NAME );
 
-		if( !jposEntry.hasPropertyWithName( JposEntryConst.RS232_STOP_BITS_PROP_NAME ) )
-			vector.add( JposEntryConst.RS232_STOP_BITS_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( RS232Const.RS232_STOP_BITS_PROP_NAME ) )
+			list.add( RS232Const.RS232_STOP_BITS_PROP_NAME );
 
-		if( !jposEntry.hasPropertyWithName( JposEntryConst.RS232_FLOW_CONTROL_PROP_NAME ) )
-			vector.add( JposEntryConst.RS232_FLOW_CONTROL_PROP_NAME );
+		if( !jposEntry.hasPropertyWithName( RS232Const.RS232_FLOW_CONTROL_PROP_NAME ) )
+			list.add( RS232Const.RS232_FLOW_CONTROL_PROP_NAME );
 
-        return vector.elements();
+        return Collections.enumeration(list);
     }
 
 	/**
@@ -225,21 +226,21 @@ public class JposEntryUtility extends Object
 	 */
 	public static Enumeration getVendorPropNames( JposEntry jposEntry )
 	{
-		Vector vector = new Vector();
+		List<String> list = new ArrayList<>();
 
-		Enumeration propNames = jposEntry.getPropertyNames();
+		Enumeration<String> propNames = jposEntry.getPropertyNames();
 		while( propNames.hasMoreElements() )
-			vector.add( propNames.nextElement() );
+			list.add( propNames.nextElement() );
 
-		Iterator standardPropNames = getStandardPropNames();
+		Iterator<String> standardPropNames = getStandardPropNames();
 
 		while( standardPropNames.hasNext() )
 		{
-			String name = (String)standardPropNames.next();
-			vector.remove( name );
+			String name = standardPropNames.next();
+			list.remove( name );
 		}
 
-		return vector.elements();
+		return Collections.enumeration(list);
 	}
 
     /**
@@ -248,13 +249,13 @@ public class JposEntryUtility extends Object
      */
 	public static void addMissingRequiredProps( JposEntry jposEntry )
 	{
-		Enumeration missingPropNames = getMissingRequiredPropNames( jposEntry );
+		Enumeration<String> missingPropNames = getMissingRequiredPropNames( jposEntry );
 
 		JposEntry prototype = getEntryPrototype();
 
 		while( missingPropNames.hasMoreElements() )
 		{
-			String propName = (String)missingPropNames.nextElement();
+			String propName = missingPropNames.nextElement();
 			jposEntry.addProperty( propName, prototype.getPropertyValue( propName ) );
 		}
 	}																				  
@@ -441,7 +442,7 @@ public class JposEntryUtility extends Object
 
 		try
 		{
-			Class typeClass = Class.forName( className );
+			Class<?> typeClass = Class.forName( className );
 
 			if( isValidPropType( typeClass ) == false )
 				throw new JposConfigException( "Invalid property type: " + typeString );
@@ -461,7 +462,7 @@ public class JposEntryUtility extends Object
 	// Class constants
 	//
 	
-	private static final List STANDARD_PROP_NAMES_LIST = new ArrayList();
+	private static final List<String> STANDARD_PROP_NAMES_LIST = new ArrayList<>();
 
 	//-------------------------------------------------------------------------
 	// Static initializer
@@ -475,7 +476,7 @@ public class JposEntryUtility extends Object
 
 		STANDARD_PROP_NAMES_LIST.add( JposEntryConst.DEVICE_BUS_PROP_NAME );
 
-		for( int i = 0; i < JposEntryConst.RS232_PROPS.length; ++i )
-			STANDARD_PROP_NAMES_LIST.add( JposEntryConst.RS232_PROPS[ i ] );
+		for( int i = 0; i < RS232Const.RS232_PROPS.length; ++i )
+			STANDARD_PROP_NAMES_LIST.add( RS232Const.RS232_PROPS[ i ] );
 	}
 }
