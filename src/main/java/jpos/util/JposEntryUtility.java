@@ -141,7 +141,7 @@ public class JposEntryUtility extends Object
 		{
 			String name = names.nextElement();
 
-			if( isRequiredPropName( name ) == false )
+			if( !isRequiredPropName( name ) )
 				list.add( name );
 		}
 
@@ -335,7 +335,7 @@ public class JposEntryUtility extends Object
 	 */
 	public static Object getDefaultValueForType( Class propType ) throws JposConfigException
 	{
-		if( isValidPropType( propType ) == false )
+		if( !isValidPropType( propType ) )
 			throw new JposConfigException( "Invalid property type: " + propType );
 
 		Object propValue = "";
@@ -387,7 +387,7 @@ public class JposEntryUtility extends Object
 	 */
 	public static Object parsePropValue( String stringValue, Class propType ) throws JposConfigException
 	{
-		if( isValidPropType( propType ) == false )
+		if( !isValidPropType( propType ) )
 			throw new JposConfigException( "Invalid property type: " + propType );
 
 		Object propValue = "";
@@ -444,7 +444,7 @@ public class JposEntryUtility extends Object
 		{
 			Class<?> typeClass = Class.forName( className );
 
-			if( isValidPropType( typeClass ) == false )
+			if( !isValidPropType( typeClass ) )
 				throw new JposConfigException( "Invalid property type: " + typeString );
 
 			return typeClass;
