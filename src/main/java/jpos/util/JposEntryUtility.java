@@ -345,28 +345,28 @@ public class JposEntryUtility extends Object
 				propValue = "";
 			else
 			if( propType.equals( Boolean.class ) )
-				propValue = false;
+				propValue = Boolean.valueOf(false);
 			else
 			if( propType.equals( Character.class ) )
-				propValue = 'a';
+				propValue = Character.valueOf('a');
 			else
 			if( propType.equals( Double.class ) )
-				propValue = (double) 0;
+				propValue = Double.valueOf(0);
 			else
 			if( propType.equals( Float.class ) )
-				propValue = (float) 0;
+				propValue = Float.valueOf(0);
 			else
 			if( propType.equals( Byte.class ) )
-				propValue = (byte) 0;
+				propValue = Byte.valueOf((byte) 0);
 			else
 			if( propType.equals( Integer.class ) )
-				propValue = (int) 0 ;
+				propValue = Integer.valueOf(0) ;
 			else
 			if( propType.equals( Long.class ) )
-				propValue = (long) 0 ;
+				propValue = Long.valueOf(0) ;
 			else
 			if( propType.equals( Short.class ) )
-				propValue = (short) 0 ;
+				propValue = Short.valueOf((short) 0);
 		}
 		catch( Exception e )
 		{ throw new JposConfigException( "Invalid property type" ); }
@@ -400,7 +400,7 @@ public class JposEntryUtility extends Object
 				propValue = Boolean.valueOf( stringValue );
 			else
 			if( propType.equals( Character.class ) )
-				propValue = (char) stringValue.charAt( 0 );
+				propValue = Character.valueOf( stringValue.charAt( 0 ) );
 			else
 			if( propType.equals( Double.class ) )
 				propValue = Double.valueOf( stringValue );
