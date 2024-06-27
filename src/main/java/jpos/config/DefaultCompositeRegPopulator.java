@@ -259,7 +259,7 @@ public class DefaultCompositeRegPopulator extends Object
 		JposProperties.MultiProperty populatorFileMultiProp = 
 		jposProperties.getMultiProperty( JposProperties.JPOS_CONFIG_POPULATOR_FILE_MULTIPROP_NAME );
 
-		if( populatorClassMultiProp.getNumberOfProperties() == 0 )
+		if( populatorClassMultiProp == null || populatorClassMultiProp.getNumberOfProperties() == 0 )
 		{
 			tracer.println( "CompositeRegPopulator.load() w/o any defined multi-property" );
 			throw new RuntimeException( "CompositeRegPopulator.load() w/o any defined multi-property" );
