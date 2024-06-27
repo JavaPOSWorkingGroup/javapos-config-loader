@@ -28,34 +28,7 @@ import java.io.Serializable;
 public abstract class AbstractPropType extends Object 
 										 implements PropType, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
-	/** Default ctor */
-	AbstractPropType() {}
-
-	//-------------------------------------------------------------------------
-	// Public abstract methods
-	//
-
-	/** @return a String representation of this PropType */
-	public abstract String toString();
-
-	/** @return a Java class that defines this type */
-	public abstract Class getJavaTypeClass();
-
-	/**
-	 * @return true if the object passed is of this PropType
-	 * @param obj the Java Object
-	 */
-	public abstract boolean isValidValue( Object obj );
-
-	/**
-	 * @return true if the PropValue passed is of this PropType
-	 * @param obj the PropValue
-	 */
-	public abstract boolean isValidValue( PropValue obj );
+	private static final long serialVersionUID = 3913079070484345271L;
 
 	//-------------------------------------------------------------------------
 	// Public methods

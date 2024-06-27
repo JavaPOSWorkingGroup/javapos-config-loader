@@ -26,7 +26,6 @@ import java.net.URL;
 import jpos.util.tracing.Tracer;
 import jpos.util.tracing.TracerFactory;
 import jpos.config.*;
-import jpos.config.simple.AbstractRegPopulator;
 
 /**
  * Simple implementation of the JposRegPopulator loading and saving from a
@@ -78,7 +77,8 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries ) throws Exception
+	@SuppressWarnings("unchecked")
+	public void save( @SuppressWarnings("rawtypes") Enumeration entries ) throws Exception
     {
         saveJposEntries( entries );
     }
@@ -90,11 +90,13 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @since 1.3 (SF 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries, String fileName ) throws Exception
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries, String fileName ) throws Exception
     {
 		File file = new File( fileName );
 		try (FileOutputStream fos = new FileOutputStream( file )) {
-			saveJposEntries( entries, fos );
+			@SuppressWarnings("unchecked")
+			Enumeration<JposEntry> typeSafeEntries = entries;
+			saveJposEntries( typeSafeEntries, fos );
 		}
     }
 
@@ -105,15 +107,14 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     public void load()
     {
         getJposEntries().clear();
-        Enumeration entries = readJposEntries();
+        Enumeration<JposEntry> entries = readJposEntries();
       
         while( entries.hasMoreElements() ) 
         {
             try
             {
-                JposEntry entry = (JposEntry)entries.nextElement();
-                String logicalName = logicalName = (String)entry.
-                getPropertyValue( JposEntry.LOGICAL_NAME_PROP_NAME );
+                JposEntry entry = entries.nextElement();
+                String logicalName = entry.getLogicalName();
 
                 if( logicalName != null )
                     getJposEntries().put( logicalName, entry );
@@ -139,7 +140,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
         try (FileInputStream fis = new FileInputStream( fileName ))
         {
             getJposEntries().clear();
-            Enumeration entries = readJposEntries( fis );
+            Enumeration<JposEntry> entries = readJposEntries( fis );
 
             while( entries.hasMoreElements() ) 
             {
@@ -199,15 +200,15 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any problems occurs while saving
      */
-    protected void saveSerInZipFile( Enumeration entries ) throws Exception
+    protected void saveSerInZipFile( Enumeration<JposEntry> entries ) throws Exception
     {
         try( ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( zipSerFile.getName() + ".temp.jar" ) ) )
         {
-        	Enumeration zipEntries = zipSerFile.entries();
+        	Enumeration<? extends ZipEntry> zipEntries = zipSerFile.entries();
         	
         	while( zipEntries.hasMoreElements() )
         	{
-        		ZipEntry zipEntry = (ZipEntry)zipEntries.nextElement();
+        		ZipEntry zipEntry = zipEntries.nextElement();
         		
         		zos.putNextEntry( zipEntry );
         		
@@ -263,7 +264,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any problems occurs while saving
      */
-    protected void saveSerFile( Enumeration entries ) throws Exception
+    protected void saveSerFile( Enumeration<JposEntry> entries ) throws Exception
     {
     	try (OutputStream os = new FileOutputStream( serFileName )) {
     		saveJposEntries( entries,  os);
@@ -277,7 +278,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    protected void saveJposEntries( Enumeration entries, OutputStream os ) 
+    protected void saveJposEntries( Enumeration<JposEntry> entries, OutputStream os ) 
     throws Exception
     {
         try (ObjectOutputStream oos = new ObjectOutputStream( os )) {
@@ -298,7 +299,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      */
     protected ObjectInputStream findSerOIS()
     {       
-        Vector classpathJarFiles = new Vector();
+        List<String> classpathJarFiles = new ArrayList<>();
 
         //Try to find the serialized file in the directory of each path in CLASSPATH
         //As a side effect put each JAR/Zip file in the vector
@@ -316,10 +317,10 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * Finds the first serialized JposEntry file in directory of each classpath
      * <b>NOTE:</b>Decorated the FileInputStream with a BufferedInputStream to
      * improve load time...
-     * @param jarZipFilesVector a vector of JAR/Zip file names
+     * @param jarZipFilePaths a vector of JAR/Zip file names
      * @since 1.2 (NY 2K meeting)
      */
-    protected ObjectInputStream findSerOISInClasspath( Vector jarZipFilesVector )
+    protected ObjectInputStream findSerOISInClasspath( List<String> jarZipFilePaths )
     {
         ObjectInputStream ois = null;
 
@@ -339,7 +340,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
                 if( path.equals("") ) continue;
 
                 if( path.length() > 4 && ( path.endsWith( ".zip" ) || path.endsWith( ".jar" ) ) )
-                    jarZipFilesVector.addElement( path );  
+                    jarZipFilePaths.add( path );  
                 else 
                 {
                     absoluteFileName = path + fileSeparator + serFileName;
@@ -359,25 +360,23 @@ public class SimpleRegPopulator extends AbstractRegPopulator
 
     /**
      * Finds the first serialized JposEntry file in the JAR files
-     * @param jarFilesVector a vector of JAR/Zip file names
+     * @param jarFilePaths a vector of JAR/Zip file names
      * @since 1.2 (NY 2K meeting)
      */
-    protected ObjectInputStream findSerOISInJar( Vector jarFilesVector )
+    protected ObjectInputStream findSerOISInJar( List<String> jarFilePaths )
     {
         ObjectInputStream ois = null;
 
-        for( int i = 0; i < jarFilesVector.size(); ++i )
+        for(String jarFileName : jarFilePaths)
         {
-            String jarFileName = (String)jarFilesVector.elementAt( i );
 
-            try
+            try (ZipFile zipFile = new ZipFile( jarFileName ))
             {
-                ZipFile zipFile = new ZipFile( jarFileName );
-                Enumeration zipEntries = zipFile.entries();
+                Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
                 while( zipEntries.hasMoreElements() )
                 {
-                    ZipEntry zipEntry = (ZipEntry)zipEntries.nextElement();
+                    ZipEntry zipEntry = zipEntries.nextElement();
                     String entryName = zipEntry.getName();
                     if( entryName.endsWith( serFileName ) )
                     {
@@ -402,9 +401,9 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @param is the InputStream from which to read the serialized entries from
      * @since 1.2 (NY 2K meeting)
      */
-    protected Enumeration readJposEntries( InputStream is )
+    protected Enumeration<JposEntry> readJposEntries( InputStream is )
     {
-        Vector entries = new Vector();
+        List<JposEntry> entries = new ArrayList<>();
 
         try
         {
@@ -423,7 +422,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
                                 serFileName );
             else
                 while( true )
-                    entries.addElement( in.readObject() );
+                    entries.add( (JposEntry) in.readObject() );
 
             serFileName = absoluteFileName;
         } 
@@ -439,29 +438,35 @@ public class SimpleRegPopulator extends AbstractRegPopulator
         	              serFileName + " Exception.message=" + 
         	              e.getMessage() ); 
         }
-        return entries.elements();
+        return Collections.enumeration(entries);
     }
 
     /** 
      * @return an Enumeration of JposEntry objects
      * @since 1.2 (NY 2K meeting)
      */
-    protected Enumeration readJposEntries()
+    protected Enumeration<JposEntry> readJposEntries()
     {
-        Enumeration entries = null;
+        Enumeration<JposEntry> entries = null;
 
-        if( isPopulatorFileDefined() )
-    		try (InputStream inputStream = getPopulatorFileIS()) { 
-    			entries = readJposEntries( inputStream ); 
-    		}
-    		catch( Exception e )
-    		{ entries = ( new Vector() ).elements(); }
-        else
+        if( isPopulatorFileDefined() ) {
+        	try (InputStream inputStream = getPopulatorFileIS()) { 
+        		entries = readJposEntries( inputStream ); 
+        	}
+        	catch( Exception e )
+        	{ 
+        		entries = Collections.enumeration(new ArrayList<>()); 
+        	}
+        }
+        else {
         	try (InputStream inputStream = findSerOIS()) {
         		entries = readJposEntries( findSerOIS() );
         	}
-			catch( Exception e )
-			{ entries = ( new Vector() ).elements(); }
+        	catch( Exception e )
+        	{ 
+        		entries = Collections.enumeration(new ArrayList<>()); 
+        	}
+        }
 
         return entries;
     }
@@ -472,7 +477,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    protected void saveJposEntries( Enumeration entries ) throws Exception
+    protected void saveJposEntries( Enumeration<JposEntry> entries ) throws Exception
     {
         if( isPopulatorFileDefined() )
         	try (OutputStream outputStream = getPopulatorFileOS()) {
@@ -499,7 +504,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     private String absoluteFileName = "";
     private String serFileName = DEFAULT_JPOS_SER_FILE_NAME;
 
-	private Tracer tracer = TracerFactory.getInstance().
+	private final Tracer tracer = TracerFactory.getInstance().
 	                         createTracer( "SimpleRegPopulator" );	
 
     //--------------------------------------------------------------------------

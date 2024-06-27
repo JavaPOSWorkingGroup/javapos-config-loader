@@ -27,12 +27,9 @@ import java.io.Serializable;
  */
 public class IntegerPropType extends AbstractPropType implements PropType, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
+	private static final long serialVersionUID = 5055260665874384882L;
 
-	/** Default ctor */
-	IntegerPropType() {}
+	private IntegerPropType() {}
 
 	//---------------------------------------------------------------------
 	// Class methods
@@ -41,9 +38,6 @@ public class IntegerPropType extends AbstractPropType implements PropType, Seria
 	/** @return the unique instance of this class (create if necessary) */
 	public static PropType getInstance()
 	{
-		if( instance == null )
-			instance = new IntegerPropType();
-
 		return instance;
 	}
 
@@ -55,7 +49,7 @@ public class IntegerPropType extends AbstractPropType implements PropType, Seria
 	public String toString() { return "IntegerPropType"; }
 
 	/** @return a Java class that defines this type */
-	public Class getJavaTypeClass() { return ( new Integer( 0 ) ).getClass(); }
+	public Class<?> getJavaTypeClass() { return Integer.class; }
 
 	/**
 	 * @return true if the object passed is of this PropType
@@ -79,5 +73,5 @@ public class IntegerPropType extends AbstractPropType implements PropType, Seria
 	// Class instance
 	//
 
-	private static PropType instance = null;
+	private static final PropType instance = new IntegerPropType();
 }

@@ -88,7 +88,8 @@ public class DefaultProperties extends Object implements JposProperties
 
         if( jposProperties != null )
         {
-            Enumeration keys = jposProperties.keys();
+            @SuppressWarnings("rawtypes")
+			Enumeration keys = jposProperties.keys();
 
             while( keys.hasMoreElements() )
             {
@@ -106,7 +107,8 @@ public class DefaultProperties extends Object implements JposProperties
      * @return an enumeration of properties names defined
      * @since 1.2 (NY 2K meeting)
      */
-    public Enumeration getPropertyNames() { return getJposProperties().keys(); }
+    @SuppressWarnings("rawtypes")
+	public Enumeration getPropertyNames() { return getJposProperties().keys(); }
 
 	/**
 	 * @return the MultiProperty by the name passed.  MultiProperty are properties
@@ -139,10 +141,10 @@ public class DefaultProperties extends Object implements JposProperties
      * @param propName the property name for which the values will be parsed from
      * @since 2.1.0
      */
-	public List getStringListProperty( String propName )
+	public List<String> getStringListProperty( String propName )
 	{
 		String propValue = getPropertyString( propName );
-		List list = new ArrayList();
+		List<String> list = new ArrayList<>();
 		
 		if( propValue == null ) return list;
 		
@@ -164,29 +166,23 @@ public class DefaultProperties extends Object implements JposProperties
 	 */
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
 
-		sb.append( "<JposProperties>\n" );
+        @SuppressWarnings("unchecked")
+		Enumeration<String> propNames = getPropertyNames();
 
-        Enumeration propNames = getPropertyNames();
-
-		List list = new ArrayList();
+		List<String> list = new ArrayList<>();
 
         while( propNames.hasMoreElements() )
-			list.add( propNames.nextElement() );
+        	list.add( propNames.nextElement() );
 
 		Collections.sort( list );
 
-		Iterator iterator = list.iterator();
-
-        while( iterator.hasNext() )
-        {
-            String propName = (String)iterator.next();
+		StringBuilder sb = new StringBuilder();
+		sb.append( "<JposProperties>\n" );
+		for (String propName : list) {
             String propValue = (String)getPropertyString( propName );
-
             sb.append( "<name = \"" + propName + "\"" + " value = \"" + propValue + "\" />\n" );
-        }
-
+		}
 		sb.append( "</JposProperties>\n" );
 
 		return sb.toString();
@@ -200,6 +196,7 @@ public class DefaultProperties extends Object implements JposProperties
 	 * @return a Comparator object to compare 2 JposProperties.Prop objects
 	 * @since 1.3 (Washington DC 2001 meeting)
 	 */
+	@SuppressWarnings("rawtypes")
 	public static Comparator propComparator()
 	{
 		if( propComparator == null )
@@ -225,13 +222,10 @@ public class DefaultProperties extends Object implements JposProperties
 	 * @return an Iterator of valid property names
 	 * @since 1.3 (Washington DC 2001)
 	 */
-	public static Iterator getDefinedPropertyNames()
+	public static Iterator<String> getDefinedPropertyNames()
 	{
-		List list = new ArrayList();
-
-		for( int i = 0; i < PROP_NAME_ARRAY.length; ++i )
-			list.add( PROP_NAME_ARRAY[ i ] );
-
+		List<String> list = Arrays.asList(Arrays.copyOf(PROP_NAME_ARRAY, PROP_NAME_ARRAY.length));
+		
 		return list.iterator();
 	}
 
@@ -245,6 +239,7 @@ public class DefaultProperties extends Object implements JposProperties
 	 */
 	protected void createMultiProperties()
 	{
+		@SuppressWarnings("rawtypes")
 		Enumeration propNames = jposProperties.keys();
 
 		while( propNames.hasMoreElements() )
@@ -313,14 +308,15 @@ public class DefaultProperties extends Object implements JposProperties
 	 * @see jpos.util.JposProperties.Prop
 	 * @since 1.3 (Washington DC 2001)
 	 */
-	public Iterator getProps()
+	public Iterator<JposProperties.Prop> getProps()
 	{
-		List list = new ArrayList();
+		List<JposProperties.Prop> list = new ArrayList<>();
 
-		Enumeration names = getPropertyNames();
+		@SuppressWarnings("unchecked")
+		Enumeration<String> names = getPropertyNames();
 		while( names.hasMoreElements() )
 		{
-			String name = (String)names.nextElement();
+			String name = names.nextElement();
 			String value = getPropertyString( name );
 
 			JposProperties.Prop prop = new DefaultProperties.Prop( name, value );
@@ -415,7 +411,7 @@ public class DefaultProperties extends Object implements JposProperties
     //
 
     private Properties jposProperties = null;
-	private HashMap multiPropMap = new HashMap();
+	private final HashMap<String, MultiProp> multiPropMap = new HashMap<>();
 
 	private String loadedPropFileName = "";
 
@@ -426,6 +422,7 @@ public class DefaultProperties extends Object implements JposProperties
     // Class variables
     //
 
+	@SuppressWarnings("rawtypes")
 	private static Comparator propComparator = null;
 
 	//-------------------------------------------------------------------------
@@ -465,12 +462,12 @@ public class DefaultProperties extends Object implements JposProperties
 		public String getBasePropertyName() { return basePropName; }
 
 		/** @return an iterator of the property names for this multi-property */
-		public Iterator getPropertyNames() { return propMap.keySet().iterator(); }
+		public Iterator<String> getPropertyNames() { return propMap.keySet().iterator(); }
 
 		/** @return an iterator of the property names alphabetically sorted for this multi-property */
-		public Iterator getSortedPropertyNames() 
+		public Iterator<String> getSortedPropertyNames() 
 		{ 
-			List namesList = new ArrayList( propMap.keySet() );
+			List<String> namesList = new ArrayList<>( propMap.keySet() );
 
 			Collections.sort( namesList );
 
@@ -478,14 +475,14 @@ public class DefaultProperties extends Object implements JposProperties
 		}
 
 		/** @return an iterator of the property values for this multi-property */
-		public Iterator getPropertyValues() { return propMap.values().iterator(); }
+		public Iterator<String> getPropertyValues() { return propMap.values().iterator(); }
 
 		/**
 		 * @return the value for this property from the full property name
 		 * @param propName the full property name &lt;name&gt;.x
 		 */
 		public String getPropertyString( String propName )
-		{ return (String)propMap.get( propName ); }
+		{ return propMap.get( propName ); }
 
 		/**
 		 * @return the value for this property from the full property name
@@ -558,14 +555,14 @@ public class DefaultProperties extends Object implements JposProperties
 		 * @return the propValue of the property removed or null if not found
 		 * @param propName the property name
 		 */
-		String remove( String propName ) { return (String)propMap.remove( propName ); }
+		String remove( String propName ) { return propMap.remove( propName ); }
 
 		//---------------------------------------------------------------------
 		// Instance variables
 		//
 
 		private String basePropName = "";
-		private HashMap propMap = new HashMap();
+		private final HashMap<String, String> propMap = new HashMap<>();
 	}
 
 	/**

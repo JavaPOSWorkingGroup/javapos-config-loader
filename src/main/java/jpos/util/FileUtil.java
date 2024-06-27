@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 
@@ -54,11 +54,11 @@ public class FileUtil extends Object
     // Private/protected static methods
     //
 
-	protected synchronized static List getCpDirList()
+	protected static synchronized List<String> getCpDirList()
 	{
 		String classpath = System.getProperty( "java.class.path" );								
 		
-		List cpDirList = new LinkedList();
+		List<String> cpDirList = new ArrayList<>();
 		
 		StringTokenizer st = new StringTokenizer( classpath, File.pathSeparator );
 		while( st.hasMoreTokens() )
@@ -77,11 +77,11 @@ public class FileUtil extends Object
 		return cpDirList;
 	}
 	
-	protected synchronized static List getJarList()
+	protected static synchronized List<String> getJarList()
 	{
 		String classpath = System.getProperty( "java.class.path" );
 								
-		List cpJarFilesList = new LinkedList();
+		List<String> cpJarFilesList = new ArrayList<>();
 		
 		StringTokenizer st = new StringTokenizer( classpath, File.pathSeparator );
 		while( st.hasMoreTokens() )
@@ -96,17 +96,17 @@ public class FileUtil extends Object
 		return cpJarFilesList;		
 	}
 	
-	protected synchronized static JarEntry getJarEntry( JarFile jarFile, String fileName )
+	protected static synchronized JarEntry getJarEntry( JarFile jarFile, String fileName )
 	{
 		tracer.println( "<getJarEntry jarFile=" + jarFile + " fileName=" + 
 						fileName + ">" );
 		
 		if( jarFile == null ) return null;
 		
-		Enumeration entries = jarFile.entries();
+		Enumeration<JarEntry> entries = jarFile.entries();
 		while( entries.hasMoreElements() )
 		{
-			JarEntry jarEntry = (JarEntry)entries.nextElement();
+			JarEntry jarEntry = entries.nextElement();
 									
 			if( jarEntry.getName().equals( fileName ) ) 
 			{
@@ -127,7 +127,7 @@ public class FileUtil extends Object
 	 * @param fileName the relative fileName to search for
 	 * directories specified by CLASSPATH
      */
-    protected synchronized static JarFile lookForFileInJars( String fileName )
+    protected static synchronized JarFile lookForFileInJars( String fileName )
 	{
 		try
 		{
@@ -137,12 +137,11 @@ public class FileUtil extends Object
 
 			tracer.println( "classpath="+classpath );
 						
-			List cpJarFilesList = getJarList();
-			List cpDirList = getCpDirList();
+			List<String> cpJarFilesList = getJarList();
 						
 			for( int i = 0; i < cpJarFilesList.size(); ++i )
 			{
-				String jarFileName = (String)cpJarFilesList.get( i );
+				String jarFileName = cpJarFilesList.get( i );
 				
 				tracer.println( "jarFileName=" + jarFileName );
 		
@@ -207,13 +206,12 @@ public class FileUtil extends Object
 			File file = new File( fileName );
 			if( file.exists() ) return file;
 			
-			List cpJarFilesList = getJarList();
-			List cpDirList = getCpDirList();
+			List<String> cpDirList = getCpDirList();
 						
 			if( searchInClassPath )
 				for( int i = 0; i < cpDirList.size(); ++i )
 				{
-					String path = (String)cpDirList.get( i );
+					String path = cpDirList.get( i );
 					File file2 = new File( path + File.separator + fileName );
 	
 					if( file2.exists() ) return file2;
@@ -235,10 +233,9 @@ public class FileUtil extends Object
 	 * @throws java.io.FileNotFoundException if the file could not be found
 	 * @throws java.io.IOException if an error occurred while loading file
 	 */
-	public synchronized static InputStream 
-	loadFile( String fileName, boolean searchInClassPath, 
-	          boolean searchInJarFile ) 
-	throws FileNotFoundException, IOException
+	public static synchronized InputStream 
+	loadFile( String fileName, boolean searchInClassPath, boolean searchInJarFile ) 
+	throws IOException
 	{	    
 		tracer.println( "<loadFile fileName=" + fileName + " searchInClassPath=" + 
 						searchInClassPath + " searchInJarFile=" + 
@@ -248,7 +245,7 @@ public class FileUtil extends Object
 		
 		if( locatedFile != null ) return new FileInputStream( locatedFile );
 
-		if( locatedFile == null && searchInJarFile == false ) 
+		if( searchInJarFile == false ) 
 			throw new FileNotFoundException( "Could not find file: " + fileName );
 		
 		JarFile locatedJarFile = lookForFileInJars( fileName );

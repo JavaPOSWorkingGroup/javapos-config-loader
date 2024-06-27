@@ -19,6 +19,7 @@ package jpos.util;
 ///////////////////////////////////////////////////////////////////////////////
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 import jpos.util.tracing.Tracer;
@@ -183,14 +184,14 @@ public class XmlHelper extends Object
 	 * @return a Vector of the different directories from a directory string
 	 * @param originalDirName the full directory name
 	 */
-	private Vector getSubdirNames( String originalDirName )
+	private List<String> getSubdirNames( String originalDirName )
 	{
 		String dirName = originalDirName.
 						 replace( "\\".charAt( 0 ), "/".charAt( 0 ) );
 
 		if( !dirName.endsWith( "/" ) ) dirName = dirName + "/";
 
-		Vector dirs = new Vector();
+		List<String> dirs = new ArrayList<>();
 		String s = dirName;
 
 		while( s.indexOf( "/" ) != -1 )
@@ -213,25 +214,24 @@ public class XmlHelper extends Object
 	 */
 	void removeDirs( String dirName ) throws IOException
 	{
-		Vector subdirNames = getSubdirNames( dirName );
-
-		while( subdirNames.size() > 0 )
-		{
-			Vector v = (Vector)subdirNames.clone();
-
-			String subdirName = "";
-			for( int i = 0; i < subdirNames.size(); ++i )
-				subdirName += (String)subdirNames.elementAt( i ) + 
-							  File.separator;
+		List<String> subdirNames = getSubdirNames( dirName );
 		
-			File subdirFile = new File( subdirName );
+		while( !subdirNames.isEmpty() )
+		{
+
+			StringBuilder filePath = new StringBuilder();
+			for (String subDirName : subdirNames) {
+				filePath.append(subDirName).append(File.separator);
+			}
+		
+			File subdirFile = new File( filePath.toString() );
 			
 			if( subdirFile.list() != null &&
 				subdirFile.list().length == 0 )
-				subdirFile.delete();
+				Files.delete(subdirFile.toPath());
 
-			if( subdirNames.size() > 0 )
-				subdirNames.removeElementAt( subdirNames.size() - 1 );
+			if( !subdirNames.isEmpty() )
+				subdirNames.remove( subdirNames.size() - 1 );
 		}
 	}
 

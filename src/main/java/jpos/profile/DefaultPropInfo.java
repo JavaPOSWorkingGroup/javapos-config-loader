@@ -27,10 +27,8 @@ import java.io.Serializable;
  */
 class DefaultPropInfo extends Object implements PropInfo, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
+	private static final long serialVersionUID = -4186241572660113196L;
+	
 	/**
 	 * Creates a PropInfo with name and profile passed
 	 * @param name the PropInfo name

@@ -19,6 +19,7 @@ package jpos.profile;
 ///////////////////////////////////////////////////////////////////////////////
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Class implementing the PropValue interface
@@ -27,9 +28,7 @@ import java.io.Serializable;
  */
 class DefaultPropValue extends Object implements PropValue, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
+	private static final long serialVersionUID = 8895132456252900824L;
 
 	/**
 	 * 2-arg ctor taking Object value
@@ -55,19 +54,23 @@ class DefaultPropValue extends Object implements PropValue, Serializable
 	/** @return the PropType for this PropValue */
 	public PropType getType() { return type; }
 
-	/**
-	 * @return true if this and the other value are equal 
-	 * @param other the other PropValue
-	 */
-	public boolean equals( Object propValue )
-	{
-		if( propValue == null ) return false;
-
-		if( !( propValue instanceof PropValue ) ) return false;
-
-		return value.equals( ( (PropValue)propValue ).getValue() );
+	@Override
+	public int hashCode() {
+		return Objects.hash(type, value);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DefaultPropValue other = (DefaultPropValue) obj;
+		return Objects.equals(type, other.type) && Objects.equals(value, other.value);
+	}
+	
 	//-------------------------------------------------------------------------
 	// Instance variables
 	//

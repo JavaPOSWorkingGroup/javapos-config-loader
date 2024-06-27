@@ -72,7 +72,7 @@ public class SimpleXmlRegPopulator extends AbstractRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries ) throws Exception
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries ) throws Exception
     { regPopulator.save( entries ); }
 
     /**
@@ -82,7 +82,7 @@ public class SimpleXmlRegPopulator extends AbstractRegPopulator
      * @since 1.3 (SF 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries, String fileName ) throws Exception
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries, String fileName ) throws Exception
     { regPopulator.save( entries, fileName ); }
 
     /**
@@ -105,7 +105,8 @@ public class SimpleXmlRegPopulator extends AbstractRegPopulator
      *       to the regPopulator instance
      * @since 1.2 (NY 2K meeting)
      */
-    public Enumeration getEntries() { return regPopulator.getEntries(); }
+    @Override
+    public Enumeration<?> getEntries() { return regPopulator.getEntries(); }
 
     /**
      * @return the URL pointing to the entries file loaded or saved

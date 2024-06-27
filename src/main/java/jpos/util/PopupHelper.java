@@ -32,7 +32,7 @@ import java.util.*;
  */
 public class PopupHelper 
 { 
-    static Dictionary dictionary = new Hashtable(); 
+    static Dictionary<Component, Object[]> dictionary = new Hashtable<>(); 
     
     static MouseListener popupMouseListener = new java.awt.event.MouseAdapter() 
         { 
@@ -44,7 +44,7 @@ public class PopupHelper
                 
                 Component mouseEvtComp = evt.getComponent(); 
                 
-                Object o[] = (Object [])dictionary.get( mouseEvtComp ); 
+                Object[] o = dictionary.get( mouseEvtComp ); 
                 
                 if ( o == null ) 
                     return; 
@@ -84,7 +84,7 @@ public class PopupHelper
      */
     public static void setPopup( JComponent mouseEvtComp, JPopupMenu popupMenu, PopupListener popupListener )
     { 
-        Object o[] = { popupMenu, popupListener }; 
+        Object[] o = { popupMenu, popupListener }; 
         
         dictionary.put( mouseEvtComp, o ); 
         

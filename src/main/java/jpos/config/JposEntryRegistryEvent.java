@@ -28,6 +28,11 @@ import java.util.*;
 public class JposEntryRegistryEvent extends EventObject
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8674029321997818382L;
+
+	/**
      * Creates a new event
      * @param source the source of this event
      * @param entry the JposEntry associated with the event

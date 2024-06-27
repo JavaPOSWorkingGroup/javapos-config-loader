@@ -28,13 +28,6 @@ import java.util.*;
 public class DefaultProfileRegistry extends Object implements ProfileRegistry
 {
 	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
-	/** Default ctor*/
-	public DefaultProfileRegistry() {}
-
-	//-------------------------------------------------------------------------
 	// Public methods
 	//
 
@@ -57,13 +50,13 @@ public class DefaultProfileRegistry extends Object implements ProfileRegistry
     public boolean hasProfile( Profile profile ) { return table.containsValue( profile ); }
 
     /** @return an enumeration of Profile objects  */
-    public Enumeration getProfiles() { return table.elements(); }
+    public Enumeration<?> getProfiles() { return table.elements(); }
 
     /**
      * @return the Profile for the profileName specified
      * @param profileName the unique name of this profile
      */
-    public Profile getProfile( String profileName ) { return (Profile)table.get( profileName ); }
+    public Profile getProfile( String profileName ) { return table.get( profileName ); }
 
     /**
      * Add an Profile for the service with logical name specified
@@ -94,5 +87,5 @@ public class DefaultProfileRegistry extends Object implements ProfileRegistry
 	// Instance varaibles
 	//
 
-	private Hashtable table = new Hashtable();
+	private final Hashtable<String, Profile> table = new Hashtable<>();
 }

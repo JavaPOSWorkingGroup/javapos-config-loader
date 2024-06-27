@@ -182,7 +182,6 @@ public class TracerFactory extends Object
 		initGlobalTracer( props );
 		initTurnedOnTracers( props );
 		initNamedTracers( props );
-		initTracerOutput();
     }
 
 	/**
@@ -223,14 +222,13 @@ public class TracerFactory extends Object
 		else		
 		if( props.isPropertyDefined( TURN_ON_NAMED_TRACERS_PROP_NAME ) )
 		{			
-			List turnOnNamedTracersList = 
+			@SuppressWarnings("unchecked")
+			List<String> turnOnNamedTracersList = 
 			     props.getStringListProperty( TURN_ON_NAMED_TRACERS_PROP_NAME );
 			
-			for( int i = 0; i < turnOnNamedTracersList.size(); ++i )
-			{
-				String tracerName = turnOnNamedTracersList.get( i ).toString();
-                namedTracerState.put( tracerName, Boolean.TRUE );
-			}			
+			for (String tracerName : turnOnNamedTracersList) {
+				namedTracerState.put( tracerName, Boolean.TRUE );
+			}
 		}
 	}
 
@@ -240,22 +238,20 @@ public class TracerFactory extends Object
 	 */
 	private void initNamedTracers( JposProperties props )
 	{
-		Enumeration propNames = props.getPropertyNames();
+		@SuppressWarnings("unchecked")
+		Enumeration<String> propNames = props.getPropertyNames();
 		
 		while( propNames.hasMoreElements() )
 		{
-			String propName = (String)propNames.nextElement();
+			String propName = propNames.nextElement();
 						
 			if( propName.startsWith( TRACER_PROP_NAME ) )
 			{
-				String name = propName.
-				              substring( ( TRACER_PROP_NAME + "." ).length(),
-				                         propName.length() );
+				String name = propName.substring( ( TRACER_PROP_NAME + "." ).length(), propName.length() );
 				
 				if( props.isPropertyDefined( propName ) )
 				{
-					String propValue = (String)props.
-					                   getPropertyString( propName );
+					String propValue = props.getPropertyString( propName );
 					
 		            if( propValue.equalsIgnoreCase( JposProperties.
 		                                            TRACING_ON_PROP_VALUE ) ||
@@ -269,22 +265,12 @@ public class TracerFactory extends Object
 		}
 	}
 
-	/**
-	 * Initializes whether TracerOutput will be to a file or System.err and
-	 * if to a file its location and name.  By default TracerOutput is to
-	 * System.err for all tracers that are turned on
-	 */
-	private void initTracerOutput()
-	{
-		//<todo/>
-	}
-    
     //-------------------------------------------------------------------------
     // Private instance variables
     //
     
-    private HashMap tracerMap = new HashMap();
-    private HashMap namedTracerState = new HashMap();
+    private final HashMap<String, Tracer> tracerMap = new HashMap<>();
+    private final HashMap<String, Boolean> namedTracerState = new HashMap<>();
 
 	private Tracer globalTracer = Tracer.getInstance();
 

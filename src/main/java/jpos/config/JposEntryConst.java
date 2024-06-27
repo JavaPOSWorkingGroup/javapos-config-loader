@@ -136,10 +136,10 @@ public interface JposEntryConst extends RS232Const, Serializable
 	//
 
 	/** The default JposEntry property type */
-	public static final Class DEFAULT_PROP_TYPE = String.class;
+	public static final Class<String> DEFAULT_PROP_TYPE = String.class;
 
 	/** Array of all the property types allowed for a JposEntry property */
-	public static final Class[] PROP_TYPES = 
+	public static final Class<?>[] PROP_TYPES = 
 								  { 
 								  	String.class, 
 								  	Boolean.class, 

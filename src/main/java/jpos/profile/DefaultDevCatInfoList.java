@@ -28,13 +28,6 @@ import java.util.*;
 class DefaultDevCatInfoList extends Object implements DevCatInfoList
 {
 	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
-	/** Default ctor */
-	public DefaultDevCatInfoList() {}
-
-	//-------------------------------------------------------------------------
 	// Public methods
 	//
 
@@ -91,7 +84,7 @@ class DefaultDevCatInfoList extends Object implements DevCatInfoList
 		//
 
 		/** @return the next DevCatInfo in the iterator */
-		public DevCatInfo next() { return (DevCatInfo)iterator.next(); }
+		public DevCatInfo next() { return iterator.next(); }
 
 		/** @return true if there is a next DevCatInfo in the iterator */
 		public boolean hasNext() { return iterator.hasNext(); }
@@ -100,12 +93,12 @@ class DefaultDevCatInfoList extends Object implements DevCatInfoList
 		// Instance variables
 		//
 
-		private java.util.Iterator iterator = null;
+		private final java.util.Iterator<DevCatInfo> iterator;
 	}
 
 	//-------------------------------------------------------------------------
 	// Instance variables
 	//
 
-	private List list = new ArrayList();
+	private final List<DevCatInfo> list = new ArrayList<>();
 }

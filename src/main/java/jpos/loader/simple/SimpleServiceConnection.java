@@ -76,7 +76,7 @@ public class SimpleServiceConnection extends Object
     {
         try 
         {
-            Class[] parameterTypes = new Class[ 2 ];
+            Class<?>[] parameterTypes = new Class[ 2 ];
             parameterTypes[ 0 ] = Class.forName( "java.lang.String" );
             parameterTypes[ 1 ] = Class.forName( "jpos.config.JposEntry");             
 
@@ -87,15 +87,15 @@ public class SimpleServiceConnection extends Object
                             get( siFactoryClassName );
             else
             {
-                Class instanceClass = Class.forName( siFactoryClassName );
-                Constructor defaultCtor = instanceClass.
+                Class<?> instanceClass = Class.forName( siFactoryClassName );
+                Constructor<?> defaultCtor = instanceClass.
                 						  getConstructor( new Class[ 0 ] );
                 siFactory = (JposServiceInstanceFactory)defaultCtor.
                 			newInstance( new Object[ 0 ] );
                 siFactoryTable.put( siFactoryClassName, siFactory );
             }
 
-            service = (JposServiceInstance)siFactory.
+            service = siFactory.
             		  createInstance( logicalName, entry );
         } 
         catch( Exception e ) 
@@ -137,7 +137,7 @@ public class SimpleServiceConnection extends Object
     // Class variables
     //
 
-    private static Hashtable siFactoryTable = new Hashtable();
+    private static Hashtable<String, JposServiceInstanceFactory> siFactoryTable = new Hashtable<>();
 
     //--------------------------------------------------------------------------
     // Instance variables

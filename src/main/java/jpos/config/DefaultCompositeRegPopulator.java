@@ -73,19 +73,19 @@ public class DefaultCompositeRegPopulator extends Object
 
 		try
 		{
-			Class popClass = Class.forName( className );
+			Class<?> popClass = Class.forName( className );
 
 			try
 			{
-				Class[] ctorParamTypes = { String.class };
-				Constructor ctor = popClass.getConstructor( ctorParamTypes );
+				Class<?>[] ctorParamTypes = { String.class };
+				Constructor<?> ctor = popClass.getConstructor( ctorParamTypes );
 
 				Object[] args = { popName };
 				populator = (JposRegPopulator)ctor.newInstance( args );
 			}
 			catch( NoSuchMethodException nsme )
 			{
-				Constructor ctor = popClass.getConstructor( new Class[ 0 ] );
+				Constructor<?> ctor = popClass.getConstructor( new Class[ 0 ] );
 				populator = (JposRegPopulator)ctor.newInstance( new Object[ 0 ] );
 			}
 
@@ -164,34 +164,28 @@ public class DefaultCompositeRegPopulator extends Object
      * @param entries an enumeration of JposEntry objects
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries ) throws Exception
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries ) throws Exception
 	{
-		HashMap popEntriesMap = new HashMap();
+		HashMap<String, List<JposEntry>>popEntriesMap = new HashMap<>();
 		
-		Iterator popIterator = popMap.values().iterator();
+		Iterator<JposRegPopulator> popIterator = popMap.values().iterator();
 		while( popIterator.hasNext() )
-			popEntriesMap.put( ( (JposRegPopulator)popIterator.next() ).
-			                   getUniqueId(),
-							   new ArrayList() );
+			popEntriesMap.put( ( popIterator.next() ).getUniqueId(), new ArrayList<>() );
 
 		while( entries.hasMoreElements() )
 		{
 			JposEntry entry = (JposEntry)entries.nextElement();
 
-			JposRegPopulator populator = (JposRegPopulator)entry.
-			                             getRegPopulator();
+			JposRegPopulator populator = entry.getRegPopulator();
 
 			if( populator == null )
 			{
-				Collection defaultEntryList = (Collection)popEntriesMap.
-				                              get( getDefaultPopulator().
-				                              getUniqueId() );
+				List<JposEntry> defaultEntryList = popEntriesMap.get( getDefaultPopulator().getUniqueId() );
 				defaultEntryList.add( entry );
 			}
 			else
 			{
-				Collection entryList = (Collection)popEntriesMap.
-				                       get( populator.getUniqueId() );
+				List<JposEntry> entryList = popEntriesMap.get( populator.getUniqueId() );
 				
 				if( entryList == null )
 					tracer.println( "Trying to save entry with logicalName = " +
@@ -206,17 +200,17 @@ public class DefaultCompositeRegPopulator extends Object
 		popIterator = popMap.values().iterator();
 		while( popIterator.hasNext() )
 		{
-			JposRegPopulator populator = (JposRegPopulator)popIterator.next();
+			JposRegPopulator populator = popIterator.next();
 			String popUniqueId = populator.getUniqueId();
-			Collection entryList = (Collection)popEntriesMap.get( popUniqueId );
+			List<JposEntry> entryList = popEntriesMap.get( popUniqueId );
 
 			try
 			{
 				if( popFileMap.get( populator.getUniqueId() ) != null )
-					populator.save( new Vector( entryList ).elements(),
-									(String)popFileMap.get( populator.getUniqueId() ) );
+					populator.save( Collections.enumeration(entryList),
+									popFileMap.get( populator.getUniqueId() ) );
 				else
-					populator.save( new Vector( entryList ).elements() );
+					populator.save( Collections.enumeration(entryList) );
 			}
 			catch( Exception e )
 			{
@@ -236,7 +230,7 @@ public class DefaultCompositeRegPopulator extends Object
      * @param fileName the file name to save entries
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries, String fileName ) throws Exception
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries, String fileName ) throws Exception
 	{
 		getDefaultPopulator().save( entries, fileName );
 	}
@@ -254,10 +248,10 @@ public class DefaultCompositeRegPopulator extends Object
         JposProperties jposProperties = JposServiceLoader.getManager().getProperties();
 
 		JposProperties.MultiProperty populatorClassMultiProp = 
-		jposProperties.getMultiProperty( JposProperties.JPOS_CONFIG_POPULATOR_CLASS_MULTIPROP_NAME );
+		jposProperties.getMultiProperty( JposPropertiesConst.JPOS_CONFIG_POPULATOR_CLASS_MULTIPROP_NAME );
 
 		JposProperties.MultiProperty populatorFileMultiProp = 
-		jposProperties.getMultiProperty( JposProperties.JPOS_CONFIG_POPULATOR_FILE_MULTIPROP_NAME );
+		jposProperties.getMultiProperty( JposPropertiesConst.JPOS_CONFIG_POPULATOR_FILE_MULTIPROP_NAME );
 
 		if( populatorClassMultiProp == null || populatorClassMultiProp.getNumberOfProperties() == 0 )
 		{
@@ -265,9 +259,10 @@ public class DefaultCompositeRegPopulator extends Object
 			throw new RuntimeException( "CompositeRegPopulator.load() w/o any defined multi-property" );
 		}
 
-		Iterator popClasses = populatorClassMultiProp.getSortedPropertyNames();
+		@SuppressWarnings("unchecked")
+		Iterator<String> popClasses = populatorClassMultiProp.getSortedPropertyNames();
 
-		String defaultPopName = (String)popClasses.next();
+		String defaultPopName = popClasses.next();
 		String defaultPopClass = populatorClassMultiProp.getPropertyString( defaultPopName );
 		int defaultPopClassNumber = populatorClassMultiProp.propertyNumber( defaultPopName );
 
@@ -275,7 +270,7 @@ public class DefaultCompositeRegPopulator extends Object
 
 		if( populatorFileMultiProp != null && populatorFileMultiProp.getNumberOfProperties() > 0 )
 		{
-			String defaultPopFile = (String)populatorFileMultiProp.getPropertyString( defaultPopClassNumber );
+			String defaultPopFile = populatorFileMultiProp.getPropertyString( defaultPopClassNumber );
 
 			if( defaultPopFile != null )
 			{
@@ -304,7 +299,7 @@ public class DefaultCompositeRegPopulator extends Object
 										  "<" + defaultPopName + ", " + defaultPopClass + ">" );
 		while( popClasses.hasNext() )
 		{
-			String popName = (String)popClasses.next();
+			String popName = popClasses.next();
 			String popClass = populatorClassMultiProp.getPropertyString( popName );
 			int popClassNumber = populatorClassMultiProp.propertyNumber( popName );
 
@@ -349,21 +344,24 @@ public class DefaultCompositeRegPopulator extends Object
 	 * number of entries in populator.  Could do better by keeping more data structure
 	 * but not worth it if n and m are small (as expected in typical system)
 	 */
-    public Enumeration getEntries()
+    @SuppressWarnings("rawtypes")
+	public Enumeration getEntries()
 	{
-		Vector entryVector = new Vector();
-		Iterator populators = getPopulators();
+		List<JposEntry> entryList = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		Iterator<JposRegPopulator> populators = getPopulators();
 
 		while( populators.hasNext() )
 		{
-			JposRegPopulator pop = (JposRegPopulator)populators.next();
+			JposRegPopulator pop = populators.next();
 
-			Enumeration entries = pop.getEntries();
+			@SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = pop.getEntries();
 			while( entries.hasMoreElements() )
-				entryVector.add( entries.nextElement() );
+				entryList.add( entries.nextElement() );
 		}
 
-		return entryVector.elements();
+		return Collections.enumeration(entryList);
 	}
 
 	/**
@@ -411,6 +409,7 @@ public class DefaultCompositeRegPopulator extends Object
 	public void remove( JposRegPopulator populator ) { popMap.remove( populator.getUniqueId() ); }
 
 	/** @return an iterator over all populators in this composite */
+	@SuppressWarnings("rawtypes")
 	public Iterator getPopulators() { return popMap.values().iterator(); }
 
 	/** 
@@ -428,8 +427,8 @@ public class DefaultCompositeRegPopulator extends Object
     // Instance variables
     //
 
-	private HashMap popMap = new HashMap();
-	private HashMap popFileMap = new HashMap();
+	private HashMap<String, JposRegPopulator> popMap = new HashMap<>();
+	private HashMap<String, String> popFileMap = new HashMap<>();
 	private JposRegPopulator defaultPop = null;
 	private Exception lastLoadException = null;
 	

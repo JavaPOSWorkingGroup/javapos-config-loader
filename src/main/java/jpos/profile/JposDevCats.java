@@ -31,7 +31,7 @@ public class JposDevCats extends Object
 	// Private class constants
 	//
 
-	private static final Hashtable DEVCAT_TABLE = new Hashtable();
+	private static final HashMap<String, DevCat> DEVCAT_TABLE = new HashMap<>();
 
 	//-------------------------------------------------------------------------
 	// Class constants
@@ -232,7 +232,7 @@ public class JposDevCats extends Object
 	public static DevCat getDevCatForName( String devCatName )
 	{
 		if( DEVCAT_TABLE.containsKey( devCatName ) )
-			return (DevCat)DEVCAT_TABLE.get( devCatName );
+			return DEVCAT_TABLE.get( devCatName );
 
 		return UNKNOWN_DEVCAT;
 	}
@@ -246,7 +246,7 @@ public class JposDevCats extends Object
 	 * @since 1.3 (SF 2K meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
-	public static abstract class AbstractDevCat extends Object 
+	public abstract static class AbstractDevCat extends Object 
 	implements DevCat 
 	{
 	    //---------------------------------------------------------------------
@@ -261,6 +261,7 @@ public class JposDevCats extends Object
 		 * category 
 		 * @param obj the other object to compare to
 		 */
+	    @Override
 		public boolean equals( Object obj )
 		{
 			if( obj == null ) return false;
@@ -269,6 +270,12 @@ public class JposDevCats extends Object
 
 			return toString().equals( obj.toString() );
 		}
+		
+		@Override
+		public int hashCode() {
+			return toString().hashCode();
+		}
+		
 	}
 
 	/**

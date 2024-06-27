@@ -27,12 +27,9 @@ import java.io.Serializable;
  */
 public class FloatPropType extends AbstractPropType implements PropType, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
+	private static final long serialVersionUID = 5727449475781327225L;
 
-	/** Default ctor */
-	FloatPropType() {}
+	private FloatPropType() {}
 
 	//---------------------------------------------------------------------
 	// Class methods
@@ -41,9 +38,6 @@ public class FloatPropType extends AbstractPropType implements PropType, Seriali
 	/** @return the unique instance of this class (create if necessary) */
 	public static PropType getInstance()
 	{
-		if( instance == null )
-			instance = new FloatPropType();
-
 		return instance;
 	}
 
@@ -52,10 +46,11 @@ public class FloatPropType extends AbstractPropType implements PropType, Seriali
 	//
 
 	/** @return a String representation of this PropType */
+	@Override
 	public String toString() { return "FloatPropType"; }
 
 	/** @return a Java class that defines this type */
-	public Class getJavaTypeClass() { return ( new Float( 1.0 ) ).getClass(); }
+	public Class<?> getJavaTypeClass() { return Float.class; }
 
 	/**
 	 * @return true if the object passed is of this PropType
@@ -79,5 +74,5 @@ public class FloatPropType extends AbstractPropType implements PropType, Seriali
 	// Class instance
 	//
 
-	private static PropType instance = null;
+	private static final PropType instance = new FloatPropType();
 }

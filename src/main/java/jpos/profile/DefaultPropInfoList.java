@@ -28,13 +28,6 @@ import java.util.*;
 class DefaultPropInfoList extends Object implements PropInfoList
 {
 	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
-	/** Default ctor */
-	public DefaultPropInfoList() {}
-
-	//-------------------------------------------------------------------------
 	// Public methods
 	//
 
@@ -91,7 +84,7 @@ class DefaultPropInfoList extends Object implements PropInfoList
 		//
 
 		/** @return the next PropInfo in the iterator */
-		public PropInfo next() { return (PropInfo)iterator.next(); }
+		public PropInfo next() { return iterator.next(); }
 
 		/** @return true if there is a next PropInfo in the iterator */
 		public boolean hasNext() { return iterator.hasNext(); }
@@ -100,12 +93,12 @@ class DefaultPropInfoList extends Object implements PropInfoList
 		// Instance variables
 		//
 
-		private java.util.Iterator iterator = null;
+		private final java.util.Iterator<PropInfo> iterator;
 	}
 
 	//-------------------------------------------------------------------------
 	// Instance variables
 	//
 
-	private List list = new ArrayList();
+	private final List<PropInfo> list = new ArrayList<>();
 }

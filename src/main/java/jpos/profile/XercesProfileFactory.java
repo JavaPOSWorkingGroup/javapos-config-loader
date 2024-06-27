@@ -26,7 +26,6 @@ import java.net.MalformedURLException;
 import javax.xml.parsers.*;
 
 import org.w3c.dom.*;
-import org.apache.xerces.parsers.DOMParser;
 import org.xml.sax.*;
 
 import jpos.util.XmlHelper;
@@ -41,13 +40,6 @@ import jpos.util.tracing.TracerFactory;
  */
 public class XercesProfileFactory extends Object implements ProfileFactory
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
-	/** Default ctor */
-	public XercesProfileFactory() {}
-
 	//-------------------------------------------------------------------------
 	// Private methods
 	//
@@ -118,8 +110,8 @@ public class XercesProfileFactory extends Object implements ProfileFactory
             
 			Document document = docBuilder.parse( new File( xmlFileName ) );
 
-			if( errorHandler.getErrorList().size() > 0 ||
-				errorHandler.getFatalErrorList().size() > 0 )
+			if( !errorHandler.getErrorList().isEmpty() ||
+				!errorHandler.getFatalErrorList().isEmpty() )
 				{
 					String msg = "Error while parsing XML file, set properties"+
 					             " jpos.tracing = ON in jpos.properties" + 
@@ -169,9 +161,7 @@ public class XercesProfileFactory extends Object implements ProfileFactory
 			DefaultErrorHandler errorHandler = this.new DefaultErrorHandler();
 			docBuilder.setErrorHandler( errorHandler );
             
-            Document document = docBuilder.parse( new File( xmlFileName ) ); 
-
-			return document;
+            return docBuilder.parse( new File( xmlFileName ) ); 
         }
         catch( IOException ioe )
         {
@@ -225,10 +215,6 @@ public class XercesProfileFactory extends Object implements ProfileFactory
 	// Instance variables
 	//
 
-	private Profile profile = null;
-
-    private DOMParser domParser = new DOMParser();
-	private DefaultErrorHandler errorHandler = this.new DefaultErrorHandler();
 	private Tracer tracer = TracerFactory.getInstance().
 							 createTracer( "XercesProfileFactory" );
 
@@ -247,11 +233,11 @@ public class XercesProfileFactory extends Object implements ProfileFactory
 		// Package methods
 		//
 
-		List getErrorList() { return errorList; }
+		List<SAXParseException> getErrorList() { return errorList; }
 
-		List getWarningList() { return warningList; }
+		List<SAXParseException> getWarningList() { return warningList; }
 
-		List getFatalErrorList() { return fatalErrorList; }
+		List<SAXParseException> getFatalErrorList() { return fatalErrorList; }
 
 		//---------------------------------------------------------------------
 		// Public methods
@@ -279,9 +265,9 @@ public class XercesProfileFactory extends Object implements ProfileFactory
 		// Private variables
 		//
 
-		private List warningList = new ArrayList();
-		private List errorList = new ArrayList();
-		private List fatalErrorList = new ArrayList();
+		private final List<SAXParseException> warningList = new ArrayList<>();
+		private final List<SAXParseException> errorList = new ArrayList<>();
+		private final List<SAXParseException> fatalErrorList = new ArrayList<>();
 	}
 
 	//-------------------------------------------------------------------------

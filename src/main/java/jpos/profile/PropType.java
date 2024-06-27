@@ -32,7 +32,7 @@ public interface PropType
 	public String getDescription();
 
 	/** @return a Java class that defines this type */
-	public Class getJavaTypeClass();
+	public Class<?> getJavaTypeClass();
 
 	/**
 	 * @return true if the object passed is of this PropType

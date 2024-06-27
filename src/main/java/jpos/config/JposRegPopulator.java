@@ -52,7 +52,7 @@ public interface JposRegPopulator
      * @since 1.2 (NY 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries ) throws Exception;
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries ) throws Exception;
 
     /**
      * Tell the populator to save the current entries in the file specified 
@@ -61,7 +61,7 @@ public interface JposRegPopulator
      * @since 1.3 (SF 2K meeting)
      * @throws java.lang.Exception if any error occurs while saving
      */
-    public void save( Enumeration entries, String fileName ) throws Exception;
+    public void save( @SuppressWarnings("rawtypes") Enumeration entries, String fileName ) throws Exception;
 
     /**
      * Tell the populator to load the entries 
@@ -93,7 +93,8 @@ public interface JposRegPopulator
      * @return an Enumeration of JposEntry objects
      * @since 1.2 (NY 2K meeting)
      */
-    public Enumeration getEntries();
+    @SuppressWarnings("rawtypes")
+	public Enumeration getEntries();
 
 	/**
 	 * @return true if this populator is a composite populator or false 

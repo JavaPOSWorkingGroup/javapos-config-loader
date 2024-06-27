@@ -28,13 +28,6 @@ import java.util.*;
 class DefaultPropValueList extends Object implements PropValueList
 {
 	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
-
-	/** Default ctor */
-	DefaultPropValueList() {}
-
-	//-------------------------------------------------------------------------
 	// Public methods
 	//
 
@@ -91,7 +84,7 @@ class DefaultPropValueList extends Object implements PropValueList
 		//
 
 		/** @return the next PropValue in the iterator */
-		public PropValue next() { return (PropValue)iterator.next(); }
+		public PropValue next() { return iterator.next(); }
 
 		/** @return true if there is a next PropValue in the iterator */
 		public boolean hasNext() { return iterator.hasNext(); }
@@ -100,12 +93,12 @@ class DefaultPropValueList extends Object implements PropValueList
 		// Instance variables
 		//
 
-		private java.util.Iterator iterator = null;
+		private final java.util.Iterator<PropValue> iterator;
 	}
 
 	//-------------------------------------------------------------------------
 	// Instance variables
 	//
 
-	private List list = new ArrayList();
+	private List<PropValue> list = new ArrayList<>();
 }

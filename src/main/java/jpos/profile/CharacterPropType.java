@@ -31,8 +31,9 @@ public class CharacterPropType extends AbstractPropType implements PropType, Ser
 	// Ctor(s)
 	//
 
-	/** Default ctor */
-	CharacterPropType() {}
+	private static final long serialVersionUID = -8746645376918501427L;
+
+	private CharacterPropType() {}
 
 	//---------------------------------------------------------------------
 	// Class methods
@@ -41,9 +42,6 @@ public class CharacterPropType extends AbstractPropType implements PropType, Ser
 	/** @return the unique instance of this class (create if necessary) */
 	public static PropType getInstance()
 	{
-		if( instance == null )
-			instance = new CharacterPropType();
-
 		return instance;
 	}
 
@@ -55,7 +53,7 @@ public class CharacterPropType extends AbstractPropType implements PropType, Ser
 	public String toString() { return "CharacterPropType"; }
 
 	/** @return a Java class that defines this type */
-	public Class getJavaTypeClass() { return ( new Character( 'c' ) ).getClass(); }
+	public Class<?> getJavaTypeClass() { return Character.class; }
 
 	/**
 	 * @return true if the object passed is of this PropType
@@ -79,5 +77,5 @@ public class CharacterPropType extends AbstractPropType implements PropType, Ser
 	// Class instance
 	//
 
-	private static PropType instance = null;
+	private static final PropType instance = new CharacterPropType();
 }

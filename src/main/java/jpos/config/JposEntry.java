@@ -32,6 +32,7 @@ import java.util.Iterator;
  * @since 0.1 (Philly 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
+@SuppressWarnings("rawtypes")
 public interface JposEntry extends Serializable, Comparable
 {
     /**

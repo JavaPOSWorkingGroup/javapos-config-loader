@@ -43,10 +43,11 @@ public final class Sorter extends Object
      * <b>NOTE:</b>implements a simple one pass algorithm in O(n) time
      * @param comparables what to compare with
      */
-    public static Comparable min( Vector comparables )
+    public static Comparable min( @SuppressWarnings("rawtypes") Vector comparables )
     {
         Comparable smallest = null;
-        Enumeration elements = comparables.elements();
+        @SuppressWarnings("rawtypes")
+		Enumeration elements = comparables.elements();
 
         while( elements.hasMoreElements() )
         {
@@ -69,10 +70,11 @@ public final class Sorter extends Object
      * <b>NOTE:</b>implements a simple one pass algorithm in O(n) time
      * @param comparables what to compare with
      */
-    public static Comparable max( Vector comparables )
+    public static Comparable max( @SuppressWarnings("rawtypes") Vector comparables )
     {
         Comparable greatest = null;
-        Enumeration elements = comparables.elements();
+		@SuppressWarnings("rawtypes")
+		Enumeration elements = comparables.elements();
 
         while( elements.hasMoreElements() )
         {
@@ -96,7 +98,8 @@ public final class Sorter extends Object
      *         Sorts n element in place in O(n^2) worst-case time
      * @param comparables a Vector with the initial Comparable objects
      */
-    public static Vector insertionSort( Vector comparables )
+    @SuppressWarnings("unchecked")
+	public static Vector<?> insertionSort( @SuppressWarnings("rawtypes") Vector comparables )
     {
         Comparable min = min( comparables );
 
@@ -123,7 +126,7 @@ public final class Sorter extends Object
      *         Sorts n element in O(nlgn) worst-case time
      * @param comparables a Vector with the initial Comparable objects
      */
-    public static Vector mergeSort( Vector comparables )
+    public static Vector<?> mergeSort( @SuppressWarnings("rawtypes") Vector comparables )
     {
         //<todo why="Proboby useful for large number of values since Merge-sort is O(nlgn)">
         throw new RuntimeException( "Not yet implemented!" );

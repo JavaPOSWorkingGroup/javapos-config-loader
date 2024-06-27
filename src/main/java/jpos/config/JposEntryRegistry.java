@@ -42,7 +42,8 @@ public interface JposEntryRegistry
      * @return an enumeration of JposEntry objects 
      * @since 0.1 (Philly 99 meeting)
      */
-    public Enumeration getEntries();
+    @SuppressWarnings("rawtypes")
+	public Enumeration getEntries();
 
     /**
      * @return the JposEntry for the logicalName specified

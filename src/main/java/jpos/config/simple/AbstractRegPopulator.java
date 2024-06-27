@@ -52,55 +52,6 @@ public abstract class AbstractRegPopulator extends Object
 	public AbstractRegPopulator( String id ) { setUniqueId( id ); }
 
     //-------------------------------------------------------------------------
-    // Public abstract methods
-    //
-
-    /**
-     * Tell the populator to save the current entries 
-     * @param entries an enumeration of JposEntry objects
-     * @since 1.2 (NY 2K meeting)
-     * @throws java.lang.Exception if any error occurs while saving
-     */
-    public abstract void save( Enumeration entries ) throws Exception;
-
-    /**
-     * Tell the populator to save the current entries in the file specified 
-     * @param entries an enumeration of JposEntry objects
-     * @param fileName the file name to save entries
-     * @since 1.3 (SF 2K meeting)
-     * @throws java.lang.Exception if any error occurs while saving
-     */
-    public abstract void save( Enumeration entries, String fileName ) 
-    				  throws Exception;
-
-    /**
-     * Tell the populator to load the entries 
-     * @since 1.2 (NY 2K meeting)
-     */
-    public abstract void load();
-
-
-    /**
-     * Loads the entries specified in the fileName
-     * @param fileName the entries file name
-     * @since 1.3 (SF 2K meeting)
-     */
-    public abstract void load( String fileName );
-
-    /**
-     * @return the URL pointing to the entries file loaded or saved
-     * @since 1.2 (NY 2K meeting)
-     */
-    public abstract URL getEntriesURL();
-
-	/**
-	 * @return the name of this populator.  This should be a short descriptive 
-	 * name
-	 * @since 1.3 (Washington DC 2001 meeting)
-	 */
-	public abstract String getName();
-
-    //-------------------------------------------------------------------------
     // Public methods
     //
 
@@ -116,15 +67,16 @@ public abstract class AbstractRegPopulator extends Object
      * @return an Enumeration of JposEntry objects
      * @since 1.2 (NY 2K meeting)
      */
-    public Enumeration getEntries() 
+    @SuppressWarnings("rawtypes")
+	public Enumeration getEntries() 
 	{
-		Vector vector = new Vector();
-		Enumeration entries = jposEntries.elements(); 
+		List<Object> entryList = new ArrayList<>();
+		Enumeration<Object> entries = jposEntries.elements(); 
 
 		while( entries.hasMoreElements() )
-			vector.addElement( entries.nextElement() );
+			entryList.add( entries.nextElement() );
 
-		return vector.elements();
+		return Collections.enumeration(entryList);
 	}
 
 	/**
@@ -197,7 +149,7 @@ public abstract class AbstractRegPopulator extends Object
      * @return the jposEntries Hashtable to allow access to subclasses
      * @since 1.2 (NY 2K meeting)
      */
-    protected Hashtable getJposEntries() { return jposEntries; }
+    protected Hashtable<String, Object> getJposEntries() { return jposEntries; }
 
     /**
      * @return true if a populator file (or URL) is defined
@@ -376,7 +328,7 @@ public abstract class AbstractRegPopulator extends Object
 
         String path = "";
 
-		Vector jarZipFilesVector = new Vector();
+		List<String> jarZipFilesVector = new ArrayList<>();
 
         for( StringTokenizer st = new StringTokenizer( classpath, 
         												pathSeparator, false ); 
@@ -389,7 +341,7 @@ public abstract class AbstractRegPopulator extends Object
 
                 if( ( path.length() > 4 ) && 
                     ( path.endsWith( ".zip" ) || path.endsWith( ".jar" ) ) )
-                    jarZipFilesVector.addElement( path );  
+                    jarZipFilesVector.add( path );  
                 else 
                 {
 					String absoluteFileName = path + 
@@ -418,22 +370,21 @@ public abstract class AbstractRegPopulator extends Object
      * @since 2.0 (Long Beach 2001)
      */
     protected InputStream findFileInJarZipFiles( String fileName, 
-    											  Vector jarZipFilesVector )
+    											  List<String> jarZipFilesVector )
     {
         InputStream is = null;
 
         for( int i = 0; i < jarZipFilesVector.size(); ++i )
         {
-            String jarZipFileName = (String)jarZipFilesVector.elementAt( i );
+            String jarZipFileName = jarZipFilesVector.get( i );
 
-            try
+            try (ZipFile zipFile = new ZipFile( jarZipFileName ))
             {
-                ZipFile zipFile = new ZipFile( jarZipFileName );
-                Enumeration zipEntries = zipFile.entries();
+                Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
                 while( zipEntries.hasMoreElements() )
                 {
-                    ZipEntry zipEntry = (ZipEntry)zipEntries.nextElement();
+                    ZipEntry zipEntry = zipEntries.nextElement();
                     String entryName = zipEntry.getName();
                     
 					if( entryName.endsWith( fileName ) )
@@ -460,7 +411,7 @@ public abstract class AbstractRegPopulator extends Object
     // Instance variables
     //
 
-    private Hashtable jposEntries = new Hashtable();
+    private final Hashtable<String, Object> jposEntries = new Hashtable<>();
 
     private InputStream populatorIS = null;
     private OutputStream populatorOS = null;

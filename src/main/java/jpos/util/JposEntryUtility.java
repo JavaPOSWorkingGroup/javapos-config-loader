@@ -126,16 +126,17 @@ public class JposEntryUtility extends Object
 	 
 
 	/** @return an Iterator of all the standard property names */
-	public static Iterator getStandardPropNames() { return STANDARD_PROP_NAMES_LIST.iterator(); }
+	public static Iterator<String> getStandardPropNames() { return STANDARD_PROP_NAMES_LIST.iterator(); }
 
 	/**
 	 * @return a enumeration of all non-required property names from the jposEntry
 	 * @param jposEntry the JposEntry
 	 */
-	public static Enumeration getNonRequiredPropNames( JposEntry jposEntry )
+	public static Enumeration<String> getNonRequiredPropNames( JposEntry jposEntry )
 	{
 		List<String> list = new ArrayList<>();
 
+		@SuppressWarnings("unchecked")
 		Enumeration<String> names = jposEntry.getPropertyNames();
 		while( names.hasMoreElements() )
 		{
@@ -153,7 +154,7 @@ public class JposEntryUtility extends Object
 	 * from the JposEntry object passed
      * @param jposEntry the entry to validate
      */
-    public static Enumeration getMissingRequiredPropNames( JposEntry jposEntry )
+    public static Enumeration<String> getMissingRequiredPropNames( JposEntry jposEntry )
     {
 		List<String> list = new ArrayList<>();
 
@@ -195,7 +196,7 @@ public class JposEntryUtility extends Object
 	 * from the JposEntry object passed
      * @param jposEntry the entry to validate
      */
-    public static Enumeration getMissingRS232PropNames( JposEntry jposEntry )
+    public static Enumeration<String> getMissingRS232PropNames( JposEntry jposEntry )
     {
 		List<String> list = new ArrayList<>();
 
@@ -224,10 +225,11 @@ public class JposEntryUtility extends Object
 	 * @return an Enumeration of all non-standard properties, that is vendor properties
 	 * @param jposEntry the JposEntry to find the vendor property names from
 	 */
-	public static Enumeration getVendorPropNames( JposEntry jposEntry )
+	public static Enumeration<String> getVendorPropNames( JposEntry jposEntry )
 	{
 		List<String> list = new ArrayList<>();
 
+		@SuppressWarnings("unchecked")
 		Enumeration<String> propNames = jposEntry.getPropertyNames();
 		while( propNames.hasMoreElements() )
 			list.add( propNames.nextElement() );
@@ -291,7 +293,7 @@ public class JposEntryUtility extends Object
 	 * @param classObject the Class object
 	 * @since 2.0.0
 	 */
-	public static String shortClassName( Class classObject )
+	public static String shortClassName( @SuppressWarnings("rawtypes") Class classObject )
 	{ return classObject.toString().substring( classObject.toString().lastIndexOf( "." ) + 1 ); }
 
 	/** 
@@ -301,7 +303,7 @@ public class JposEntryUtility extends Object
 	 * @see jpos.config.JposEntryConst#PROP_TYPES
 	 * @since 2.0.0
 	 */
-	public static boolean validatePropValue( Object propValue, Class propType )
+	public static boolean validatePropValue( Object propValue, @SuppressWarnings("rawtypes") Class propType )
 	{
 		if( propValue == null || propType == null ) return false;
 
@@ -316,7 +318,7 @@ public class JposEntryUtility extends Object
 	 * @see jpos.config.JposEntryConst#PROP_TYPES
 	 * @since 2.0.0
 	 */
-	public static boolean isValidPropType( Class propType )
+	public static boolean isValidPropType( @SuppressWarnings("rawtypes") Class propType )
 	{
 		if( propType == null ) return false;
 
@@ -333,7 +335,7 @@ public class JposEntryUtility extends Object
 	 * @exception jpos.config.JposConfigException if this property type is not 
 	 * valid
 	 */
-	public static Object getDefaultValueForType( Class propType ) throws JposConfigException
+	public static Object getDefaultValueForType( @SuppressWarnings("rawtypes") Class propType ) throws JposConfigException
 	{
 		if( !isValidPropType( propType ) )
 			throw new JposConfigException( "Invalid property type: " + propType );
@@ -385,7 +387,7 @@ public class JposEntryUtility extends Object
 	 * from the arguments passed
 	 * @since 2.0.0
 	 */
-	public static Object parsePropValue( String stringValue, Class propType ) throws JposConfigException
+	public static Object parsePropValue( String stringValue, @SuppressWarnings("rawtypes") Class propType ) throws JposConfigException
 	{
 		if( !isValidPropType( propType ) )
 			throw new JposConfigException( "Invalid property type: " + propType );
@@ -434,7 +436,7 @@ public class JposEntryUtility extends Object
 	 * @param typeString the type string name
 	 * @throws jpos.config.JposConfigException if the typeString is not a valid property type string
 	 */
-	public static Class propTypeFromString( String typeString ) throws JposConfigException
+	public static Class<?> propTypeFromString( String typeString ) throws JposConfigException
 	{
 		if( typeString == null ) throw new JposConfigException( "typeString cannot be null" );
 

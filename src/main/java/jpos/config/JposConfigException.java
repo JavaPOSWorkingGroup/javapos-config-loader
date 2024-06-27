@@ -28,6 +28,11 @@ import jpos.JposException;
  */
 public class JposConfigException extends JposException
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6080819630774250157L;
+
 	//-------------------------------------------------------------------------
 	// Ctor(s)
 	// 

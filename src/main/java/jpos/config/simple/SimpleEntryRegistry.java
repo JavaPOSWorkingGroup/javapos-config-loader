@@ -66,15 +66,16 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
      * @return an enumeration of JposEntry objects 
      * @since 0.1 (Philly 99 meeting)
      */
-    public Enumeration getEntries() 
+    @SuppressWarnings("rawtypes")
+	public Enumeration getEntries() 
 	{
-		Vector vector = new Vector();
-		Enumeration entries = jposEntries.elements(); 
+		List<JposEntry> entryList = new ArrayList<>();
+		Enumeration<JposEntry> entries = jposEntries.elements(); 
 
 		while( entries.hasMoreElements() )
-			vector.addElement( entries.nextElement() );
+			entryList.add( entries.nextElement() );
 
-		return vector.elements();
+		return Collections.enumeration(entryList);
 	}
 
     /**
@@ -135,17 +136,16 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
      */
     public void removeJposEntry( JposEntry entry ) 
     {
-        Enumeration entries = jposEntries.elements();
+        Enumeration<JposEntry> entries = jposEntries.elements();
 
         while( entries.hasMoreElements() )
         {
-            JposEntry jposEntry = (JposEntry)entries.nextElement();
+            JposEntry jposEntry = entries.nextElement();
 
-            if( jposEntry.hasPropertyWithName( JposEntry.
-            								   LOGICAL_NAME_PROP_NAME ) )
+            if( jposEntry.hasPropertyWithName( JposEntry.LOGICAL_NAME_PROP_NAME ) )
             {
-                JposEntry removedEntry = (JposEntry)jposEntries.
-                remove( entry.getPropertyValue( JposEntry.
+                JposEntry removedEntry = 
+                		jposEntries.remove( entry.getPropertyValue( JposEntry.
                 							    LOGICAL_NAME_PROP_NAME ) );
 
 		        tracer.println( "Removed entry.logicalName = " + 
@@ -169,14 +169,13 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
      */
     public void removeJposEntry( String logicalName ) 
     {
-        JposEntry entry = (JposEntry)jposEntries.get( logicalName );
+        JposEntry entry = jposEntries.get( logicalName );
 
         if( entry != null )
         {
             jposEntries.remove( logicalName ); 
 
-            fireJposEntryRegistryEventRemoved( new JposEntryRegistryEvent( 
-            								   this, entry ) );
+            fireJposEntryRegistryEventRemoved( new JposEntryRegistryEvent( this, entry ) );
         }
     }
 
@@ -233,18 +232,16 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
         jposEntries.clear();
         getRegPopulator().load();
 
-        Enumeration entries = getRegPopulator().getEntries();
+        @SuppressWarnings("unchecked")
+		Enumeration<JposEntry> entries = getRegPopulator().getEntries();
 
         while( entries.hasMoreElements() )
         {
             try
             {
-                JposEntry jposEntry = (JposEntry)entries.nextElement();
+                JposEntry jposEntry = entries.nextElement();
 
-                jposEntries.put( jposEntry.
-                				 getPropertyValue( JposEntry.
-                				 				   LOGICAL_NAME_PROP_NAME ),
-				                                   jposEntry );
+                jposEntries.put( jposEntry.getLogicalName(), jposEntry );
             }
             catch( Exception e ) { tracer.print( e ); }
         }
@@ -274,7 +271,7 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
 	 */
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		sb.append( "<SimpleEntryRegistry>\n" );
 
@@ -285,13 +282,14 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
 
 		sb.append( "<entries>\n" );
 
-		Enumeration entries = getEntries();
+		@SuppressWarnings("unchecked")
+		Enumeration<JposEntry> entries = getEntries();
 		int count = 0;
 
 		while( entries.hasMoreElements() )
 		{
 			sb.append( "<entry" + count + ".LogicalName=\"" + 
-			           ( (JposEntry)entries.nextElement() ).
+			           ( entries.nextElement() ).
 			           getLogicalName() + "\"\n/>" );
 			count++;
 		}
@@ -318,12 +316,13 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
     	                "e.getJposEntry().logicalName = " + 
     	                e.getJposEntry().getLogicalName() );    	
     	
-        Vector listenersClone = (Vector)listeners.clone();
+        @SuppressWarnings("unchecked")
+		Vector<JposEntryRegistryListener> listenersClone = (Vector<JposEntryRegistryListener>) listeners.clone();
 
         synchronized( listenersClone )
         {
             for( int i = 0; i < listenersClone.size(); ++i )
-                ((JposEntryRegistryListener)listenersClone.elementAt( i ) ).
+                (listenersClone.elementAt( i ) ).
                 jposEntryAdded( e );
         }
     }
@@ -339,13 +338,13 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
     	                "e.getJposEntry().logicalName = " + 
     	                e.getJposEntry().getLogicalName() );
     	
-        Vector listenersClone = (Vector)listeners.clone();
+        @SuppressWarnings("unchecked")
+		Vector<JposEntryRegistryListener> listenersClone = (Vector<JposEntryRegistryListener>) listeners.clone();
 
         synchronized( listenersClone )
         {
             for( int i = 0; i < listenersClone.size(); ++i )
-                ((JposEntryRegistryListener)listenersClone.elementAt( i ) ).
-                jposEntryRemoved( e );
+                (listenersClone.elementAt( i ) ).jposEntryRemoved( e );
         }
     }
 
@@ -360,13 +359,13 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
     	                "e.getJposEntry().logicalName = " + 
     	                e.getJposEntry().getLogicalName() );    	
     	
-        Vector listenersClone = (Vector)listeners.clone();
+        @SuppressWarnings("unchecked")
+		Vector<JposEntryRegistryListener> listenersClone = (Vector<JposEntryRegistryListener>) listeners.clone();
 
         synchronized( listenersClone )
         {
             for( int i = 0; i < listenersClone.size(); ++i )
-                ((JposEntryRegistryListener)listenersClone.elementAt( i ) ).
-                jposEntryModified( e );
+                (listenersClone.elementAt( i ) ).jposEntryModified( e );
         }
     }
 
@@ -374,8 +373,8 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
     // Instance variables
     //
 
-    public Hashtable jposEntries = new Hashtable();
-    private Vector listeners = new Vector();
+    private final Hashtable<String, JposEntry> jposEntries = new Hashtable<>();
+    private final Vector<JposEntryRegistryListener> listeners = new Vector<>();
     private JposRegPopulator regPopulator = null;
 	private boolean loaded = false;
 	

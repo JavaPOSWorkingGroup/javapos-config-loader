@@ -29,18 +29,28 @@ public class ProfileException extends Exception
 	// Ctor(s)
 	//
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5646225627523470777L;
+
 	/** 
 	 * 1-arg ctor 
 	 * @param msg the exception's message
 	 */
-	public ProfileException( String msg ) { super( msg ); }
+	public ProfileException( String msg ) { 
+		this( msg, null );
+	}
 
 	/** 
 	 * 2 args ctor 
 	 * @param msg the exception's message
 	 * @param e the original exception causing this one
 	 */
-	public ProfileException( String msg, Exception e ) { this( msg ); origException = e; }
+	public ProfileException( String msg, Exception e ) { 
+		super( msg ); 
+		origException = e; 
+	}
 
 	//-------------------------------------------------------------------------
 	// Public methods
@@ -53,5 +63,5 @@ public class ProfileException extends Exception
 	// Private instance variables
 	//
 
-	private Exception origException = null;
+	private final Exception origException;
 }

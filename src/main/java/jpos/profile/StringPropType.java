@@ -27,12 +27,9 @@ import java.io.Serializable;
  */
 public class StringPropType extends AbstractPropType implements PropType, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
+	private static final long serialVersionUID = -8148982860254316606L;
 
-	/** Default ctor */
-	StringPropType() {}
+	private StringPropType() {}
 
 	//---------------------------------------------------------------------
 	// Class methods
@@ -41,9 +38,6 @@ public class StringPropType extends AbstractPropType implements PropType, Serial
 	/** @return the unique instance of this class (create if necessary) */
 	public static PropType getInstance()
 	{
-		if( instance == null )
-			instance = new StringPropType();
-
 		return instance;
 	}
 
@@ -55,7 +49,7 @@ public class StringPropType extends AbstractPropType implements PropType, Serial
 	public String toString() { return "StringPropType"; }
 
 	/** @return a Java class that defines this type */
-	public Class getJavaTypeClass() { return "".getClass(); }
+	public Class<?> getJavaTypeClass() { return String.class; }
 
 	/**
 	 * @return true if the object passed is of this PropType
@@ -79,5 +73,5 @@ public class StringPropType extends AbstractPropType implements PropType, Serial
 	// Class instance
 	//
 
-	private static PropType instance = null;
+	private static final PropType instance = new StringPropType();
 }

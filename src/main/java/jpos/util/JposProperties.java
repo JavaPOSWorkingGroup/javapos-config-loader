@@ -65,7 +65,8 @@ public interface JposProperties extends JposPropertiesConst
      * @return an enumeration of properties names defined
      * @since 1.2 (NY 2K meeting)
      */
-    public Enumeration getPropertyNames();
+    @SuppressWarnings("rawtypes")
+	public Enumeration getPropertyNames();
     
     /**
      * @return a List of property value parsed from the property value found
@@ -73,6 +74,7 @@ public interface JposProperties extends JposPropertiesConst
      * @param propName the property name for which the values will be parsed from
      * @since 2.1.0
      */
+	@SuppressWarnings("rawtypes")
 	public List getStringListProperty( String propName );
 
 	/**
@@ -97,6 +99,7 @@ public interface JposProperties extends JposPropertiesConst
 	 * @see jpos.util.JposProperties.Prop
 	 * @since 1.3 (Washington DC 2001)
 	 */
+	@SuppressWarnings("rawtypes")
 	public Iterator getProps();
 
 	/**
@@ -131,12 +134,15 @@ public interface JposProperties extends JposPropertiesConst
 		public String getBasePropertyName();
 
 		/** @return an iterator of the property names for this multi-property */
+		@SuppressWarnings("rawtypes")
 		public Iterator getPropertyNames();
 
 		/** @return an iterator of the property names alphabetically sorted for this multi-property */
+		@SuppressWarnings("rawtypes")
 		public Iterator getSortedPropertyNames();
 
 		/** @return an iterator of the property values for this multi-property */
+		@SuppressWarnings("rawtypes")
 		public Iterator getPropertyValues();
 
 		/**

@@ -46,7 +46,7 @@ public interface ProfileRegistry
     public boolean hasProfile( Profile profile );
 
     /** @return an enumeration of Profile objects  */
-    public Enumeration getProfiles();
+    public Enumeration<?> getProfiles();
 
     /**
      * @return the Profile for the profileName specified

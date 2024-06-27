@@ -95,12 +95,12 @@ public final class JposServiceLoader extends Object
         	
             try
             {
-                Class managerClass = Class.forName( customManagerClassName );
+                Class<?> managerClass = Class.forName( customManagerClassName );
 
-                Class arg1Class = Class.forName( "jpos.util.JposProperties" );
-                Class[] argsClass = { arg1Class };
+                Class<?> arg1Class = Class.forName( "jpos.util.JposProperties" );
+                Class<?>[] argsClass = { arg1Class };
 
-                Constructor oneArgCtor = managerClass.
+                Constructor<?> oneArgCtor = managerClass.
                                          getConstructor( argsClass );
 
                 Object[] args = { jposProperties };

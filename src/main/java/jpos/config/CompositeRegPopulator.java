@@ -49,6 +49,7 @@ public interface CompositeRegPopulator extends JposRegPopulator
 	public void remove( JposRegPopulator populator );
 
 	/** @return an iterator over all populators in this composite */
+	@SuppressWarnings("rawtypes")
 	public Iterator getPopulators();
 
 	/** 

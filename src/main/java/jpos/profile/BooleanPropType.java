@@ -31,8 +31,9 @@ public class BooleanPropType extends AbstractPropType implements PropType, Seria
 	// Ctor(s)
 	//
 
-	/** Default ctor */
-	BooleanPropType() {}
+	private static final long serialVersionUID = -5426902119474210358L;
+
+	private BooleanPropType() {}
 
 	//---------------------------------------------------------------------
 	// Class methods
@@ -41,9 +42,6 @@ public class BooleanPropType extends AbstractPropType implements PropType, Seria
 	/** @return the unique instance of this class (create if necessary) */
 	public static PropType getInstance()
 	{
-		if( instance == null )
-			instance = new BooleanPropType();
-
 		return instance;
 	}
 
@@ -55,7 +53,7 @@ public class BooleanPropType extends AbstractPropType implements PropType, Seria
 	public String toString() { return "BooleanPropType"; }
 
 	/** @return a Java class that defines this type */
-	public Class getJavaTypeClass() { return ( new Boolean( false ) ).getClass(); }
+	public Class<?> getJavaTypeClass() { return Boolean.class; }
 
 	/**
 	 * @return true if the object passed is of this PropType
@@ -79,5 +77,5 @@ public class BooleanPropType extends AbstractPropType implements PropType, Seria
 	// Class instance
 	//
 
-	private static PropType instance = null;
+	private static final PropType instance = new BooleanPropType();
 }

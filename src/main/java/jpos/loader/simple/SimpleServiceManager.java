@@ -105,7 +105,7 @@ implements JposServiceManager
 
             try
             {
-                Class regPopulatorClass = Class.forName( regPopulatorClassName );
+                Class<?> regPopulatorClass = Class.forName( regPopulatorClassName );
 
                 regPopulator = (JposRegPopulator)regPopulatorClass.newInstance();
             }

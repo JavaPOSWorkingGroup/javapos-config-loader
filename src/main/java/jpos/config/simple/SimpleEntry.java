@@ -32,7 +32,7 @@ import jpos.util.JposEntryUtility;
  * @since 0.1 (Philly 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class SimpleEntry implements JposEntry, Serializable, Comparable
+public class SimpleEntry implements JposEntry, Serializable
 {
     //--------------------------------------------------------------------------
     // Ctor(s)
@@ -85,7 +85,8 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
      * @return an enumerator for the properties names 
      * @since 0.1 (Philly 99 meeting)
      */
-    public Enumeration getPropertyNames() { return properties.keys(); }
+	@SuppressWarnings("rawtypes")
+	public Enumeration getPropertyNames() { return properties.keys(); }
 
     /**
      * @return true if there is a property by the name specified
@@ -114,7 +115,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
      * @param propName the property's name String
      * @since 2.0.0
      */
-    public Class getPropertyType( String propName ) { return getPropertyValue( propName ).getClass(); }
+    public Class<?> getPropertyType( String propName ) { return getPropertyValue( propName ).getClass(); }
 
     /**
      * Modifies the property value of the property passed
@@ -174,11 +175,12 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 
         if( getPropertyCount() != otherEntry.getPropertyCount() ) return false;
 
-        Enumeration otherPropNames = otherEntry.getPropertyNames();
+        @SuppressWarnings("unchecked")
+		Enumeration<String> otherPropNames = otherEntry.getPropertyNames();
 
         while( otherPropNames.hasMoreElements() )
         {
-            String name = (String)otherPropNames.nextElement();
+            String name = otherPropNames.nextElement();
             Object value = otherEntry.getPropertyValue( name );
 
             if( !hasPropertyWithName( name ) ) return false;
@@ -197,11 +199,12 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 	{
 		JposEntry entryCopy = new SimpleEntry();
 
-		Enumeration entryNames = getPropertyNames();
+		@SuppressWarnings("unchecked")
+		Enumeration<String> entryNames = getPropertyNames();
 
 		while( entryNames.hasMoreElements() )
 		{
-			String propName = (String)entryNames.nextElement();
+			String propName = entryNames.nextElement();
 			entryCopy.addProperty( propName,getPropertyValue( propName ) );
 		}
 
@@ -242,15 +245,17 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 	 * @return an Iterator over the properties in this JposEntry as JposEntry.Prop objects
 	 * @since 1.3 (Washington DC 2001)
 	 */
+	@SuppressWarnings("rawtypes")
 	public Iterator getProps()
 	{
-		List list = new ArrayList();
+		List<Prop> list = new ArrayList<>();
 
-		Enumeration names = getPropertyNames();
+		@SuppressWarnings("unchecked")
+		Enumeration<String> names = getPropertyNames();
 
 		while( names.hasMoreElements() )
 		{
-			String name = (String)names.nextElement();
+			String name = names.nextElement();
 
 			list.add( new Prop( name, getPropertyValue( name ) ) );
 		}
@@ -289,7 +294,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 	{
 		checkNull( prop );
 
-		if( hasPropertyWithName( prop.getName() ) == false ) return;
+		if( !hasPropertyWithName( prop.getName() ) ) return;
 
 		modifyPropertyValue( prop.getName(), prop.getValue() );
 	}
@@ -312,12 +317,12 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 	 * @see jpos.config.JposEntryConst#PROP_TYPES
 	 * @since 2.0.0
 	 */
-	public JposEntry.Prop createProp( String propName, Object propValue, Class propType ) throws JposConfigException
+	public JposEntry.Prop createProp( String propName, Object propValue, @SuppressWarnings("rawtypes") Class propType ) throws JposConfigException
 	{
 		if( propName == null || propValue == null || propType == null )
 			throw new JposConfigException( "Cannot create JposEntry.Prop with null argument" );
 
-		if( JposEntryUtility.validatePropValue( propValue, propType ) == false )
+		if( !JposEntryUtility.validatePropValue( propValue, propType ) )
 			throw new JposConfigException( "Cannot create JposEntry.Prop with invalid value or type" );
 
 		return new Prop( propName, propValue );
@@ -331,14 +336,15 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
      * @return true if the two JposEntries have the same properties 
      * @since 1.3 (SF 2K meeting)
      */
+	@Override
     public boolean equals( Object object )
     {
         if( object instanceof JposEntry )
-            return equals( (JposEntry)object );
+            return this.equals( (JposEntry)object );
 
         return false;
     }
-
+	
 	/**
 	 * @return 0 if two entries are the same -1 if this is less or 1 of more than other
 	 * the comparison for &gt; and &lt; uses the logicalName of the entry to decide
@@ -362,7 +368,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
      */
     public String toString()
     {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         sb.append( "<JposEntry logicalName=\"" + getPropertyValue( JposEntry.LOGICAL_NAME_PROP_NAME ) + "\">\n" );
         sb.append( "\t<creation factoryClass=\"" + getPropertyValue( JposEntry.SI_FACTORY_CLASS_PROP_NAME ) + "\" serviceClass=\"" + getPropertyValue( JposEntry.SERVICE_CLASS_PROP_NAME ) + "\"/>\n" );
@@ -372,10 +378,10 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 
 		sb.append( "\n" );
 
-		Enumeration otherPropNames = JposEntryUtility.getNonRequiredPropNames( this );
+		Enumeration<String> otherPropNames = JposEntryUtility.getNonRequiredPropNames( this );
 		while( otherPropNames.hasMoreElements() )
 		{
-			String name = (String)otherPropNames.nextElement();
+			String name = otherPropNames.nextElement();
 			String value = getPropertyValue( name ).toString();
 			String typeClassName = JposEntryUtility.shortClassName( getPropertyValue( name ).getClass() );
 
@@ -418,7 +424,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
     // Instance variables
     //
 
-    private Hashtable properties = new Hashtable();
+    private Hashtable<String, Object> properties = new Hashtable<>();
 	private transient JposRegPopulator regPopulator = null;
 
 	//-------------------------------------------------------------------------
@@ -430,7 +436,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 	 * @author E. Michael Maximilien
 	 * @since 1.3 (Washington DC 2001)
 	 */
-	public static class Prop implements JposEntry.Prop, Comparable
+	public static class Prop implements JposEntry.Prop
 	{
 		//---------------------------------------------------------------------
 		// Ctor(s)
@@ -471,7 +477,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 		 * primitive types e.g. Integer, Byte, Boolean, ... 
 		 * @return the type of this property as a java.lang.Class object 
 		 */
-		public Class getType() { return typeClass; }
+		public Class<?> getType() { return typeClass; }
 
 		/** 
 		 * Sets the name of this property 
@@ -496,7 +502,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 		{
 			checkNull( objValue );
 
-			if( JposEntryUtility.validatePropValue( objValue, objValue.getClass() ) == false )
+			if( !JposEntryUtility.validatePropValue( objValue, objValue.getClass() ) )
 				throw new IllegalArgumentException( "Cannot set property named = " + getName() + 
 													" with value = " + objValue + 
 													" invalid value or type" );
@@ -509,7 +515,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 		 * object passed
 		 * @param type the Class object
 		 */
-		public boolean isOfType( Class type )
+		public boolean isOfType( @SuppressWarnings("rawtypes") Class type )
 		{
 			if( type == null || typeClass == null ) return false;
 
@@ -573,7 +579,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 		 * @throws java.lang.IllegalArgumentException if the object value type does not
 		 * match the Class type
 		 */
-		private void setValue( Object object, Class type ) throws IllegalArgumentException
+		private void setValue( Object object, @SuppressWarnings("rawtypes") Class type ) throws IllegalArgumentException
 		{
 			checkNull( object );
 			checkNull( type );
@@ -591,7 +597,7 @@ public class SimpleEntry implements JposEntry, Serializable, Comparable
 
 		private String name = "";
 		private Object value = null;
-		private Class typeClass = null;
+		private Class<?> typeClass = null;
 	}
 
     //--------------------------------------------------------------------------

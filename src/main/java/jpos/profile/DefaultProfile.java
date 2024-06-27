@@ -29,9 +29,7 @@ import java.net.URL;
  */
 class DefaultProfile extends Object implements Profile, Serializable
 {
-	//-------------------------------------------------------------------------
-	// Ctor(s)
-	//
+	private static final long serialVersionUID = 1478221492781830174L;
 
 	/** 
 	 * Creates a profile with name passed
@@ -68,7 +66,7 @@ class DefaultProfile extends Object implements Profile, Serializable
 	/** @return a String representation of this Profile */
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		sb.append( "<Profile name='" + getName() + "'>\n" );
 
