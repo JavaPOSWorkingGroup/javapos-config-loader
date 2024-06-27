@@ -60,7 +60,7 @@ public class SimpleRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 		deleteFileIfExists( JCL_CFG_FILE_NAME );
 		
 		createParentDirectoryForFileName(JCL_CFG_FILE_NAME);
-		( new File( JCL_CFG_FILE_NAME ) ).createNewFile();
+		assertTrue("file could not be created: " + JCL_CFG_FILE_NAME, ( new File( JCL_CFG_FILE_NAME ) ).createNewFile());
 
 		assertTrue( "Could not create the empty file: " + JCL_CFG_FILE_NAME,
 					( new File( JCL_CFG_FILE_NAME ) ).exists() );

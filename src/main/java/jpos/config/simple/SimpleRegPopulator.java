@@ -93,11 +93,9 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     public void save( Enumeration entries, String fileName ) throws Exception
     {
 		File file = new File( fileName );
-		FileOutputStream fos = new FileOutputStream( file );
-
-        saveJposEntries( entries, fos );
-
-		fos.close();
+		try (FileOutputStream fos = new FileOutputStream( file )) {
+			saveJposEntries( entries, fos );
+		}
     }
 
     /**
@@ -138,10 +136,10 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      */
     public void load( String fileName )
     {
-        try
+        try (FileInputStream fis = new FileInputStream( fileName ))
         {
             getJposEntries().clear();
-            Enumeration entries = readJposEntries( new FileInputStream( fileName ) );
+            Enumeration entries = readJposEntries( fis );
 
             while( entries.hasMoreElements() ) 
             {
@@ -203,64 +201,60 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      */
     protected void saveSerInZipFile( Enumeration entries ) throws Exception
     {
-        ZipOutputStream zos = new ZipOutputStream( new 
-        					  FileOutputStream( zipSerFile.getName() + ".temp.jar" ) );
-
-        Enumeration zipEntries = zipSerFile.entries();
-
-        while( zipEntries.hasMoreElements() )
+        try( ZipOutputStream zos = new ZipOutputStream( new FileOutputStream( zipSerFile.getName() + ".temp.jar" ) ) )
         {
-            ZipEntry zipEntry = (ZipEntry)zipEntries.nextElement();
-
-            zos.putNextEntry( zipEntry );
-
-            if( zipEntry.getName() != serFileName )
-            {
-                InputStream is = zipSerFile.getInputStream( zipEntry );
-
-                while( is.available() > 0 )
-                {
-                    byte[] byteArray = new byte[ is.available() ];
-
-                    is.read( byteArray );
-
-                    zos.write( byteArray );
-                }
-
-                zos.closeEntry();
-            }
-            else
-            {
-                ObjectOutputStream oos = new ObjectOutputStream( new 
-                						 FileOutputStream( TEMP_SER_FILE_NAME ) );
-
-                while( entries.hasMoreElements() )
-                {
-                    JposEntry entry = (JposEntry)entries.nextElement();
-
-                    oos.writeObject( entry );
-                }
-
-                oos.flush();
-                oos.close();
-
-                FileInputStream fis = new FileInputStream( TEMP_SER_FILE_NAME );
-
-                while( fis.available() > 0 )
-                {
-                    byte[] byteArray = new byte[ fis.available() ];
-
-                    fis.read( byteArray );
-
-                    zos.write( byteArray );
-                }
-
-                zos.closeEntry();
-            }
+        	Enumeration zipEntries = zipSerFile.entries();
+        	
+        	while( zipEntries.hasMoreElements() )
+        	{
+        		ZipEntry zipEntry = (ZipEntry)zipEntries.nextElement();
+        		
+        		zos.putNextEntry( zipEntry );
+        		
+        		if( zipEntry.getName() != serFileName )
+        		{
+        			InputStream is = zipSerFile.getInputStream( zipEntry );
+        			
+        			while( is.available() > 0 )
+        			{
+        				byte[] byteArray = new byte[ is.available() ];
+        				
+        				is.read( byteArray );
+        				
+        				zos.write( byteArray );
+        			}
+        			
+        			zos.closeEntry();
+        		}
+        		else
+        		{
+        			try( ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream( TEMP_SER_FILE_NAME ) ) )
+        			{
+        				while( entries.hasMoreElements() )
+        				{
+        					JposEntry entry = (JposEntry)entries.nextElement();
+        					
+        					oos.writeObject( entry );
+        				}
+        			}
+        			
+        			
+        			try( FileInputStream fis = new FileInputStream( TEMP_SER_FILE_NAME ) )
+        			{
+        				while( fis.available() > 0 )
+        				{
+        					byte[] byteArray = new byte[ fis.available() ];
+        					
+        					fis.read( byteArray );
+        					
+        					zos.write( byteArray );
+        				}
+        				
+        				zos.closeEntry();
+        			}
+        		}
+        	}
         }
-
-        zos.flush();
-        zos.close();
     }
 
     /**
@@ -271,7 +265,9 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      */
     protected void saveSerFile( Enumeration entries ) throws Exception
     {
-        saveJposEntries( entries, new FileOutputStream( serFileName ) );
+    	try (OutputStream os = new FileOutputStream( serFileName )) {
+    		saveJposEntries( entries,  os);
+    	}
     }
 
     /**
@@ -284,16 +280,14 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     protected void saveJposEntries( Enumeration entries, OutputStream os ) 
     throws Exception
     {
-        ObjectOutputStream oos = new ObjectOutputStream( os );
-
-        while( entries.hasMoreElements() )
-        {
-            JposEntry entry = (JposEntry)entries.nextElement();
-
-            oos.writeObject( entry );
+        try (ObjectOutputStream oos = new ObjectOutputStream( os )) {
+	        while( entries.hasMoreElements() )
+	        {
+	            JposEntry entry = (JposEntry)entries.nextElement();
+	
+	            oos.writeObject( entry );
+	        }
         }
-
-        oos.close();
     }
 
     /**
@@ -433,12 +427,18 @@ public class SimpleRegPopulator extends AbstractRegPopulator
 
             serFileName = absoluteFileName;
         } 
-        catch( EOFException eofe ) {}
+        catch( EOFException eofe ) {
+        	tracer.println( "ERROR while reading serialized JposEntry file: " + 
+  	              serFileName + " Exception.message=" + 
+  	              eofe.getMessage() ); 
+        	
+        }
         catch( Exception e ) 
-        { tracer.println( "ERROR while reading serialized JposEntry file: " + 
+        { 
+        	tracer.println( "ERROR while reading serialized JposEntry file: " + 
         	              serFileName + " Exception.message=" + 
-        	              e.getMessage() ); }
-        
+        	              e.getMessage() ); 
+        }
         return entries.elements();
     }
 
@@ -451,11 +451,17 @@ public class SimpleRegPopulator extends AbstractRegPopulator
         Enumeration entries = null;
 
         if( isPopulatorFileDefined() )
-            try { entries = readJposEntries( getPopulatorFileIS() ); }
-            catch( Exception e )
-            { entries = ( new Vector() ).elements(); }
+    		try (InputStream inputStream = getPopulatorFileIS()) { 
+    			entries = readJposEntries( inputStream ); 
+    		}
+    		catch( Exception e )
+    		{ entries = ( new Vector() ).elements(); }
         else
-            entries = readJposEntries( findSerOIS() );
+        	try (InputStream inputStream = findSerOIS()) {
+        		entries = readJposEntries( findSerOIS() );
+        	}
+			catch( Exception e )
+			{ entries = ( new Vector() ).elements(); }
 
         return entries;
     }
@@ -469,7 +475,9 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     protected void saveJposEntries( Enumeration entries ) throws Exception
     {
         if( isPopulatorFileDefined() )
-            saveJposEntries( entries, getPopulatorFileOS() );
+        	try (OutputStream outputStream = getPopulatorFileOS()) {
+        		saveJposEntries( entries, outputStream );
+        	}
         else
         {
             if( serInZipFile )
