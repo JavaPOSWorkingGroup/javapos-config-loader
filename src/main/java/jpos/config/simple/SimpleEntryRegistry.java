@@ -36,13 +36,6 @@ import jpos.util.tracing.TracerFactory;
 public class SimpleEntryRegistry extends Object implements JposEntryRegistry 
 {
     /**
-     * Default ctor
-     * @deprecated no longer used, see the 1 argument ctor 
-     * @since 0.1 (Philly 99 meeting)
-     */
-    public SimpleEntryRegistry() {}
-
-    /**
      * One-argument constructor
      * @param populator the JposRegPopulator used by the registry
      * @since 1.2 (NY 2K meeting)

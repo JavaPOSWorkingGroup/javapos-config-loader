@@ -42,19 +42,6 @@ implements JposServiceManager
 	//
 
     /**
-     * Default ctor
-     * NOTE: necessary because it will be used by jpos.config.JposServiceLoader 
-     * to create the simple factory
-     * @deprecated replaced by 1-argument ctor
-     * @since 0.1 (Philly 99 meeting)
-     */
-    public SimpleServiceManager() 
-    { 
-        getProperties().loadJposProperties();
-        init(); 
-    }
-
-    /**
      * One argument ctor
      * @param properties the JposProperties for this manager
      * NOTE: this could be an instance of the simple 
