@@ -39,7 +39,7 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 
 	protected void setUp() 
     {
-        xercesRegPopulator = new JavaxRegPopulator();
+        javaxRegPopulator = new JavaxRegPopulator();
 
         try
         {
@@ -58,7 +58,7 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 
 	protected void tearDown() 
     {
-        xercesRegPopulator = null;
+        javaxRegPopulator = null;
     }
 
 	//-------------------------------------------------------------------------
@@ -87,44 +87,28 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
         return jposEntry;
     }
 
-    private Enumeration searchEntriesForVendorName( Enumeration entries, String vendorName )
-    {
-        Vector v = new Vector();
-
-        while( entries.hasMoreElements() )
-        {
-            JposEntry jposEntry = (JposEntry)entries.nextElement();
-
-            if( jposEntry.hasPropertyWithName( JposEntry.VENDOR_NAME_PROP_NAME ) )
-                if( jposEntry.getPropertyValue( JposEntry.VENDOR_NAME_PROP_NAME ).
-                    toString().equals( JUNIT_CORP_STRING ) )
-                    v.addElement( jposEntry );
-        }
-
-        return v.elements();
-    }
-
 	//-------------------------------------------------------------------------
-	// Public testXyz() methods
+	// Public test methods
 	//
 
 	/** 
      * Test the loading/saving of XML entries using the XercesRegPopulator 
      */
-	public void testXercesPopulator1()
+	public void testJavaxPopulatorReloadToTheSameInstance()
 	{
         //Save and load an empty set of registry entries
-        Vector v1 = new Vector();
+        List<JposEntry> v1 = new ArrayList<>();
 
         try
         {
-            xercesRegPopulator.save( v1.elements(), JCL_JUNIT_XML_FILE_NAME );
-            xercesRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
-            Enumeration entries = xercesRegPopulator.getEntries();
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
-            assertTrue( "Expected an empty set of entries...", JUnitUtility.isIdentical( entries, v1.elements() ) );
-            assertTrue( "Expected an empty set of entries...", JUnitUtility.isEquals( entries, v1.elements() ) );
+            assertTrue( "Expected an empty set of entries...", JUnitUtility.isIdentical( entries, Collections.enumeration(v1) ) );
+            assertTrue( "Expected an empty set of entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
         }
         catch( Exception e )
         { fail( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage() ); }
@@ -147,15 +131,16 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
         try
         {
             v1.clear();
-            v1.addElement( entry1 );
-            v1.addElement( entry2 );
+            v1.add( entry1 );
+            v1.add( entry2 );
 
-            xercesRegPopulator.save( v1.elements(), JCL_JUNIT_XML_FILE_NAME );
-            xercesRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
-            Enumeration entries = xercesRegPopulator.getEntries();
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
-            assertTrue( "Expected 2 entries...", JUnitUtility.isEquals( entries, v1.elements() ) );
+            assertTrue( "Expected 2 entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
         }
         catch( Exception e )
         { assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true ); }
@@ -166,12 +151,13 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 
         try
         {
-            xercesRegPopulator.save( v1.elements(), JCL_JUNIT_XML_FILE_NAME );
-            xercesRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
-            Enumeration entries = xercesRegPopulator.getEntries();
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
-            assertTrue( "Expected 1 entries...", JUnitUtility.isEquals( entries, v1.elements() ) );
+            assertTrue( "Expected 1 entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
         }
         catch( Exception e )
         { assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true ); }
@@ -180,9 +166,9 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	/** 
      * Test the loading/saving of XML entries using the XercesRegPopulator 
      */
-	public void testXercesPopulator2()
+	public void testJavaxPopulator()
 	{
-        Vector v1 = new Vector();
+        List<JposEntry> v1 = new ArrayList<>();
 
         for( int i = 0; i < 100; i++ )
         {
@@ -193,17 +179,18 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
                                                "Virtual LineDisplay JavaPOS Service", 
                                                "Example virtual LineDisplay JavaPOS Service from virtual Xyz Corporation",
                                                "http://www.javapos.com" );
-            v1.addElement( entry );
+            v1.add( entry );
         }
 
         try
         {
-            xercesRegPopulator.save( v1.elements(), JCL_JUNIT_XML_FILE_NAME );
-            xercesRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
-            Enumeration entries = xercesRegPopulator.getEntries();
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
-            assertTrue( "Expected 100 entries...", JUnitUtility.isEquals( entries, v1.elements() ) );
+            assertTrue( "Expected 100 entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
         }
         catch( Exception e )
         { fail( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage() ); }
@@ -211,26 +198,27 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 
 	public void testGetName()
 	{
-		xercesRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
+		javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
-		assertTrue( xercesRegPopulator.getName().startsWith("JAVAX XML Entries Populator") );
+		assertTrue( javaxRegPopulator.getName().startsWith("JAVAX XML Entries Populator") );
 	}
 
-	public void testLoad1()
+	public void testLoadDefect6562()
 	{
         try
         {
 			assertTrue( "Expected file: " + DEFECT_6562_XML_FILE + " to exist",
 						( new File( DEFECT_6562_XML_FILE ) ).exists() );
 
-            xercesRegPopulator.load( DEFECT_6562_XML_FILE );
-            Enumeration entries = xercesRegPopulator.getEntries();
+            javaxRegPopulator.load( DEFECT_6562_XML_FILE );
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
 			JposEntry defect6562Entry = (JposEntry)entries.nextElement();
 
-			assertTrue( "defect6562Entry == null", defect6562Entry != null );
-			assertTrue( "defect6562Entry.logicalName != defect6562", 
-						defect6562Entry.getLogicalName().equals( "defect6562" ) );
+			assertNotNull( "defect6562Entry == null", defect6562Entry );
+			assertEquals( "defect6562Entry.logicalName != defect6562", 
+						"defect6562", defect6562Entry.getLogicalName() );
 
         }
         catch( Exception e ) { fail( "Unexpected exception.message = " + e.getMessage() ); }
@@ -243,45 +231,42 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
             assertTrue( "Expected file: " + JCL_JUNIT_TEST_PROP_TYPE_XML_FILE + " to exist",
 						( new File( JCL_JUNIT_TEST_PROP_TYPE_XML_FILE ) ).exists() );
 
-            xercesRegPopulator.load( JCL_JUNIT_TEST_PROP_TYPE_XML_FILE );
-            Enumeration entries = xercesRegPopulator.getEntries();
+            javaxRegPopulator.load( JCL_JUNIT_TEST_PROP_TYPE_XML_FILE );
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
 			JposEntry testPropTypeEntry = (JposEntry)entries.nextElement();
 
-			//<temp>
-			//System.out.println( testPropTypeEntry );
-			//</temp>
+			assertNotNull( "testPropTypeEntry == null", testPropTypeEntry );
+			assertEquals( "testPropTypeEntry.logicalName != testPropType", 
+					"testPropType", testPropTypeEntry.getLogicalName() );
 
-			assertTrue( "testPropTypeEntry == null", testPropTypeEntry != null );
-			assertTrue( "testPropTypeEntry.logicalName != testPropType", 
-						testPropTypeEntry.getLogicalName().equals( "testPropType" ) );
+			assertEquals( "testPropTypeEntry.getProp( \"stringProp\" ).getType() != String.class", 
+						String.class, testPropTypeEntry.getProp( "stringProp" ).getType() );
 
-			assertTrue( "testPropTypeEntry.getProp( \"stringProp\" ).getType() != String.class", 
-						testPropTypeEntry.getProp( "stringProp" ).getType().equals( String.class ) );
+			assertEquals( "testPropTypeEntry.getProp( \"booleanProp\" ).getType() != Boolean.class", 
+						Boolean.class, testPropTypeEntry.getProp( "booleanProp" ).getType() );
+			
+			assertEquals( "testPropTypeEntry.getProp( \"byteProp\" ).getType() != Byte.class", 
+						Byte.class, testPropTypeEntry.getProp( "byteProp" ).getType() );
+			
+			assertEquals( "testPropTypeEntry.getProp( \"characterProp\" ).getType() != Character.class", 
+						Character.class, testPropTypeEntry.getProp( "characterProp" ).getType() );
+			
+			assertEquals( "testPropTypeEntry.getProp( \"doubleProp\" ).getType() != Double.class", 
+						Double.class, testPropTypeEntry.getProp( "doubleProp" ).getType() );
+			
+			assertEquals( "testPropTypeEntry.getProp( \"floatProp\" ).getType() != Float.class", 
+						Float.class, testPropTypeEntry.getProp( "floatProp" ).getType() );
+			
+			assertEquals( "testPropTypeEntry.getProp( \"integerProp\" ).getType() != Integer.class", 
+						Integer.class, testPropTypeEntry.getProp( "integerProp" ).getType() );
+			
+			assertEquals( "testPropTypeEntry.getProp( \"longProp\" ).getType() != Long.class", 
+						Long.class, testPropTypeEntry.getProp( "longProp" ).getType() );
 
-			assertTrue( "testPropTypeEntry.getProp( \"booleanProp\" ).getType() != Boolean.class", 
-						testPropTypeEntry.getProp( "booleanProp" ).getType().equals( Boolean.class ) );
-			
-			assertTrue( "testPropTypeEntry.getProp( \"byteProp\" ).getType() != Byte.class", 
-						testPropTypeEntry.getProp( "byteProp" ).getType().equals( Byte.class ) );
-			
-			assertTrue( "testPropTypeEntry.getProp( \"characterProp\" ).getType() != Character.class", 
-						testPropTypeEntry.getProp( "characterProp" ).getType().equals( Character.class ) );
-			
-			assertTrue( "testPropTypeEntry.getProp( \"doubleProp\" ).getType() != Double.class", 
-						testPropTypeEntry.getProp( "doubleProp" ).getType().equals( Double.class ) );
-			
-			assertTrue( "testPropTypeEntry.getProp( \"floatProp\" ).getType() != Float.class", 
-						testPropTypeEntry.getProp( "floatProp" ).getType().equals( Float.class ) );
-			
-			assertTrue( "testPropTypeEntry.getProp( \"integerProp\" ).getType() != Integer.class", 
-						testPropTypeEntry.getProp( "integerProp" ).getType().equals( Integer.class ) );
-			
-			assertTrue( "testPropTypeEntry.getProp( \"longProp\" ).getType() != Long.class", 
-						testPropTypeEntry.getProp( "longProp" ).getType().equals( Long.class ) );
-
-			assertTrue( "testPropTypeEntry.getProp( \"shortProp\" ).getType() != Short.class", 
-						testPropTypeEntry.getProp( "shortProp" ).getType().equals( Short.class ) );
+			assertEquals( "testPropTypeEntry.getProp( \"shortProp\" ).getType() != Short.class", 
+						Short.class, testPropTypeEntry.getProp( "shortProp" ).getType() );
         }
         catch( Exception e ) { fail( "Unexpected exception.message = " + e.getMessage() ); }
 	}
@@ -300,7 +285,7 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	// Instance variables
 	//
 
-    private JavaxRegPopulator xercesRegPopulator = null;
+    private JavaxRegPopulator javaxRegPopulator = null;
 
 	//-------------------------------------------------------------------------
 	// Instance variables
