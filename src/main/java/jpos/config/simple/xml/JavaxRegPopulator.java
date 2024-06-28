@@ -303,6 +303,7 @@ public class JavaxRegPopulator
         }
         parserFactory.setNamespaceAware(true);
         jposEntryList.clear();
+        getJposEntries().clear();
         try {
             SAXParser parser = parserFactory.newSAXParser();
             parser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "file");
