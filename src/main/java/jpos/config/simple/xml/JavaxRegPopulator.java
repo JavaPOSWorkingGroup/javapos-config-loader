@@ -106,8 +106,8 @@ public class JavaxRegPopulator
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    public void save(Enumeration entries)
+	@Override
+    public void save(@SuppressWarnings("rawtypes") Enumeration entries)
             throws Exception {
         if (isPopulatorFileDefined())
             save(entries, getPopulatorFileOS());
@@ -119,7 +119,7 @@ public class JavaxRegPopulator
 
     @SuppressWarnings("unchecked")
     @Override
-    public void save(Enumeration entries, String fileName)
+    public void save(@SuppressWarnings("rawtypes") Enumeration entries, String fileName)
             throws Exception {
         try (FileOutputStream os = new FileOutputStream(fileName)) {
             save(entries, os);
@@ -224,7 +224,9 @@ public class JavaxRegPopulator
             jposEntryElement.appendChild(tag);
 
         List<JposEntry.Prop> sortedProps = new LinkedList<>();
-        ((Iterator<JposEntry.Prop>)jposEntry.getProps()).forEachRemaining(sortedProps::add);
+        @SuppressWarnings("unchecked")
+		Iterator<JposEntry.Prop> props = jposEntry.getProps();
+		props.forEachRemaining(sortedProps::add);
         Collections.sort(sortedProps,
                 (JposEntry.Prop p1, JposEntry.Prop p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
 
@@ -378,7 +380,6 @@ public class JavaxRegPopulator
                         tracer.println(": " + msg);
                         lastLoadException = new SAXException(msg, e);
                     }
-                    ;
                 }
             }
             tracer.println("");
