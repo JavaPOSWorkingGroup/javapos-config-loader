@@ -268,32 +268,34 @@ public class DefaultCompositeRegPopulator extends Object
 
 		JposRegPopulator defaultPopulator = createPopulator( defaultPopName, defaultPopClass );
 
-		if( populatorFileMultiProp != null && populatorFileMultiProp.getNumberOfProperties() > 0 )
-		{
-			String defaultPopFile = populatorFileMultiProp.getPropertyString( defaultPopClassNumber );
-
-			if( defaultPopFile != null )
+		if( defaultPopulator != null ) {
+			
+			if( populatorFileMultiProp != null && populatorFileMultiProp.getNumberOfProperties() > 0 )
 			{
-				defaultPopulator.load( defaultPopFile );
-				lastLoadException = defaultPopulator.getLastLoadException();
-				popFileMap.put( defaultPopulator.getUniqueId(), defaultPopFile );
+				String defaultPopFile = populatorFileMultiProp.getPropertyString( defaultPopClassNumber );
+	
+				if( defaultPopFile != null )
+				{
+					defaultPopulator.load( defaultPopFile );
+					lastLoadException = defaultPopulator.getLastLoadException();
+					popFileMap.put( defaultPopulator.getUniqueId(), defaultPopFile );
+				}
+				else
+				{
+					tracer.println( "Created default populator with name = " + defaultPopName + 
+												  " OK but populator file is null" );
+					defaultPopulator.load();
+					lastLoadException = defaultPopulator.getLastLoadException();
+				}
 			}
 			else
 			{
-				tracer.println( "Created default populator with name = " + defaultPopName + 
-											  " OK but populator file is null" );
 				defaultPopulator.load();
 				lastLoadException = defaultPopulator.getLastLoadException();
 			}
-		}
-		else
-		{
-			defaultPopulator.load();
-			lastLoadException = defaultPopulator.getLastLoadException();
-		}
 
-		if( defaultPopulator != null )
 			setDefaultPopulator( defaultPopulator );
+		}
 		else
 			tracer.println( "Did not add default populator by <name, className>: " +
 										  "<" + defaultPopName + ", " + defaultPopClass + ">" );
