@@ -96,12 +96,12 @@ implements JposServiceManager
     {
 		JposProperties properties = getProperties();
 
-        if( properties.isPropertyDefined( JposProperties.
-            JPOS_REG_POPULATOR_CLASS_PROP_NAME ) )
+        if( properties.isPropertyDefined( 
+        		JposPropertiesConst.JPOS_REG_POPULATOR_CLASS_PROP_NAME ) )
         {
-			String regPopulatorClassName = properties.
-			       getPropertyString( JposProperties.
-			       JPOS_REG_POPULATOR_CLASS_PROP_NAME );
+			String regPopulatorClassName = 
+					properties.getPropertyString( 
+							JposPropertiesConst.JPOS_REG_POPULATOR_CLASS_PROP_NAME );
 
             try
             {
@@ -117,9 +117,8 @@ implements JposServiceManager
 				regPopulator = new SimpleRegPopulator(); 
 			}
         }
-        else
-		if( properties.hasMultiProperty( JposPropertiesConst.JPOS_CONFIG_POPULATOR_CLASS_MULTIPROP_NAME ) )
-			regPopulator = new DefaultCompositeRegPopulator();
+        else if( properties.hasMultiProperty( JposPropertiesConst.JPOS_CONFIG_POPULATOR_CLASS_MULTIPROP_NAME ) )
+            regPopulator = new DefaultCompositeRegPopulator();
 		else
             regPopulator = new SimpleRegPopulator();
     }
@@ -172,7 +171,7 @@ implements JposServiceManager
 
         try 
         {
-            JposEntry jposEntry = (JposEntry)entryRegistry.
+            JposEntry jposEntry = entryRegistry.
                                   getJposEntry( logicalName );
 
             if( jposEntry == null )

@@ -62,7 +62,7 @@ class DefaultDevCatInfo extends Object implements DevCatInfo
 	/** @return the String representation of this DevCat */
 	public String toString()
 	{
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 
 		sb.append( "<DevCatInfo>\n" );
 		sb.append( "   <Profile name = " + profile.getName() + 

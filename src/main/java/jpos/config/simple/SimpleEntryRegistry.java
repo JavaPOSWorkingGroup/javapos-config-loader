@@ -84,7 +84,7 @@ public class SimpleEntryRegistry extends Object implements JposEntryRegistry
      * @since 0.1 (Philly 99 meeting)
      */
     public JposEntry getJposEntry( String logicalName ) 
-    { return (JposEntry)jposEntries.get( logicalName ); }
+    { return jposEntries.get( logicalName ); }
 
     /**
      * Modify the JposEntry with logicalName with the new entry indicated

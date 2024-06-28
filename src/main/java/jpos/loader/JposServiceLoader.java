@@ -69,23 +69,21 @@ public final class JposServiceLoader extends Object
         boolean customManagerDefined = false;
         String customManagerClassName = "";
 
-        if( jposProperties.isPropertyDefined( JposProperties.
-        	JPOS_SERVICE_MANAGER_CLASS_PROP_NAME ) )
+        if( jposProperties.isPropertyDefined( 
+        		JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME ) )
         {
             customManagerDefined = true;
             customManagerClassName = jposProperties.
-            getPropertyString( JposProperties.
-                               JPOS_SERVICE_MANAGER_CLASS_PROP_NAME );
+            getPropertyString( JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME );
         }
         else
-        if( jposProperties.isPropertyDefined( JposProperties.
-        	JPOS_SERVICE_MANAGER_CLASS_PROP_NAME2 ) )
+        if( jposProperties.isPropertyDefined( 
+        		JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME2 ) )
         {
             customManagerDefined = true;
             customManagerClassName = 
             jposProperties.
-            getPropertyString( JposProperties.
-            				   JPOS_SERVICE_MANAGER_CLASS_PROP_NAME2 );
+            getPropertyString( JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME2 );
         }
 
         if( customManagerDefined )
@@ -141,7 +139,7 @@ public final class JposServiceLoader extends Object
         if( manager == null )
         {
         	String msg = "Did not find a valid " + 
-        	             JposProperties.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME + 
+        	             JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME + 
         	             " to create";
 
 			tracer.println( msg );

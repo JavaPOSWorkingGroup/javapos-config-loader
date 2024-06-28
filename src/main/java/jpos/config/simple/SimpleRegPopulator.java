@@ -144,7 +144,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
 
             while( entries.hasMoreElements() ) 
             {
-                JposEntry entry = (JposEntry)entries.nextElement();
+                JposEntry entry = entries.nextElement();
                 String logicalName = (String)entry.
                 getPropertyValue( JposEntry.LOGICAL_NAME_PROP_NAME );
 
@@ -233,7 +233,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
         			{
         				while( entries.hasMoreElements() )
         				{
-        					JposEntry entry = (JposEntry)entries.nextElement();
+        					JposEntry entry = entries.nextElement();
         					
         					oos.writeObject( entry );
         				}
@@ -284,7 +284,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
         try (ObjectOutputStream oos = new ObjectOutputStream( os )) {
 	        while( entries.hasMoreElements() )
 	        {
-	            JposEntry entry = (JposEntry)entries.nextElement();
+	            JposEntry entry = entries.nextElement();
 	
 	            oos.writeObject( entry );
 	        }

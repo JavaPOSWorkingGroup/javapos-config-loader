@@ -83,7 +83,7 @@ public class SimpleServiceConnection extends Object
             JposServiceInstanceFactory siFactory = null;
 
             if( siFactoryTable.containsKey( siFactoryClassName ) )
-                siFactory = (JposServiceInstanceFactory)siFactoryTable.
+                siFactory = siFactoryTable.
                             get( siFactoryClassName );
             else
             {

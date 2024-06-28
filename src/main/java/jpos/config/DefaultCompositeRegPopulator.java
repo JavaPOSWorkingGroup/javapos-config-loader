@@ -311,7 +311,7 @@ public class DefaultCompositeRegPopulator extends Object
 			{
 				if( populatorFileMultiProp != null && populatorFileMultiProp.getNumberOfProperties() > 0 )
 				{
-					String popFile = (String)populatorFileMultiProp.getPropertyString( popClassNumber );
+					String popFile = populatorFileMultiProp.getPropertyString( popClassNumber );
 					populator.load( popFile );
 					popFileMap.put( populator.getUniqueId(), popFile );
 				}
@@ -420,7 +420,7 @@ public class DefaultCompositeRegPopulator extends Object
 	 * @see jpos.config.JposRegPopulator#getUniqueId()
 	 */
 	public JposRegPopulator getPopulator( String uniqueId ) 
-	{ return (JposRegPopulator)popMap.get( uniqueId ); }
+	{ return popMap.get( uniqueId ); }
 
 	/** @return the number of populator in this composite */
 	public int size() { return popMap.size(); }

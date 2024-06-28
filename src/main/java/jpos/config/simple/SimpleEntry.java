@@ -130,7 +130,7 @@ public class SimpleEntry implements JposEntry, Serializable
 		checkNull( propName );
 		checkNull( propValue );
 
-		if( hasPropertyWithName( propName ) == false )
+		if( !hasPropertyWithName( propName ) )
 			return null;
 
 		Object oldValue = removeProperty( propName );
@@ -352,7 +352,7 @@ public class SimpleEntry implements JposEntry, Serializable
 	 */
 	public int compareTo( Object other )
 	{
-		if( other == null || ( (other instanceof JposEntry ) == false ) )
+		if( !(other instanceof JposEntry ) )
 			throw new RuntimeException( "Cannot compare: " + other + " with JposEntry: " + this );
 
 		JposEntry otherEntry = (JposEntry)other;

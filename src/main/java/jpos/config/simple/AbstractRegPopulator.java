@@ -26,6 +26,7 @@ import java.net.URL;
 import jpos.config.*;
 import jpos.loader.JposServiceLoader;
 import jpos.util.JposProperties;
+import jpos.util.JposPropertiesConst;
 import jpos.util.tracing.Tracer;
 import jpos.util.tracing.TracerFactory;
 
@@ -161,14 +162,11 @@ public abstract class AbstractRegPopulator extends Object
         JposProperties jposProperties = 
         			   JposServiceLoader.getManager().getProperties();
 
-        if( jposProperties.
-        	isPropertyDefined( JposProperties.JPOS_POPULATOR_FILE_PROP_NAME ) )
-            defined = true;
-        else
-        if( jposProperties.
-        	isPropertyDefined( JposProperties.
-        					   JPOS_POPULATOR_FILE_URL_PROP_NAME ) )
-            defined = true;
+        if( jposProperties.isPropertyDefined( JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME ) ||
+        	jposProperties.isPropertyDefined( JposPropertiesConst.JPOS_POPULATOR_FILE_URL_PROP_NAME ) ) 
+        {
+        	defined = true;
+        }
 
         return defined;
     }
@@ -182,15 +180,16 @@ public abstract class AbstractRegPopulator extends Object
      */
     protected InputStream getPopulatorFileIS() throws Exception
     {
+    	InputStream populatorIS;
+    	
         JposProperties jposProperties = JposServiceLoader.
         								getManager().getProperties();
 
-        if( jposProperties.isPropertyDefined( JposProperties.
-        									  JPOS_POPULATOR_FILE_PROP_NAME ) )
+        if( jposProperties.isPropertyDefined( JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME ) )
         {
-            populatorFileName = jposProperties.
-            					getPropertyString( JposProperties.
-            									   JPOS_POPULATOR_FILE_PROP_NAME );
+            populatorFileName = 
+            		jposProperties.getPropertyString( 
+            				JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME );
 
 			tracer.println( "getPopulatorFileIS(): populatorFileName=" + 
 							populatorFileName );
@@ -198,13 +197,11 @@ public abstract class AbstractRegPopulator extends Object
             populatorIS = new FileInputStream( populatorFileName );
         }
         else
-        if( jposProperties.
-        	isPropertyDefined( JposProperties.
-        					   JPOS_POPULATOR_FILE_URL_PROP_NAME ) )
+        if( jposProperties.isPropertyDefined( JposPropertiesConst.JPOS_POPULATOR_FILE_URL_PROP_NAME ) )
         {
-            populatorFileURL = jposProperties.
-            				   getPropertyString( JposProperties.
-            				   JPOS_POPULATOR_FILE_URL_PROP_NAME );
+            populatorFileURL = 
+            		jposProperties.getPropertyString( 
+            				JposPropertiesConst.JPOS_POPULATOR_FILE_URL_PROP_NAME );
 
             URL url = new URL( populatorFileURL );
 
@@ -235,26 +232,26 @@ public abstract class AbstractRegPopulator extends Object
      */
     protected OutputStream getPopulatorFileOS() throws Exception
     {
+    	OutputStream populatorOS;
+    	
         JposProperties jposProperties = JposServiceLoader.
         								getManager().getProperties();
 
         if( jposProperties.
-        	isPropertyDefined( JposProperties.JPOS_POPULATOR_FILE_PROP_NAME ) )
+        	isPropertyDefined( JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME ) )
         {
-            populatorFileName = jposProperties.
-            					getPropertyString( JposProperties.
-            					JPOS_POPULATOR_FILE_PROP_NAME );
+            populatorFileName = 
+            		jposProperties.getPropertyString( 
+            				JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME );
             
             populatorOS = new FileOutputStream( populatorFileName );
         }
         else
-        if( jposProperties.
-        	isPropertyDefined( JposProperties.
-        					   JPOS_POPULATOR_FILE_URL_PROP_NAME ) )
+        if( jposProperties.isPropertyDefined( JposPropertiesConst.JPOS_POPULATOR_FILE_URL_PROP_NAME ) )
         {
-            populatorFileURL = jposProperties.
-            				   getPropertyString( JposProperties.
-            				   JPOS_POPULATOR_FILE_URL_PROP_NAME );
+            populatorFileURL = 
+            		jposProperties.getPropertyString( 
+            				JposPropertiesConst.JPOS_POPULATOR_FILE_URL_PROP_NAME );
 
             URL url = new URL( populatorFileURL );
 
@@ -412,9 +409,6 @@ public abstract class AbstractRegPopulator extends Object
     //
 
     private final Hashtable<String, Object> jposEntries = new Hashtable<>();
-
-    private InputStream populatorIS = null;
-    private OutputStream populatorOS = null;
 
     private String populatorFileName = "";
     private String populatorFileURL = "";
