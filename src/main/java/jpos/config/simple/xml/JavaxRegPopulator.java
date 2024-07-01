@@ -59,8 +59,11 @@ import java.util.stream.Collectors;
  */
 public class JavaxRegPopulator
         extends AbstractRegPopulator
-        implements XmlRegPopulator {
-    /**
+        implements XmlRegPopulator 
+{
+    private static final String XML_RESTRICTED_ACCESS_ATTRIBUTE = "file,jar:file";
+
+	/**
      * Default ctor
      */
     public JavaxRegPopulator() {
@@ -168,8 +171,8 @@ public class JavaxRegPopulator
 
         DOMSource source = new DOMSource(document);
         TransformerFactory factory = TransformerFactory.newInstance();
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "file,jar:file");
-        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file,jar:file");
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, XML_RESTRICTED_ACCESS_ATTRIBUTE);
+        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, XML_RESTRICTED_ACCESS_ATTRIBUTE);
         Transformer transformer = factory.newTransformer();
 
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -338,8 +341,8 @@ public class JavaxRegPopulator
         getJposEntries().clear();
         try {
             SAXParser parser = parserFactory.newSAXParser();
-            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "file");
-            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "file,jar:file");
+            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, XML_RESTRICTED_ACCESS_ATTRIBUTE);
+            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, XML_RESTRICTED_ACCESS_ATTRIBUTE);
             parser.parse(inputStream, saxHandler);
         } catch (SAXException e) {
             tracer.println("SAX Parser error, msg=" + e.getMessage());
