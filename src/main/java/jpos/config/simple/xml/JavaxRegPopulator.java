@@ -328,11 +328,10 @@ public class JavaxRegPopulator
     private void load(InputStream inputStream) {
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         JavaxSaxHandler saxHandler = new JavaxSaxHandler();
-        try {
-            InputStream is = findFileInClasspath(XSD_FILE_NAME);
+        try(InputStream is = findFileInClasspath(XSD_FILE_NAME)) {
             StreamSource ss = new StreamSource(is == null ? new FileInputStream(XSD_FILE_NAME) : is);
-            Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(ss);
-            parserFactory.setSchema(schema);
+        	Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(ss);
+        	parserFactory.setSchema(schema);
         } catch (Exception e) {
             parserFactory.setValidating(true);
         }
