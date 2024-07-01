@@ -19,6 +19,7 @@ package jpos.config.simple.xml;
 ///////////////////////////////////////////////////////////////////////////////
 
 import jpos.config.JposEntry;
+import jpos.config.JposEntry.Prop;
 import jpos.config.simple.AbstractRegPopulator;
 import jpos.config.simple.SimpleEntry;
 import jpos.loader.Version;
@@ -44,6 +45,7 @@ import java.io.*;
 import java.net.URL;
 import java.text.DateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Simple implementation of the JposRegPopulator that loads and saves
@@ -222,56 +224,86 @@ public class JavaxRegPopulator
 
         for (Element tag : new Element[]{creation, vendor, jpos, product})
             jposEntryElement.appendChild(tag);
+        
+        List<JposEntry.Prop> sortedProps = getSortedProperties(jposEntry);
 
-        List<JposEntry.Prop> sortedProps = new LinkedList<>();
-        @SuppressWarnings("unchecked")
+        List<JposEntry.Prop> propsAsAttributes = sortedProps.stream()
+        		.filter(prop -> isAttribute(prop)).collect(Collectors.toList());
+        List<JposEntry.Prop> properties = sortedProps.stream()
+        		.filter(prop -> !isAttribute(prop)).collect(Collectors.toList());
+
+        for (Prop prop : propsAsAttributes) {
+			addPropAsAttribute(prop, creation, jpos, product, vendor);
+		}
+        
+        for (Prop prop : properties) {
+            addPropElement( doc, jposEntryElement, prop );
+		}
+    }
+
+	private List<JposEntry.Prop> getSortedProperties(JposEntry jposEntry) {
+		@SuppressWarnings("unchecked")
 		Iterator<JposEntry.Prop> props = jposEntry.getProps();
+        List<JposEntry.Prop> sortedProps = new ArrayList<>();
 		props.forEachRemaining(sortedProps::add);
         Collections.sort(sortedProps,
                 (JposEntry.Prop p1, JposEntry.Prop p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
+		return sortedProps;
+	}
 
-        for (JposEntry.Prop prop : sortedProps) {
-            if (cannotSetAttributeOfTag(prop, creation, JposEntry.SERVICE_CLASS_PROP_NAME, XML_ATTR_SERVICECLASS) &&
-                    cannotSetAttributeOfTag(prop, creation, JposEntry.SI_FACTORY_CLASS_PROP_NAME, XML_ATTR_FACTORYCLASS) &&
-                    cannotSetAttributeOfTag(prop, vendor, JposEntry.VENDOR_NAME_PROP_NAME, XML_ATTR_NAME) &&
-                    cannotSetAttributeOfTag(prop, vendor, JposEntry.VENDOR_URL_PROP_NAME, XML_ATTR_URL) &&
-                    cannotSetAttributeOfTag(prop, jpos, JposEntry.JPOS_VERSION_PROP_NAME, XML_ATTR_VERSION) &&
-                    cannotSetAttributeOfTag(prop, jpos, JposEntry.DEVICE_CATEGORY_PROP_NAME, XML_ATTR_CATEGORY) &&
-                    cannotSetAttributeOfTag(prop, product, JposEntry.PRODUCT_NAME_PROP_NAME, XML_ATTR_NAME) &&
-                    cannotSetAttributeOfTag(prop, product, JposEntry.PRODUCT_DESCRIPTION_PROP_NAME, XML_ATTR_DESCRIPTION) &&
-                    cannotSetAttributeOfTag(prop, product, JposEntry.PRODUCT_URL_PROP_NAME, XML_ATTR_URL)
-            )
-                addPropElement(doc, jposEntryElement, prop);
-        }
-    }
+	private static final Set<String> PROPS_AS_ATTRIBUTES = new HashSet<>(Arrays.asList(
+    		JposEntry.SERVICE_CLASS_PROP_NAME,
+    		JposEntry.SI_FACTORY_CLASS_PROP_NAME,
+    		JposEntry.JPOS_VERSION_PROP_NAME,
+    		JposEntry.DEVICE_CATEGORY_PROP_NAME,
+    		JposEntry.VENDOR_NAME_PROP_NAME,
+    		JposEntry.VENDOR_URL_PROP_NAME,
+    		JposEntry.PRODUCT_NAME_PROP_NAME,
+    		JposEntry.PRODUCT_DESCRIPTION_PROP_NAME,
+    		JposEntry.PRODUCT_URL_PROP_NAME
+    ));
 
-    /**
-     * Checks whether the given JposEntry element represents an attribute of the given tag. If so, the attribute will be
-     * added to the tag. This method returns true if the element did not represent the specified attribute.
-     * @param prop     Prop element of an JposEntry object.
-     * @param elem     XML tag to be used to store the specified attribute, if prop represents thit attribute.
-     * @param propName Name of the Prop element.
-     * @param attrName Attribute name to be used in XML tag.
-     * @return true if prop does not represent the specified attribute and no attribute has been added to elem. false
-     * if the specified attribute has been added to elem.
-     */
-    private boolean cannotSetAttributeOfTag(JposEntry.Prop prop, Element elem, String propName, String attrName) {
-        if (prop.getName().equals(propName)) {
-            /* Change /* to //* to generate implicit attribute values only if value is not empty.
-            String value = prop.getValueAsString();
-            if( value.length() > 0 ||
-                    ( !JposEntry.PRODUCT_URL_PROP_NAME.equals(propName) &&
-                            !JposEntry.VENDOR_URL_PROP_NAME.equals(propName)
-                    )
-            )
-            //*/
-            {
-                elem.setAttribute(attrName, prop.getValueAsString());
-            }
-            return false;
-        }
-        return true;
-    }
+	private static boolean isAttribute(Prop prop) {
+		return PROPS_AS_ATTRIBUTES.contains(prop.getName());
+	}
+    
+    private void addPropAsAttribute(Prop prop, Element creation, Element jpos, Element product, Element vendor) {
+    	String attrName = prop.getName();
+    	String attrValue = prop.getValueAsString();
+		switch (attrName) {
+		case JposEntry.SERVICE_CLASS_PROP_NAME:
+			creation.setAttribute(XML_ATTR_SERVICECLASS, attrValue);
+			break;
+    	case JposEntry.SI_FACTORY_CLASS_PROP_NAME:
+			creation.setAttribute(XML_ATTR_FACTORYCLASS, attrValue);
+			break;
+    	case JposEntry.JPOS_VERSION_PROP_NAME:
+    		jpos.setAttribute(XML_ATTR_VERSION, attrValue);
+    		break;
+    	case JposEntry.DEVICE_CATEGORY_PROP_NAME:
+    		jpos.setAttribute(XML_ATTR_CATEGORY, attrValue);
+    		break;
+    	case JposEntry.VENDOR_NAME_PROP_NAME:
+			vendor.setAttribute(XML_ATTR_NAME, attrValue);
+			break;
+    	case JposEntry.VENDOR_URL_PROP_NAME:
+			vendor.setAttribute(XML_ATTR_URL, attrValue);
+			break;
+    	case JposEntry.PRODUCT_NAME_PROP_NAME:
+			product.setAttribute(XML_ATTR_NAME, attrValue);
+			break;
+    	case JposEntry.PRODUCT_DESCRIPTION_PROP_NAME:
+			product.setAttribute(XML_ATTR_DESCRIPTION, attrValue);
+			break;
+    	case JposEntry.PRODUCT_URL_PROP_NAME:
+			product.setAttribute(XML_ATTR_URL, attrValue);
+			break;
+		default:
+			tracer.print("WARN: unexpected XML attribute (will be skipped):" + attrName);
+			break;
+		}
+		
+	}
 
     private static void addPropElement(Document doc, Element jposEntryElement, JposEntry.Prop prop) {
         Element propElement = doc.createElement(XML_TAG_PROP);
