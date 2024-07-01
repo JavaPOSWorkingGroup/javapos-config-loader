@@ -146,10 +146,10 @@ implements JposServiceManager
     public JposRegPopulator getRegPopulator() { return regPopulator; }
 
     /**
-     * @return a ServiceConnection used to connect to the service
+     * @return a {@link JposServiceConnection} object used to connect to the service
      * @param logicalName the logical name of the service to find
      * @since 0.1 (Philly 99 meeting)
-     * @throws JposException 
+     * @throws JposException in case the connection could not established for any reason
      */
     public JposServiceConnection createConnection( String logicalName ) 
     throws JposException

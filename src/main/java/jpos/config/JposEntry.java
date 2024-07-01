@@ -91,6 +91,7 @@ public interface JposEntry extends Serializable, Comparable
      * NOTE: any property with the same name gets overlaid
      * @param propName the name of this property (should be unique per property)
      * @param propValue the properties value Object
+     * @return the property value object as passed as 2nd argument
      * @since 0.1 (Philly 99 meeting)
 	 * @throws java.lang.IllegalArgumentException if the propName or propValue is null
      */
@@ -99,11 +100,17 @@ public interface JposEntry extends Serializable, Comparable
     /**
      * Looks for a property with name specified and removes it
      * @param propName the name String of the property to remove
+     * @return the property object that has been removed
      * @since 0.1 (Philly 99 meeting)
      */
     public Object removeProperty( String propName );
 
     /**
+     * A {@link JposEntry} specific equal method. <br>
+     * This considered a design flow today as {@link Object} defines an {@link Object#equals(Object)} which never should be 
+     * redefined. However, this interface is from the early days when Java was only 4 years old and that was unknown.
+     * For backward compatibility reasons ths will remain. 
+     * @param otherEntry the other {@link JposEntry} object the comparison has to be done against
      * @return true if the two JposEntries have the same properties 
      * @since 0.1 (Philly 99 meeting)
      */

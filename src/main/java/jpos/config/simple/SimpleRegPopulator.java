@@ -315,9 +315,9 @@ public class SimpleRegPopulator extends AbstractRegPopulator
 
     /**
      * Finds the first serialized JposEntry file in directory of each classpath
-     * <b>NOTE:</b>Decorated the FileInputStream with a BufferedInputStream to
-     * improve load time...
-     * @param jarZipFilePaths a vector of JAR/Zip file names
+     * @param jarZipFilePaths a list of JAR/Zip file names
+     * @return an {@link ObjectInputStream} object opened for the given ZIP files paths.<br>
+     * This object must be closed by the caller!  
      * @since 1.2 (NY 2K meeting)
      */
     protected ObjectInputStream findSerOISInClasspath( List<String> jarZipFilePaths )
@@ -361,6 +361,8 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     /**
      * Finds the first serialized JposEntry file in the JAR files
      * @param jarFilePaths a vector of JAR/Zip file names
+     * @return an {@link ObjectInputStream} object opened for the given JAR files paths.<br>
+     * This object must be closed by the caller!  
      * @since 1.2 (NY 2K meeting)
      */
     protected ObjectInputStream findSerOISInJar( List<String> jarFilePaths )

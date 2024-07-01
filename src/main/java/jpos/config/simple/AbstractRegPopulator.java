@@ -293,11 +293,11 @@ public abstract class AbstractRegPopulator extends Object
 
     /**
      * Finds the first file matching the fileName in the CLASSPATH 
-     * directory or each
-	 * JAR or Zip file in the CLASSPATH
-     * <b>NOTE:</b>Decorated the FileInputStream with a BufferedInputStream to
-     * improve load time...
+     * directory or each JAR or Zip file in the CLASSPATH.
+     * 
      * @param fileName the fileName to find
+     * @return an {@link InputStream} object opened for the given file name. <br>
+     * This object must be closed by the caller!  
      * @since 2.0 (Long Beach 2001)
 	 */
     protected InputStream findFileInClasspath( String fileName )
@@ -363,7 +363,9 @@ public abstract class AbstractRegPopulator extends Object
     /**
      * Finds the occurrence of the fileName in the JAR or Zip files
 	 * @param fileName the file to find
-     * @param jarZipFilesVector a vector of JAR/Zip file names
+     * @param jarZipFilesVector a list of JAR/Zip file names
+     * @return an {@link InputStream} object opened for the given file name. <br>
+     * This object must be closed by the caller!  
      * @since 2.0 (Long Beach 2001)
      */
     protected InputStream findFileInJarZipFiles( String fileName, 

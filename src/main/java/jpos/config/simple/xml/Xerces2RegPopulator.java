@@ -225,7 +225,7 @@ public class Xerces2RegPopulator extends AbstractXercesRegPopulator
 	/**
 	 * Initializes XMLReader instance
 	 * @param xmlReader the XMLReader instance
-	 * @throws org.xml.sax.SAXException
+	 * @throws org.xml.sax.SAXException in case the {@link XMLReader} initialization fails
 	 */
 	protected void initXMLReader( XMLReader xmlReader ) throws SAXException
 	{

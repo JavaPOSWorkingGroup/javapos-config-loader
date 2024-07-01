@@ -73,6 +73,8 @@ public class PopupHelper
     /**
      * registers a component to listen to mouse events for the popupMenu, does not use
      * the PopupListener to do extra setting up for the menu
+     * @param mouseEvtComp a {@link JComponent} object the event listener is registered at
+     * @param popupMenu a {@link JPopupMenu} object the event listener is registered for
      * @since 1.3 (SF 2K meeting)
      */
     public static void setPopup( JComponent mouseEvtComp, JPopupMenu popupMenu ) { setPopup( mouseEvtComp, popupMenu, null ); } 
@@ -80,6 +82,9 @@ public class PopupHelper
     /**
      * registers a component to listen to mouse events for the popupMenu, uses
      * the PopupListener to do extra setting up for the menu when mouse is clicked
+     * @param mouseEvtComp a {@link JComponent} object the event listener is registered at
+     * @param popupMenu a {@link JPopupMenu} object the event listener is registered for
+     * @param popupListener the {@link PopupListener} object to be registered
      * @since 1.3 (SF 2K meeting)
      */
     public static void setPopup( JComponent mouseEvtComp, JPopupMenu popupMenu, PopupListener popupListener )

@@ -116,6 +116,7 @@ public interface JposEntryRegistry
      * Tell the JposEntryRegistry to save the current entries to the file 
      * specified.  Depending on the current JposEntryPopulator the file might
      * be an XML or serialized or other file.
+     * @param file the {@link File} object the registry entries has to to be persisted to
      * @since 2.1.0
      * @throws java.lang.Exception if any error occurs while saving or if the
      * current populator does not support saving in a file

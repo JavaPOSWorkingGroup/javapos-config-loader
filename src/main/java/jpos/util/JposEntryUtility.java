@@ -313,6 +313,8 @@ public class JposEntryUtility extends Object
 	}
 
 	/**
+	 * Predicate for checking whether the given Java type is a valid JavaPOS property type. 
+	 * @param propType a {@link Class} object as type
 	 * @return true if the propType object passed is a valid JposEntry property type
 	 * that is one of the JposEntryConst.PROP_TYPES
 	 * @see jpos.config.JposEntryConst#PROP_TYPES

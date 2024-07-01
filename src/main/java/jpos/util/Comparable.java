@@ -28,12 +28,14 @@ public interface Comparable
     /**
      * Compares this and other arguments for order
      * @param other object to compare to
+     * @return same as defined by {@link Comparable#compareTo(Object)}
      */
     public int compareTo( Object other );
 
     /**
      * Indicates this object is "equal to" the other 
      * @param other object to compare to
+     * @return same as defined by {@link Object#equals(Object)}
      */
     public boolean equals( Object other );
 }

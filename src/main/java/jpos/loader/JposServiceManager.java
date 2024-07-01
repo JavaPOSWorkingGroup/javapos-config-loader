@@ -41,6 +41,7 @@ public interface JposServiceManager
      * @return a JposServiceConnection for the service with the logical name specified
      * This should use the populator to see if there exist any entry with the logical
      * name provided, get the entry and create the JposServiceConnection
+     * @param logicalName the logical name the connection shall be created for 
      * @since 0.1 (Philly 99 meeting)
      * @throws jpos.JposException if an error occurs while creating this connection
      */

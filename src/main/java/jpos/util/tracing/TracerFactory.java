@@ -74,7 +74,9 @@ public class TracerFactory extends Object
     /** 
      * Sets the File that all subsequently created Tracer objects will print to
      * if these Tracer objects are turned on.  Successfully calling this method
-     * overrides the current setting for TracerOutput to files
+     * overrides the current setting for TracerOutput to files.
+     * <i>Note: </i>This is not implemented yet!
+     * @param file the {@link File} the output should be written to
      * @throws java.io.IOException if a PrintStream could not be created from File
      */
     public void setOutputFile( File file ) throws IOException

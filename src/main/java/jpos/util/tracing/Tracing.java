@@ -23,7 +23,6 @@ package jpos.util.tracing;
  * This class uses the Tracer class for all its static methods implementations
  * its a convinient class to avoid having to cache the Tracer object or having
  * to do Tracer.getInstance() everytime you need to access the Tracer.
- * @see jpos.util.Tracer#getInstance
  * @author E. Michael Maximilien
  */
 public class Tracing extends Object
