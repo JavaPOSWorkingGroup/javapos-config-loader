@@ -351,11 +351,9 @@ public class JavaxRegPopulator
             tracer.println("SAX Parser configuration error, msg=" + e.getMessage());
             lastLoadException = e;
         }
-        Iterator<JposEntry> entries = jposEntryList.iterator();
-        while (entries.hasNext()) {
-            JposEntry jposEntry = entries.next();
-            getJposEntries().put(jposEntry.getLogicalName(), jposEntry);
-        }
+        for (JposEntry jposEntry : jposEntryList) {
+			getJposEntries().put(jposEntry.getLogicalName(), jposEntry);
+		}
     }
 
     //--------------------------------------------------------------------------
