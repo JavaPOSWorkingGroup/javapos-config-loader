@@ -71,8 +71,8 @@ public abstract class AbstractRegPopulator extends Object
     @SuppressWarnings("rawtypes")
 	public Enumeration getEntries() 
 	{
-		List<Object> entryList = new ArrayList<>();
-		Enumeration<Object> entries = jposEntries.elements(); 
+		List<JposEntry> entryList = new ArrayList<>();
+		Enumeration<JposEntry> entries = jposEntries.elements(); 
 
 		while( entries.hasMoreElements() )
 			entryList.add( entries.nextElement() );
@@ -147,10 +147,33 @@ public abstract class AbstractRegPopulator extends Object
     }
 
     /**
-     * @return the jposEntries Hashtable to allow access to subclasses
+     * The {@link Hashtable} of {@link JposEntry}s of this registry populator instance.<br>
+     * @return the jposEntries Hashtable to allow access for subclasses
      * @since 1.2 (NY 2K meeting)
+     * @deprecated use {@link #addJposEntry(String, JposEntry)} for adding and {@link #clearAllJposEntries()} for clearing, 
+     * both are type safe
      */
-    protected Hashtable<String, Object> getJposEntries() { return jposEntries; }
+    @Deprecated
+    @SuppressWarnings("rawtypes")
+	protected Hashtable getJposEntries() { return jposEntries; }
+
+    /**
+     * Adds a {@link JposEntry} to the internal data structure of {@link JposEntry}s represented by
+     * this registry populator instance.
+     * @param logicalName the logical name the {@link JposEntry} is associated with
+     * @param entry the {@link JposEntry} object to be added
+     * @since 4.0
+     */
+	protected void addJposEntry(String logicalName, JposEntry entry) {
+		this.jposEntries.put(logicalName, entry); 
+	}
+	
+	/**
+	 * Clears all {@link JposEntry}s in the internal data structure of this registry populator instance.
+	 */
+	protected void clearAllJposEntries() {
+		this.jposEntries.clear();
+	}
 
     /**
      * @return true if a populator file (or URL) is defined
@@ -361,21 +384,34 @@ public abstract class AbstractRegPopulator extends Object
     }
 
     /**
-     * Finds the occurrence of the fileName in the JAR or Zip files
+     * Finds the occurrence of the fileName in the JAR or Zip files.
 	 * @param fileName the file to find
-     * @param jarZipFilesVector a list of JAR/Zip file names
+     * @param jarZipFilesVector a vector of JAR/Zip file names
      * @return an {@link InputStream} object opened for the given file name. <br>
      * This object must be closed by the caller!  
      * @since 2.0 (Long Beach 2001)
+     * @deprecated use {@link #findFileInJarZipFiles(String, List)} instead
      */
-    protected InputStream findFileInJarZipFiles( String fileName, 
-    											  List<String> jarZipFilesVector )
+    @Deprecated
+    protected InputStream findFileInJarZipFiles( String fileName, Vector<String> jarZipFilesVector ) {
+    	return findFileInJarZipFiles(fileName, jarZipFilesVector);
+    }
+
+    /**
+     * Finds the occurrence of the fileName in the JAR or Zip files.
+	 * @param fileName the file to find
+     * @param jarZipFilesList a list of JAR/Zip file names
+     * @return an {@link InputStream} object opened for the given file name. <br>
+     * This object must be closed by the caller!  
+     * @since 4.0 (Long Beach 2001)
+     */
+    private InputStream findFileInJarZipFiles( String fileName, List<String> jarZipFilesList )
     {
         InputStream is = null;
 
-        for( int i = 0; i < jarZipFilesVector.size(); ++i )
+        for( int i = 0; i < jarZipFilesList.size(); ++i )
         {
-            String jarZipFileName = jarZipFilesVector.get( i );
+            String jarZipFileName = jarZipFilesList.get( i );
 
             try (ZipFile zipFile = new ZipFile( jarZipFileName ))
             {
@@ -410,7 +446,7 @@ public abstract class AbstractRegPopulator extends Object
     // Instance variables
     //
 
-    private final Hashtable<String, Object> jposEntries = new Hashtable<>();
+    private final Hashtable<String, JposEntry> jposEntries = new Hashtable<>();
 
     private String populatorFileName = "";
     private String populatorFileURL = "";

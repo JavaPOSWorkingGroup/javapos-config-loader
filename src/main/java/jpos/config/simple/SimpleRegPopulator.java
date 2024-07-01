@@ -106,7 +106,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
      */
     public void load()
     {
-        getJposEntries().clear();
+    	clearAllJposEntries();
         Enumeration<JposEntry> entries = readJposEntries();
       
         while( entries.hasMoreElements() ) 
@@ -117,7 +117,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
                 String logicalName = entry.getLogicalName();
 
                 if( logicalName != null )
-                    getJposEntries().put( logicalName, entry );
+                	addJposEntry( logicalName, entry );
 
 				lastLoadException = null;
             }
@@ -139,7 +139,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
     {
         try (FileInputStream fis = new FileInputStream( fileName ))
         {
-            getJposEntries().clear();
+            clearAllJposEntries();
             Enumeration<JposEntry> entries = readJposEntries( fis );
 
             while( entries.hasMoreElements() ) 
@@ -149,7 +149,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
                 getPropertyValue( JposEntry.LOGICAL_NAME_PROP_NAME );
 
                 if( logicalName != null )
-                    getJposEntries().put( logicalName, entry );
+                	addJposEntry(logicalName, entry);
             }
 
 			lastLoadException = null;
