@@ -103,33 +103,30 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
         {
             javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
             javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
+            
+            assertNull(javaxRegPopulator.getLastLoadException());
 
             @SuppressWarnings("unchecked")
 			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
             assertTrue( "Expected an empty set of entries...", JUnitUtility.isIdentical( entries, Collections.enumeration(v1) ) );
             assertTrue( "Expected an empty set of entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
-        }
-        catch( Exception e )
-        { fail( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage() ); }
 
-        //Add some entries and save and load
-        JposEntry entry1 = createJposEntry( "entry1", "com.xyz.jpos.XyzJposServiceInstanceFactory",
-                                            "com.xyz.jpos.LineDisplayService", "Xyz, Corp.", 
-                                            "http://www.javapos.com", "LineDisplay", "1.4a",
-                                            "Virtual LineDisplay JavaPOS Service", 
-                                            "Example virtual LineDisplay JavaPOS Service from virtual Xyz Corporation",
-                                            "http://www.javapos.com" );
+	        //Add some entries and save and load
+	        JposEntry entry1 = createJposEntry( "entry1", "com.xyz.jpos.XyzJposServiceInstanceFactory",
+	                                            "com.xyz.jpos.LineDisplayService", "Xyz, Corp.", 
+	                                            "http://www.javapos.com", "LineDisplay", "1.4a",
+	                                            "Virtual LineDisplay JavaPOS Service", 
+	                                            "Example virtual LineDisplay JavaPOS Service from virtual Xyz Corporation",
+	                                            "http://www.javapos.com" );
+	
+	        JposEntry entry2 = createJposEntry( "entry2", "com.xyz.jpos.XyzJposServiceInstanceFactory",
+	                                            "com.xyz.jpos.LineDisplayService", "Xyz, Corp.", 
+	                                            "http://www.javapos.com", "LineDisplay", "1.4a",
+	                                            "Virtual LineDisplay JavaPOS Service", 
+	                                            "Example virtual LineDisplay JavaPOS Service from virtual Xyz Corporation",
+	                                            "http://www.javapos.com" );
 
-        JposEntry entry2 = createJposEntry( "entry2", "com.xyz.jpos.XyzJposServiceInstanceFactory",
-                                            "com.xyz.jpos.LineDisplayService", "Xyz, Corp.", 
-                                            "http://www.javapos.com", "LineDisplay", "1.4a",
-                                            "Virtual LineDisplay JavaPOS Service", 
-                                            "Example virtual LineDisplay JavaPOS Service from virtual Xyz Corporation",
-                                            "http://www.javapos.com" );
-
-        try
-        {
             v1.clear();
             v1.add( entry1 );
             v1.add( entry2 );
@@ -137,30 +134,30 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
             javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
             javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
+            assertNull(javaxRegPopulator.getLastLoadException());
+
             @SuppressWarnings("unchecked")
-			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
+			Enumeration<JposEntry> entries2 = javaxRegPopulator.getEntries();
 
-            assertTrue( "Expected 2 entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
-        }
-        catch( Exception e )
-        { assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true ); }
+            assertTrue( "Expected 2 entries...", JUnitUtility.isEquals( entries2, Collections.enumeration(v1) ) );
         
-        //Remove entries save and load reg
-        v1.remove( entry1 );
+	        //Remove entries save and load reg
+	        v1.remove( entry1 );
 
-
-        try
-        {
             javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
             javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
-            @SuppressWarnings("unchecked")
-			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
+            assertNull(javaxRegPopulator.getLastLoadException());
 
-            assertTrue( "Expected 1 entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
+            @SuppressWarnings("unchecked")
+			Enumeration<JposEntry> entries3 = javaxRegPopulator.getEntries();
+
+            assertTrue( "Expected 1 entries...", JUnitUtility.isEquals( entries3, Collections.enumeration(v1) ) );
         }
         catch( Exception e )
-        { assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true ); }
+        { 
+        	assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true ); 
+        }
 	}
 
 	/** 
@@ -187,13 +184,17 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
             javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
             javaxRegPopulator.load( JCL_JUNIT_XML_FILE_NAME );
 
+            assertNull(javaxRegPopulator.getLastLoadException());
+
             @SuppressWarnings("unchecked")
 			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
             assertTrue( "Expected 100 entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
         }
         catch( Exception e )
-        { fail( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage() ); }
+        { 
+        	fail( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage() ); 
+        }
 	}
 
 	public void testGetName()
@@ -211,6 +212,9 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 						( new File( DEFECT_6562_XML_FILE ) ).exists() );
 
             javaxRegPopulator.load( DEFECT_6562_XML_FILE );
+
+            assertNull(javaxRegPopulator.getLastLoadException());
+
             @SuppressWarnings("unchecked")
 			Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
 
@@ -221,7 +225,9 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 						"defect6562", defect6562Entry.getLogicalName() );
 
         }
-        catch( Exception e ) { fail( "Unexpected exception.message = " + e.getMessage() ); }
+        catch( Exception e ) { 
+        	fail( "Unexpected exception.message = " + e.getMessage() ); 
+        }
 	}
 
 	public void testLoadwithPropType()
