@@ -64,7 +64,6 @@ if (System.getenv('CI') && null == findProperty('github.event.action'))
 def testResourceDir = file("${System.properties['java.io.tmpdir']}/javapos-config-loader-test/resources")
 
 dependencies {
-	api 'xerces:xerces:1.2.3'
 	api 'org.javapos:javapos-contracts:1.6.0'
 	
 	testImplementation("junit:junit:4.13.2")
