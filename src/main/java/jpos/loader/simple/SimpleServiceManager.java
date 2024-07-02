@@ -131,7 +131,7 @@ implements JposServiceManager
     private ProfileFactory getProfileFactory()
     {
 		if( profileFactory == null )
-			profileFactory = new XercesProfileFactory();
+			profileFactory = new DefaultProfileFactory();
 		
 		return profileFactory;
     }
