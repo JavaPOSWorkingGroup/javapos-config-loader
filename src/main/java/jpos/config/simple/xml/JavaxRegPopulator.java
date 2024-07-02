@@ -49,11 +49,12 @@ import java.util.stream.Collectors;
 
 /**
  * Simple implementation of the JposRegPopulator that loads and saves
- * the entries in XML using Javax API.
+ * the entries in XML using the Javax API.
+ * <br>
  * NOTE: this class must define a public no-argument constructor so that it may be
- * created via reflection when it is defined in the jpos.properties as
- * the jpos.config.regPopulatorClass
- * @see jpos.util.JposProperties#JPOS_REG_POPULATOR_CLASS_PROP_NAME
+ * created via reflection when it is defined in the <i>jpos.properties</i> file by
+ * the <i>jpos.config.regPopulatorClass</i> property.
+ * 
  * @since 4.0
  * @author M. Conrad (martin.conrad@freenet.de)
  */
@@ -61,8 +62,6 @@ public class JavaxRegPopulator
         extends AbstractRegPopulator
         implements XmlRegPopulator 
 {
-    private static final String XML_RESTRICTED_ACCESS_ATTRIBUTE = "file,jar:file";
-
 	/**
      * Default ctor
      */
@@ -93,14 +92,13 @@ public class JavaxRegPopulator
     public URL getEntriesURL() {
         URL url = null;
 
-        if (getPopulatorFileURL() != null &&
-                !getPopulatorFileURL().equals(""))
-            try {
-                url = new URL(getPopulatorFileURL());
-            } catch (Exception e) {
-                tracer.println("getEntriesURL: Exception.message=" +
-                        e.getMessage());
-            }
+        if (getPopulatorFileURL() != null && !getPopulatorFileURL().equals("")) {
+        	try {
+        		url = new URL(getPopulatorFileURL());
+        	} catch (Exception e) {
+        		tracer.println("getEntriesURL: Exception.message=" + e.getMessage());
+        	}
+        }
         else
             url = createURLFromFile(new File(getPopulatorFileName()));
 
@@ -112,20 +110,21 @@ public class JavaxRegPopulator
 
     @SuppressWarnings("unchecked")
 	@Override
-    public void save(@SuppressWarnings("rawtypes") Enumeration entries)
-            throws Exception {
+    public void save(@SuppressWarnings("rawtypes") Enumeration entries) throws Exception 
+    {
         if (isPopulatorFileDefined())
             save(entries, getPopulatorFileOS());
-        else
+        else {
             try (FileOutputStream os = new FileOutputStream(DEFAULT_XML_FILE_NAME)) {
                 save(entries, os);
             }
+        }
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public void save(@SuppressWarnings("rawtypes") Enumeration entries, String fileName)
-            throws Exception {
+    public void save(@SuppressWarnings("rawtypes") Enumeration entries, String fileName) throws Exception 
+    {
         try (FileOutputStream os = new FileOutputStream(fileName)) {
             save(entries, os);
         }
@@ -136,8 +135,7 @@ public class JavaxRegPopulator
         try (InputStream is = isPopulatorFileDefined() ? new FileInputStream(DEFAULT_XML_FILE_NAME) : getPopulatorFileIS()) {
             load(is);
         } catch (Exception e) {
-            tracer.println("Error while loading populator file Exception.message: " +
-                    e.getMessage());
+            tracer.println("Error while loading populator file Exception.message: " + e.getMessage());
             lastLoadException = e;
         }
     }
@@ -147,8 +145,7 @@ public class JavaxRegPopulator
         try (InputStream is = new File(fileName).exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
             load(is);
         } catch (Exception e) {
-            tracer.println("Error while loading populator file Exception.message: " +
-                    e.getMessage());
+            tracer.println("Error while loading populator file Exception.message: " + e.getMessage());
             lastLoadException = e;
         }
     }
@@ -169,12 +166,12 @@ public class JavaxRegPopulator
         insertJposEntriesInDoc(entries, document);
         insertDateSavedComment(document);
 
-        DOMSource source = new DOMSource(document);
         TransformerFactory factory = TransformerFactory.newInstance();
         factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, XML_RESTRICTED_ACCESS_ATTRIBUTE);
         factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, XML_RESTRICTED_ACCESS_ATTRIBUTE);
+        
+        DOMSource source = new DOMSource(document);
         Transformer transformer = factory.newTransformer();
-
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, document.getDoctype().getPublicId());
@@ -206,14 +203,14 @@ public class JavaxRegPopulator
     }
 
     /**
-     * Insert JposEntry tag for a given JposEntry object into an XML document. For better readability, first the
-     * tags creation, jpos, product and vendor will be created, followed by (optional) prop tags in alphabetic
-     * order.<br>
-     * Keep in mind that elements of the JposEntry object represent either an attribute of tag creation, jpos, product
-     * or vendor or a complete prop tag. Method checkAndSetAttributeOfTagIsTrue will be used to add the specific
-     * attribute into the corresponding tag if the element represents the specified attribute. If
-     * checkAndSetAttributeOfTagIsTrue fails for all specified attributes, a prop tag will be created and added to
-     * JposEntry tag.
+     * Inserts {@value XmlRegPopulator#XML_TAG_JPOSENTRY} node content for a given {@link JposEntry} object into 
+     * the given XML {@link Document}. For better readability, first the XML elements for 
+     * {@value XmlRegPopulator#XML_TAG_CREATION}, {@value XmlRegPopulator#XML_TAG_JPOS}, 
+     * {@value XmlRegPopulator#XML_TAG_PRODUCT}, and {@value XmlRegPopulator#XML_TAG_VENDOR} 
+     * will be created, followed by (optional) {@value XmlRegPopulator#XML_TAG_PROP} elements in alphabetic order.<br>
+     * Keep in mind that the {@link JposEntry.Prop}s represent either an XML attribute of XML element of the above listed 
+     * tag names or an XML element with tag name {@value XmlRegPopulator#XML_TAG_PROP}. 
+     * 
      * @param doc              The XML document to be modified.
      * @param jposEntry        The JposEntry object to be added.
      * @param jposEntryElement The XML element the JposEntry tag shall be added to. This should be the JposEntries
@@ -244,7 +241,7 @@ public class JavaxRegPopulator
 		}
     }
 
-	private List<JposEntry.Prop> getSortedProperties(JposEntry jposEntry) {
+	private static List<JposEntry.Prop> getSortedProperties(JposEntry jposEntry) {
 		@SuppressWarnings("unchecked")
 		Iterator<JposEntry.Prop> props = jposEntry.getProps();
         List<JposEntry.Prop> sortedProps = new ArrayList<>();
@@ -302,7 +299,7 @@ public class JavaxRegPopulator
 			product.setAttribute(XML_ATTR_URL, attrValue);
 			break;
 		default:
-			tracer.print("WARN: unexpected XML attribute (will be skipped):" + attrName);
+			tracer.print("WARN: unexpected XML attribute (will be skipped): " + attrName);
 			break;
 		}
 		
@@ -317,7 +314,7 @@ public class JavaxRegPopulator
             propElement.setAttribute(XML_ATTR_TYPE, prop.getValue().getClass().getSimpleName());
     }
 
-    private void insertDateSavedComment(Document document) {
+    private static void insertDateSavedComment(Document document) {
         String dateString = DateFormat.getInstance().format(new Date(System.currentTimeMillis()));
         String commentString = "Saved by javapos-config-loader (JCL) version " + Version.getVersionString()
                 + " on " + dateString;
@@ -465,8 +462,7 @@ public class JavaxRegPopulator
                     systemId);
 
             if (publicId.equals(DTD_DOC_TYPE_VALUE)) {
-                InputStream is =
-                        getClass().getResourceAsStream(DTD_FILE_NAME);
+                InputStream is = getClass().getResourceAsStream(DTD_FILE_NAME);
 
                 if (is == null)
                     is = findFileInClasspath(DTD_FILE_NAME);
@@ -485,12 +481,13 @@ public class JavaxRegPopulator
 
     private List<JposEntry> jposEntryList = new ArrayList<>();
 
-    private Tracer tracer = TracerFactory.getInstance().
-            createTracer(this.getClass().getSimpleName());
+    private Tracer tracer = 
+    		TracerFactory.getInstance().createTracer(this.getClass().getSimpleName());
 
     //--------------------------------------------------------------------------
     // Constants
     //
 
     private static final String JAVAX_REG_POPULATOR_NAME_STRING = "JAVAX XML Entries Populator";
+    private static final String XML_RESTRICTED_ACCESS_ATTRIBUTE = "file,jar:file";
 }
