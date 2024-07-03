@@ -12,6 +12,7 @@
 - fixing a NPE in case multi-propo definition is missing
 - removed deprecated constructors at `jpos.config.simple.SimpleEntryRegistry` and `jpos.loader.simple.SimpleServiceManager`
 - removed deprecated class `jpos.util.Tracer`
+- ensure compatibility to webstart environments by using standard class-loader instead of the system class-loader (solves issue #1)
 
 ## 3.1.0
 

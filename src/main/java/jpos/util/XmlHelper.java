@@ -89,7 +89,7 @@ public class XmlHelper
 								dtdFilePath );
             }
             
-            is = ClassLoader.getSystemClassLoader().getResourceAsStream( dtdJarFullFileName );
+            is = getClass().getClassLoader().getResourceAsStream( dtdJarFullFileName );
 
 			tracer.println( "Got DTD InputStream from current ClassLoader" );
 
