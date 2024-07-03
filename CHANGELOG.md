@@ -1,5 +1,10 @@
 # Change Log for javapos-config-loader
 
+- ensure all resources are well closed by stringent use of try-with-resource clauses
+- fixing a NPE in case multi-propo definition is missing
+- removed deprecated constructors at `jpos.config.simple.SimpleEntryRegistry` and `jpos.loader.simple.SimpleServiceManager`
+- removed deprecated class `jpos.util.Tracer`
+
 ## 3.1.0
 
 - Added missing devices to XML schema/DTD files and as DevCat interfaces (contribution by [@dougberkland](https://github.com/dougberkland))
