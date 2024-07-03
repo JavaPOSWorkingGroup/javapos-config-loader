@@ -130,5 +130,5 @@ public class SimpleXmlRegPopulator extends AbstractRegPopulator
     // Instance variables
     //
 
-    private XmlRegPopulator regPopulator = new XercesRegPopulator();
+    private XmlRegPopulator regPopulator = new JavaxRegPopulator();
 }

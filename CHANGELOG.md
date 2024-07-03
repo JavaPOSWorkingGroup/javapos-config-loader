@@ -1,5 +1,13 @@
 # Change Log for javapos-config-loader
 
+- added Javax XML parser based XML registry populator implementation (contributed by @mjpcger)
+- removed Xerces based XML registry populator implementations, mainly
+    - `jpos.config.simple.xml.XercesRegPopulator`
+    - `jpos.config.simple.xml.Xerces2RegPopulator`
+- removed Xerces dependency at all, thus, it does not appear as transitive dependency in the Maven POM anymore
+- added JavaPOS XML node name, attribute name, and fixed file names as constants to `jpos.config.simple.xml.JavaxRegPopulator` making them available for all (proprietary) XML implementations
+- restricted XML parser's DTD and XSD resources access for security reasons
+- renamed `jpos.profile.XercesProfileFactory` to `jpos.profile.DefaultProfileFactory`
 - ensure all resources are well closed by stringent use of try-with-resource clauses
 - fixing a NPE in case multi-propo definition is missing
 - removed deprecated constructors at `jpos.config.simple.SimpleEntryRegistry` and `jpos.loader.simple.SimpleServiceManager`

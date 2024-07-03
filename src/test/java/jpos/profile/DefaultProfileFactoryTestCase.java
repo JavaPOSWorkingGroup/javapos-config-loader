@@ -25,13 +25,13 @@ import org.w3c.dom.Document;
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  * @since 1.3 (SF 2K meeting)
  */
-public class XercesProfileFactoryTestCase extends JposTestCase
+public class DefaultProfileFactoryTestCase extends JposTestCase
 {
 	//-------------------------------------------------------------------------
 	// Ctor(s)
 	//
 
-	public XercesProfileFactoryTestCase( String name ) { super( name ); }
+	public DefaultProfileFactoryTestCase( String name ) { super( name ); }
 
 	//-------------------------------------------------------------------------
 	// Protected overridden methods
@@ -39,14 +39,14 @@ public class XercesProfileFactoryTestCase extends JposTestCase
 
 	protected void setUp()
 	{
-		xProfFactory = new XercesProfileFactory();
+		profFactory = new DefaultProfileFactory();
 		profileFileName = PROFILE_FILE_NAME;
 		schemaProfileFileName = SCHEMA_PROFILE_FILE_NAME; 
 	}
 
 	protected void tearDown()
 	{
-		xProfFactory = null;
+		profFactory = null;
 		profileFileName = "";
 		schemaProfileFileName = "";
 	}
@@ -76,7 +76,7 @@ public class XercesProfileFactoryTestCase extends JposTestCase
 		assertTrue( "JCL JUnit Schema Profile file named = " + schemaProfileFileName + ", does not exist",
 				profileFile.exists() );
 
-		Document document = xProfFactory.parseSchema( schemaProfileFileName );
+		Document document = profFactory.parseSchema( schemaProfileFileName );
 
 		assertTrue( "XercesProfileFactory.parseSchema returned a null object",
 				    document != null );
@@ -89,7 +89,7 @@ public class XercesProfileFactoryTestCase extends JposTestCase
 		assertTrue( "JCL JUnit Profile file named = " + profileFileName + ", does not exist",
 				profileFile.exists() );
 		
-		Profile profile = xProfFactory.createProfile( profileFileName );
+		Profile profile = profFactory.createProfile( profileFileName );
 
 		assertTrue( "XercesProfileFactory.createProfile returned a null object", profile != null );
 		
@@ -109,34 +109,11 @@ public class XercesProfileFactoryTestCase extends JposTestCase
 	// Private methods
 	//
 
-	private File copyFile( File file, File newDir ) throws IOException
-	{
-		BufferedInputStream bis = new BufferedInputStream( new FileInputStream( file ) );
-		
-		String newFileName = newDir.getAbsolutePath() + File.separator + file.getName();
-
-		BufferedOutputStream bos = new BufferedOutputStream( new FileOutputStream( newFileName ) );
-
-		while( bis.available() > 0 )
-		{
-			int byteArraySize = bis.available();
-			byte[] buffer = new byte[ byteArraySize ];
-
-			bis.read( buffer );
-			bos.write( buffer , 0, byteArraySize ); 
-		}
-
-		bis.close();
-		bos.close();
-
-		return new File( newFileName );
-	}
-
     //-------------------------------------------------------------------------
 	// Instance variables
 	//
 
-	private XercesProfileFactory xProfFactory = null;
+	private DefaultProfileFactory profFactory = null;
 	private String profileFileName = "";
 	private String schemaProfileFileName = "";
 
