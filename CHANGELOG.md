@@ -1,5 +1,7 @@
 # Change Log for javapos-config-loader
 
+## 4.0.0
+
 - added Javax XML parser based XML registry populator implementation (contributed by @mjpcger)
 - removed Xerces based XML registry populator implementations, mainly
     - `jpos.config.simple.xml.XercesRegPopulator`
@@ -10,7 +12,9 @@
 - renamed `jpos.profile.XercesProfileFactory` to `jpos.profile.DefaultProfileFactory`
 - ensure all resources are well closed by stringent use of try-with-resource clauses
 - fixing a NPE in case multi-propo definition is missing
-- removed deprecated constructors at `jpos.config.simple.SimpleEntryRegistry` and `jpos.loader.simple.SimpleServiceManager`
+- removed deprecated constructors at 
+    - `jpos.config.simple.SimpleEntryRegistry`, and
+    - `jpos.loader.simple.SimpleServiceManager`
 - removed deprecated class `jpos.util.Tracer`
 - ensure compatibility to webstart environments by using standard class-loader instead of the system class-loader (solves issue #1)
 
