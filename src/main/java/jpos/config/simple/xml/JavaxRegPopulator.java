@@ -334,7 +334,7 @@ public class JavaxRegPopulator
         }
         parserFactory.setNamespaceAware(true);
         jposEntryList.clear();
-        getJposEntries().clear();
+        clearAllJposEntries();
         try {
             SAXParser parser = parserFactory.newSAXParser();
             parser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, XML_RESTRICTED_ACCESS_ATTRIBUTE);
@@ -351,7 +351,7 @@ public class JavaxRegPopulator
             lastLoadException = e;
         }
         for (JposEntry jposEntry : jposEntryList) {
-			getJposEntries().put(jposEntry.getLogicalName(), jposEntry);
+			addJposEntry(jposEntry.getLogicalName(), jposEntry);
 		}
     }
 
