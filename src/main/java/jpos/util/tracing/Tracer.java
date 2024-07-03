@@ -41,7 +41,7 @@ import java.io.PrintStream;
  * @author E. Michael Maximilien
  * @since 2.1.0
  */
-public class Tracer extends Object
+public class Tracer 
 {
     //-------------------------------------------------------------------------
     // Ctor
@@ -229,7 +229,7 @@ public class Tracer extends Object
      * Inner class for a default TracerOutput.  Just prints out info to System.err
      * @author E. Michael Maximilien
      */
-    class DefaultTracerOutput extends Object implements TracerOutput
+    class DefaultTracerOutput implements TracerOutput
     {
         //---------------------------------------------------------------------
         // Ctor(s)

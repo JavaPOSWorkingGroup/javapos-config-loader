@@ -41,7 +41,7 @@ import jpos.util.tracing.TracerFactory;
  * @version 0.0.1
  * @since 2.1.0
  */
-public class FileUtil extends Object
+public class FileUtil 
 {	
     //-------------------------------------------------------------------------
     // Ctor(s)

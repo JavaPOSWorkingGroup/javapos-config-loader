@@ -36,7 +36,7 @@ import java.lang.reflect.*;
  * @since 0.1 (Philly 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public final class JposServiceLoader extends Object
+public final class JposServiceLoader 
 {
     //--------------------------------------------------------------------------
     // Class variables

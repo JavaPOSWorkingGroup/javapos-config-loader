@@ -37,8 +37,7 @@ import jpos.util.tracing.TracerFactory;
  * @since 1.2 (NY 2K 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public abstract class AbstractRegPopulator extends Object 
-											 implements JposRegPopulator 
+public abstract class AbstractRegPopulator implements JposRegPopulator 
 {
     //-------------------------------------------------------------------------
     // Ctor(s)

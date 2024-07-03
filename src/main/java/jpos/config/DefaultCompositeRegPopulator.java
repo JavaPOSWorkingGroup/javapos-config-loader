@@ -32,8 +32,7 @@ import jpos.util.tracing.TracerFactory;
  * @since 1.3 (Washington DC 2001 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class DefaultCompositeRegPopulator extends Object 
-										   implements CompositeRegPopulator
+public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 {
     //-------------------------------------------------------------------------
     // Ctor(s)

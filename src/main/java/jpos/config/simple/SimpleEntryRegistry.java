@@ -33,7 +33,7 @@ import jpos.util.tracing.TracerFactory;
  * @since 0.1 (Philly 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class SimpleEntryRegistry extends Object implements JposEntryRegistry 
+public class SimpleEntryRegistry implements JposEntryRegistry 
 {
     /**
      * One-argument constructor

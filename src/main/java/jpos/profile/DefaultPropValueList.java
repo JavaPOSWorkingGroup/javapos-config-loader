@@ -25,7 +25,7 @@ import java.util.*;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-class DefaultPropValueList extends Object implements PropValueList
+class DefaultPropValueList implements PropValueList
 {
 	//-------------------------------------------------------------------------
 	// Public methods
@@ -70,7 +70,7 @@ class DefaultPropValueList extends Object implements PropValueList
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 * @since 1.3 (SF 2K meeting)
 	 */
-	class DefaultIterator extends Object implements PropValueList.Iterator
+	class DefaultIterator implements PropValueList.Iterator
 	{ 
 		//---------------------------------------------------------------------
 		// Ctor(s)

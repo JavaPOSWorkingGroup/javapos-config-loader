@@ -38,7 +38,7 @@ import jpos.util.tracing.TracerFactory;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class XercesProfileFactory extends Object implements ProfileFactory
+public class XercesProfileFactory implements ProfileFactory
 {
 	//-------------------------------------------------------------------------
 	// Private methods
@@ -227,7 +227,7 @@ public class XercesProfileFactory extends Object implements ProfileFactory
 	 * @since 1.3 (Washington DC 2001 meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
-	class DefaultErrorHandler extends Object implements org.xml.sax.ErrorHandler
+	class DefaultErrorHandler implements org.xml.sax.ErrorHandler
 	{
 		//---------------------------------------------------------------------
 		// Package methods

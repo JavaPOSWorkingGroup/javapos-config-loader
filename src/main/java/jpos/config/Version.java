@@ -25,7 +25,7 @@ package jpos.config;
  * @since 1.2 (NY 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public final class Version extends Object
+public final class Version 
 {
     /**
      * Main entry point for the Version application

@@ -23,7 +23,7 @@ package jpos.profile;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class DefaultDevCatV extends Object implements DevCatVisitor
+public class DefaultDevCatV implements DevCatVisitor
 {
 	//-------------------------------------------------------------------------
 	// Public methods

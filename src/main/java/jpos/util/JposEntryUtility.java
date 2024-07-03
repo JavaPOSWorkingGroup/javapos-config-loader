@@ -32,7 +32,7 @@ import jpos.config.simple.SimpleEntry;
  * @since 1.3 (Tokyo 2001 meeting)
  * @version 1.3.0
  */
-public class JposEntryUtility extends Object
+public class JposEntryUtility 
 {
 	//-------------------------------------------------------------------------
 	// Ctor(s)

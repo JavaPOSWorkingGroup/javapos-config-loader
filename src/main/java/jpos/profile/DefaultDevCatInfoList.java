@@ -25,7 +25,7 @@ import java.util.*;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien
  */
-class DefaultDevCatInfoList extends Object implements DevCatInfoList
+class DefaultDevCatInfoList implements DevCatInfoList
 {
 	//-------------------------------------------------------------------------
 	// Public methods
@@ -70,7 +70,7 @@ class DefaultDevCatInfoList extends Object implements DevCatInfoList
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 * @since 1.3 (SF 2K meeting)
 	 */
-	class DefaultIterator extends Object implements DevCatInfoList.Iterator
+	class DefaultIterator implements DevCatInfoList.Iterator
 	{
 		//---------------------------------------------------------------------
 		// Ctor(s)

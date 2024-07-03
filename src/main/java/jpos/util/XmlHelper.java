@@ -30,7 +30,7 @@ import jpos.util.tracing.TracerFactory;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class XmlHelper extends Object
+public class XmlHelper 
 {
     //-------------------------------------------------------------------------
     // Public methods

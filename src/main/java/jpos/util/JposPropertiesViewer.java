@@ -26,7 +26,7 @@ import jpos.loader.*;
  * @since 1.2 (NY 2K 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class JposPropertiesViewer extends Object
+public class JposPropertiesViewer 
 {
     //-------------------------------------------------------------------------
     // Public class methods

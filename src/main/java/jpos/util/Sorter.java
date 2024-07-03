@@ -25,7 +25,7 @@ import java.util.*;
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  * @version 1.1.x (JDK 1.1.x)
  */
-public final class Sorter extends Object
+public final class Sorter 
 {
     //-------------------------------------------------------------------------
     // Ctor

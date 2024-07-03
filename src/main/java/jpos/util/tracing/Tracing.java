@@ -25,7 +25,7 @@ package jpos.util.tracing;
  * to do Tracer.getInstance() everytime you need to access the Tracer.
  * @author E. Michael Maximilien
  */
-public class Tracing extends Object
+public class Tracing 
 {
     //-------------------------------------------------------------------------
     // Ctor

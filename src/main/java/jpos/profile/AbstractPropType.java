@@ -25,8 +25,7 @@ import java.io.Serializable;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public abstract class AbstractPropType extends Object 
-										 implements PropType, Serializable
+public abstract class AbstractPropType implements PropType, Serializable
 {
 	private static final long serialVersionUID = 3913079070484345271L;
 

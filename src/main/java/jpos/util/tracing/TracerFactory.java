@@ -42,7 +42,7 @@ import jpos.util.*;
  * @author E. Michael Maximilien
  * @since 2.1.0
  */
-public class TracerFactory extends Object
+public class TracerFactory 
 {
     //-------------------------------------------------------------------------
     // Ctor

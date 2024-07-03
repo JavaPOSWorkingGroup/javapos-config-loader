@@ -484,7 +484,7 @@ public class Xerces2RegPopulator extends AbstractXercesRegPopulator
      * SAX XML Handler interface
      * @author E. Michael Maximilien
      */
-    protected class JposErrorHandler extends Object implements ErrorHandler
+    protected class JposErrorHandler implements ErrorHandler
     {
 	    //----------------------------------------------------------------------
 	    // Private/protected methods

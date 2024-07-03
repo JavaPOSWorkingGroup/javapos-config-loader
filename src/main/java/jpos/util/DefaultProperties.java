@@ -30,7 +30,7 @@ import java.util.*;
  * @since 1.2 (NY 2K 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class DefaultProperties extends Object implements JposProperties 
+public class DefaultProperties implements JposProperties 
 {
     //-------------------------------------------------------------------------
     // Public methods
@@ -436,7 +436,7 @@ public class DefaultProperties extends Object implements JposProperties
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 * @since 1.3 (Washington DC 2001 meeting)
 	 */
-	class MultiProp extends Object implements JposProperties.MultiProperty
+	class MultiProp implements JposProperties.MultiProperty
 	{
 		//---------------------------------------------------------------------
 		// Ctor(s)
@@ -570,7 +570,7 @@ public class DefaultProperties extends Object implements JposProperties
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 * @since 1.3 (Washington DC 2001)
 	 */
-	public static class Prop extends Object implements JposProperties.Prop
+	public static class Prop implements JposProperties.Prop
 	{
 		//---------------------------------------------------------------------
 		// Ctor

@@ -25,7 +25,7 @@ import java.util.*;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class JposDevCats extends Object
+public class JposDevCats 
 {
 	//-------------------------------------------------------------------------
 	// Private class constants
@@ -246,8 +246,7 @@ public class JposDevCats extends Object
 	 * @since 1.3 (SF 2K meeting)
 	 * @author E. Michael Maximilien (maxim@us.ibm.com)
 	 */
-	public abstract static class AbstractDevCat extends Object 
-	implements DevCat 
+	public abstract static class AbstractDevCat implements DevCat 
 	{
 	    //---------------------------------------------------------------------
 	    // Public overriden methods

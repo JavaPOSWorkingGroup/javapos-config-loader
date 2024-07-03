@@ -23,7 +23,7 @@ package jpos.profile;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-class DefaultDevCatInfo extends Object implements DevCatInfo
+class DefaultDevCatInfo implements DevCatInfo
 {
 	//-------------------------------------------------------------------------
 	// Ctor(s)

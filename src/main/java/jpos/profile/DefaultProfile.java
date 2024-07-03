@@ -27,7 +27,7 @@ import java.net.URL;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-class DefaultProfile extends Object implements Profile, Serializable
+class DefaultProfile implements Profile, Serializable
 {
 	private static final long serialVersionUID = 1478221492781830174L;
 

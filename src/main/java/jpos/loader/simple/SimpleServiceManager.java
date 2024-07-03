@@ -34,8 +34,7 @@ import jpos.util.tracing.TracerFactory;
  * @since 0.1 (Philly 99 meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class SimpleServiceManager extends Object 
-implements JposServiceManager
+public class SimpleServiceManager implements JposServiceManager
 {
 	//--------------------------------------------------------------------------
 	// Ctor(s)

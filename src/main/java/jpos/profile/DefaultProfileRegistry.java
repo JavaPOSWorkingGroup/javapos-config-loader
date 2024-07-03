@@ -25,7 +25,7 @@ import java.util.*;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-public class DefaultProfileRegistry extends Object implements ProfileRegistry
+public class DefaultProfileRegistry implements ProfileRegistry
 {
 	//-------------------------------------------------------------------------
 	// Public methods

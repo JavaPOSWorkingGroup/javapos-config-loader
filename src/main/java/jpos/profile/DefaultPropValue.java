@@ -26,7 +26,7 @@ import java.util.Objects;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-class DefaultPropValue extends Object implements PropValue, Serializable
+class DefaultPropValue implements PropValue, Serializable
 {
 	private static final long serialVersionUID = 8895132456252900824L;
 

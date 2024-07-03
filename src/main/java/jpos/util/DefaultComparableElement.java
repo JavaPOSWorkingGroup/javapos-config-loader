@@ -24,7 +24,7 @@ package jpos.util;
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  * @version 1.2.0 (JDK 1.1.x)
  */
-public class DefaultComparableElement extends Object implements Comparable
+public class DefaultComparableElement implements Comparable
 {
     //-------------------------------------------------------------------------
     // Ctor

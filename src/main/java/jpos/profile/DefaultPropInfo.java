@@ -25,7 +25,7 @@ import java.io.Serializable;
  * @since 1.3 (SF 2K meeting)
  * @author E. Michael Maximilien (maxim@us.ibm.com)
  */
-class DefaultPropInfo extends Object implements PropInfo, Serializable
+class DefaultPropInfo implements PropInfo, Serializable
 {
 	private static final long serialVersionUID = -4186241572660113196L;
 	
