@@ -28,14 +28,11 @@ import jpos.JposException;
  */
 public class JposLoaderException extends JposException
 {
+	private static final long serialVersionUID = -2552211746747253072L;
+	
 	//-------------------------------------------------------------------------
 	// Ctor(s)
 	// 
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2552211746747253072L;
 
 	/**
 	 * Creates a JposLoaderException with the description passed

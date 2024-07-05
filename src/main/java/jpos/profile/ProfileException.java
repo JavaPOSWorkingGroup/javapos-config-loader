@@ -25,15 +25,12 @@ package jpos.profile;
  */
 public class ProfileException extends Exception
 {
+	private static final long serialVersionUID = -5646225627523470777L;
+	
 	//-------------------------------------------------------------------------
 	// Ctor(s)
 	//
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5646225627523470777L;
-
+	
 	/** 
 	 * 1-arg ctor 
 	 * @param msg the exception's message
