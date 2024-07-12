@@ -125,7 +125,7 @@ public class CompositeRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	private void createCompositePropFile() throws IOException
 	{
         Properties jclProps = new Properties();
-		jclProps.put( "jpos.util.tracing", JPOS_UTIL_TRACING_VALUE );
+		jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
 		jclProps.put( "jpos.config.populator.class.0", "jpos.config.simple.SimpleRegPopulator" );
 		jclProps.put( "jpos.config.populator.class.1", "jpos.config.simple.xml.SimpleXmlRegPopulator" );
 		jclProps.put( "jpos.config.populator.class.2", "jpos.config.simple.SimpleRegPopulator" );

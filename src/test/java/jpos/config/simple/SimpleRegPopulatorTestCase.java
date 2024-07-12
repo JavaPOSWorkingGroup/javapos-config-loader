@@ -116,7 +116,7 @@ public class SimpleRegPopulatorTestCase extends AbstractRegPopulatorTestCase
     public void testRegPopulatorSave1() throws Exception
 	{
         Properties jclProps = new Properties();
-		jclProps.put( "jpos.util.tracing", JPOS_UTIL_TRACING_VALUE );
+		jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
 		jclProps.put( "jpos.config.regPopulatorClass", "jpos.config.simple.SimpleRegPopulator" );
 		jclProps.put( "jpos.config.populatorFile", JCL_CFG_FILE_NAME );
 		createPropFile( jclProps );
@@ -166,7 +166,7 @@ public class SimpleRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	public void testRegPopulatorLoad1() throws Exception
 	{
         Properties jclProps = new Properties();
-		jclProps.put( "jpos.util.tracing", JPOS_UTIL_TRACING_VALUE );
+		jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
 		jclProps.put( "jpos.config.regPopulatorClass", "jpos.config.simple.SimpleRegPopulator" );
 		jclProps.put( "jpos.config.populatorFile", JCL_CFG_FILE_NAME );
 		createPropFile( jclProps );

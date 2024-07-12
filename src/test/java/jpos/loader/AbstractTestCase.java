@@ -127,7 +127,7 @@ public abstract class AbstractTestCase extends JposTestCase
 	private void createSimplePropFile() throws Exception
 	{
         Properties jclProps = new Properties();
-		jclProps.put( "jpos.util.tracing", JPOS_UTIL_TRACING_VALUE );
+		jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
 		jclProps.put( "jpos.loader.serviceManagerClass", MANAGER_CLASS );
 		jclProps.put( "jpos.config.regPopulatorClass", POPULATOR_CLASS );
 		jclProps.put( "jpos.config.populatorFile",  POPULATOR_FILE );
@@ -152,7 +152,7 @@ public abstract class AbstractTestCase extends JposTestCase
 	private void createMultiPropFile() throws Exception
 	{
         Properties jclProps = new Properties();
-		jclProps.put( "jpos.util.tracing", JPOS_UTIL_TRACING_VALUE );
+		jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
 		jclProps.put( "jpos.loader.serviceManagerClass", MANAGER_CLASS );
 		
 		int startIndex = 0;
