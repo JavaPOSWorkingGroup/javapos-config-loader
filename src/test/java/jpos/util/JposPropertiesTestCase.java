@@ -111,8 +111,8 @@ public class JposPropertiesTestCase extends JposTestCase
 				properties.getPropertyString( "jpos.loader.serviceManagerClass" ) != null );
 
 
-		assertTrue( "All JposProperties should contain property \"jpos.util.tracing\"",
-				properties.getPropertyString( "jpos.util.tracing" ) != null );
+		assertTrue( "All JposProperties should contain property \"jpos.util.tracing.TurnOnAllNamedTracers\"",
+				properties.getPropertyString( "jpos.util.tracing.TurnOnAllNamedTracers" ) != null );
 
 		assertTrue( "JposProperties should NOT contain property \"__this.is.a.fake.property_name__\"",
 				properties.getPropertyString( "__this.is.a.fake.property_name__" ) == null );
@@ -126,8 +126,8 @@ public class JposPropertiesTestCase extends JposTestCase
 				properties.isPropertyDefined( "jpos.loader.serviceManagerClass" ) == true );
 
 
-		assertTrue( "All JposProperties should contain property \"jpos.util.tracing\"",
-				properties.isPropertyDefined( "jpos.util.tracing" ) == true );
+		assertTrue( "All JposProperties should contain property \"jpos.util.tracing.TurnOnAllNamedTracers\"",
+				properties.isPropertyDefined( "jpos.util.tracing.TurnOnAllNamedTracers" ) == true );
 
 		assertTrue( "JposProperties should NOT contain property \"__this.is.a.fake.property_name__\"",
 				properties.isPropertyDefined( "__this.is.a.fake.property_name__" ) == false );
