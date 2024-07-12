@@ -313,7 +313,7 @@ public abstract class JposTestCase extends TestCase
 								 "data" + File.separator ;
 
 	public static final boolean CONSOLE_OUTPUT_ENABLED = false;
-	public static final String JPOS_UTIL_TRACING_VALUE = "ON"; 
+	public static final String JPOS_UTIL_TRACING_VALUE = "OFF"; 
 	
 	/**
 	 * This method is needed as on different OS the temp directory path may come without
