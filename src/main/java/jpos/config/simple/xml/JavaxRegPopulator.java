@@ -125,6 +125,7 @@ public class JavaxRegPopulator
     @Override
     public void save(@SuppressWarnings("rawtypes") Enumeration entries, String fileName) throws Exception 
     {
+    	tracer.println("saving JavaPOS configuration to file "  + new File(fileName).getAbsolutePath());
         try (FileOutputStream os = new FileOutputStream(fileName)) {
             save(entries, os);
         }
@@ -142,6 +143,7 @@ public class JavaxRegPopulator
 
     @Override
     public void load(String fileName) {
+    	tracer.println("loading JavaPOS configuration from file "  + new File(fileName).getAbsolutePath());
         try (InputStream is = new File(fileName).exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
             load(is);
         } catch (Exception e) {
@@ -329,6 +331,7 @@ public class JavaxRegPopulator
             StreamSource ss = new StreamSource(is == null ? new FileInputStream(XSD_FILE_NAME) : is);
         	Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(ss);
         	parserFactory.setSchema(schema);
+        	tracer.println("XML file will be XSD schema validated against " + XSD_FILE_NAME);
         } catch (Exception e) {
             parserFactory.setValidating(true);
         }
@@ -369,7 +372,6 @@ public class JavaxRegPopulator
 
         @Override
         public void startElement(String uri, String lname, String qname, Attributes attrs) {
-            tracer.print("StartElement: " + qname);
             if (theException != null) {
                 tracer.println(": Parse error: " + theException.getMessage());
                 lastLoadException = theException;
@@ -412,7 +414,6 @@ public class JavaxRegPopulator
                     }
                 }
             }
-            tracer.println("");
         }
 
         private void addOptionalProperty(String name, String value) {
@@ -421,10 +422,8 @@ public class JavaxRegPopulator
 
         @Override
         public void endElement(String uri, String lname, String qname) {
-            if (theException == null)
-                tracer.println("EndElement: " + qname);
-            else {
-                tracer.println("EndElement: " + theException.getMessage());
+            if (theException != null) {
+                tracer.println("Parsing XML element " + qname + " failed with: " + theException.getMessage());
                 theException = null;
             }
             if (qname.equals(XML_TAG_JPOSENTRY)) {
@@ -455,13 +454,10 @@ public class JavaxRegPopulator
 
         @Override
         public InputSource resolveEntity(String name, String publicId, String uri, String systemId) {
-            tracer.println("JposEntityResolver:resolveEntity:publicId=" +
-                    publicId);
-
-            tracer.println("JposEntityResolver:resolveEntity:systemId=" +
-                    systemId);
 
             if (publicId.equals(DTD_DOC_TYPE_VALUE)) {
+            	tracer.println("XML file will be DTD validated against public Id '" + publicId + "' and system Id " + systemId);
+            	
                 InputStream is = getClass().getResourceAsStream(DTD_FILE_NAME);
 
                 if (is == null)
