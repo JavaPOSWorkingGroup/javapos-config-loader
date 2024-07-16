@@ -81,7 +81,7 @@ public class TracerFactory
      */
     public void setOutputFile( File file ) throws IOException
     {
-    	//<todo/>
+    	// not implemented yet
     }
     
     /** 
@@ -109,16 +109,17 @@ public class TracerFactory
     public Tracer createTracer( String name ) 
     { 
     	if( tracerMap.containsKey( name ) )
-    		return (Tracer)tracerMap.get( name );
+    		return tracerMap.get( name );
     		
     	Tracer tracer = new Tracer( name );
     	
     	if( namedTracerState.containsKey( name ) )
-    		tracer.setOn( ( (Boolean)namedTracerState.get( name ) ).booleanValue() );
+    		tracer.setOn( ( namedTracerState.get( name ) ).booleanValue() );
     	else
     		tracer.setOn( false );
     		
-		if( turnOnAllNamedTracers ) tracer.setOn( true );
+		if( turnOnAllNamedTracers ) 
+			tracer.setOn( true );
     	
     	tracerMap.put( name, tracer );
     	
@@ -164,13 +165,14 @@ public class TracerFactory
      */
     private boolean isPropertyTrue( String propValue )
     {
-    	if( propValue == null ) return false;
+    	if( propValue == null ) 
+    		return false;
     	
-        if( propValue.
-            equalsIgnoreCase( JposProperties.TRACING_ON_PROP_VALUE ) ||
-            propValue.
-            equalsIgnoreCase( JposProperties.TRACING_TRUE_PROP_VALUE ) )
+        if( propValue.equalsIgnoreCase( JposProperties.TRACING_ON_PROP_VALUE ) ||
+            propValue.equalsIgnoreCase( JposProperties.TRACING_TRUE_PROP_VALUE ) ) 
+        {
 			return true;
+        }
 			
 		return false;
     }
