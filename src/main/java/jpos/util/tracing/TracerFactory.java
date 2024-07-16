@@ -231,7 +231,7 @@ public class TracerFactory
 			     props.getStringListProperty( TURN_ON_NAMED_TRACERS_PROP_NAME );
 			
 			for (String tracerName : turnOnNamedTracersList) {
-				namedTracerState.put( tracerName, Boolean.TRUE );
+				namedTracerState.put( tracerName.trim(), Boolean.TRUE );
 			}
 		}
 	}
