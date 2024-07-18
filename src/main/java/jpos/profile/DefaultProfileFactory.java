@@ -29,8 +29,8 @@ import org.w3c.dom.*;
 import org.xml.sax.*;
 
 import jpos.util.XmlHelper;
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of the ProfileFactory interface using an 
@@ -39,6 +39,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public class DefaultProfileFactory implements ProfileFactory
 {
+	private static final Logger log = LoggerFactory.getLogger(DefaultProfileFactory.class);
+	
 	//-------------------------------------------------------------------------
 	// Private methods
 	//
@@ -123,19 +125,19 @@ public class DefaultProfileFactory implements ProfileFactory
         catch( IOException ioe )
         {
 			String msg = "Error loading XML profile file";
-			tracer.println( msg + ": Exception.message = " + ioe.getMessage() ); 
+			log.error( "{}: Exception.message = {}", msg, ioe.getMessage() ); 
 			throw new ProfileException( msg, ioe ); 
 		}
         catch( SAXException se )
         { 
 			String msg = "Error parsing XML profile file";
-			tracer.println( msg + ": Exception.message = " + se.getMessage() ); 
+			log.error( "{}: Exception.message = {}", msg, se.getMessage() ); 
 			throw new ProfileException( msg, se ); 
 		}
 		catch( ParserConfigurationException pce )
 		{
 			String msg = "Error creating XML parser";
-			tracer.println( msg + ": Exception.message = " + pce.getMessage() ); 
+			log.error( "{}: Exception.message = {}", msg, pce.getMessage() ); 
 			throw new ProfileException( msg, pce ); 
 		}
 		finally
@@ -165,20 +167,20 @@ public class DefaultProfileFactory implements ProfileFactory
         catch( IOException ioe )
         {
 			String msg = "Error loading XML profile file";
-			tracer.println( msg + ": Excpetion.message = " + ioe.getMessage() ); 
+			log.error( "{}: Excpetion.message = {}", msg, ioe.getMessage() ); 
 			throw new ProfileException( msg, ioe ); 
 		}
         catch( SAXException se )
         { 
 			String msg = "Error parsing XML profile file";
-			tracer.println( msg + ": Exception.message = " + se.getMessage() ); 
+			log.error( "{}: Exception.message = {}", msg, se.getMessage() ); 
 
 			throw new ProfileException( msg, se ); 
 		}
 		catch( ParserConfigurationException pce )
 		{
 			String msg = "Error creating XML parser";
-			tracer.println( msg + ": Exception.message = " + pce.getMessage() ); 
+			log.error( "{}: Exception.message = {}", msg, pce.getMessage() ); 
 			throw new ProfileException( msg, pce ); 
 		}
     }
@@ -211,13 +213,6 @@ public class DefaultProfileFactory implements ProfileFactory
 	}
 
 	//-------------------------------------------------------------------------
-	// Instance variables
-	//
-
-	private Tracer tracer = TracerFactory.getInstance().
-							 createTracer( this.getClass().getSimpleName() );
-
-	//-------------------------------------------------------------------------
 	// Inner classes
 	//
 
@@ -244,19 +239,19 @@ public class DefaultProfileFactory implements ProfileFactory
 
 		public void warning( SAXParseException e ) throws SAXException 
 		{
-			tracer.println( "Line " + e.getLineNumber() + ": WARNING SAXParseException.message = " + e.getMessage() );
+			log.warn( "Line {}: WARNING SAXParseException.message = {}", e.getLineNumber(), e.getMessage() );
 			warningList.add( e );
 		}
 		
 		public void error( SAXParseException e ) throws SAXException 
 		{
-			tracer.println( "Line " + e.getLineNumber() + ": ERROR SAXParseException.message = " + e.getMessage() );
+			log.error( "Line {}: ERROR SAXParseException.message = {}", e.getLineNumber(), e.getMessage() );
 			errorList.add( e );
 		}
 		
 		public void fatalError( SAXParseException e ) throws SAXException 
 		{
-			tracer.println( "Line " + e.getLineNumber() + ": FATALERROR SAXParseException.message = " + e.getMessage() );
+			log.error( "Line {}: FATALERROR SAXParseException.message = {}", e.getLineNumber(), e.getMessage() );
 			fatalErrorList.add( e );
 		}
 

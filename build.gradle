@@ -65,9 +65,11 @@ def testResourceDir = file("${System.properties['java.io.tmpdir']}/javapos-confi
 
 dependencies {
 	api 'org.javapos:javapos-contracts:1.6.0'
+	implementation 'org.slf4j:slf4j-api:2.0.13' 
 	
 	testImplementation("junit:junit:4.13.2")
 	
+	testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.13'
 	testRuntimeOnly files(testResourceDir)
 }
 
