@@ -255,7 +255,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 		if( populatorClassMultiProp == null || populatorClassMultiProp.getNumberOfProperties() == 0 )
 		{
 			tracer.println( "CompositeRegPopulator.load() w/o any defined multi-property" );
-			throw new RuntimeException( "CompositeRegPopulator.load() w/o any defined multi-property" );
+			throw new IllegalArgumentException( "CompositeRegPopulator.load() w/o any defined multi-property" );
 		}
 
 		@SuppressWarnings("unchecked")
