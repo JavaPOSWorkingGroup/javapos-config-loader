@@ -22,8 +22,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
 
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple helper class for XML related activities
@@ -32,6 +32,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public class XmlHelper 
 {
+	private static final Logger log = LoggerFactory.getLogger(XmlHelper.class);
+	
     //-------------------------------------------------------------------------
     // Public methods
     //
@@ -85,30 +87,26 @@ public class XmlHelper
 
                 createdTempDir = true;
 
-				tracer.println( "DTD file PATH does not exist.  Created path " + 
-								dtdFilePath );
+				log.debug( "DTD file PATH does not exist.  Created path {}", dtdFilePath );
             }
             
             is = getClass().getClassLoader().getResourceAsStream( dtdJarFullFileName );
 
-			tracer.println( "Got DTD InputStream from current ClassLoader" );
+			log.debug( "Got DTD InputStream from current ClassLoader" );
 
             if( is != null )
             	readAndCreateTempDtdFile( is );
         }
         catch( IOException ioe )
         { 
-        	tracer.println( "Error creating DTD file: Exception.message = " + 
-        	  			    ioe.getMessage() ); 
+        	log.error( "Error creating DTD file: Exception.message = {}", ioe.getMessage() ); 
         }
         finally
         {
             try{ if( is != null ) is.close(); }
             catch( IOException ioe ) 
             {
-	        	tracer.println( "Error while closing streams:" +
-	        					" Exception.message = " + 
-    	    	  			    ioe.getMessage() );             	
+	        	log.error( "Error while closing streams: Exception.message = {}", ioe.getMessage() );             	
             }
         }
     }
@@ -126,13 +124,13 @@ public class XmlHelper
 				if( createdTempDir )
 					removeDirs( dtdFilePath );
 					
-				tracer.println( "Removed temp directory with DTD OK" );
+				log.debug( "Removed temp directory with DTD OK" );
             }
         }
         catch( Exception e )
         { 
-        	tracer.println( "Error removing temporary DTD file: " +
-        	  				"Exception.msg = " + e.getMessage() ); 
+        	log.error( "Error removing temporary DTD file: " +
+        	  				"Exception.msg = {}", e.getMessage() ); 
        	}
     }
 
@@ -165,7 +163,7 @@ public class XmlHelper
 			
 			createdTempDTD = true;
 			
-			tracer.println( "Read and created temp " + dtdFilePath + dtdFileName );
+			log.debug( "Read and created temp {}{}", dtdFilePath, dtdFileName );
 		}
 	}
 
@@ -235,9 +233,6 @@ public class XmlHelper
     
 	private boolean createdTempDTD = false;
     private boolean createdTempDir = false;
-
-	private Tracer tracer = TracerFactory.getInstance().
-							 createTracer( "XmlHelper" );
 
 	//-------------------------------------------------------------------------
 	// Class constants

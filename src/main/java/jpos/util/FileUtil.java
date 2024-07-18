@@ -32,8 +32,8 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for various File related actions and methods
@@ -43,6 +43,9 @@ import jpos.util.tracing.TracerFactory;
  */
 public class FileUtil 
 {	
+	private static final String JAVA_CLASS_PATH_PROP_NAME = "java.class.path";
+	private static final Logger log = LoggerFactory.getLogger(FileUtil.class);
+	
     //-------------------------------------------------------------------------
     // Ctor(s)
     //
@@ -56,7 +59,7 @@ public class FileUtil
 
 	protected static synchronized List<String> getCpDirList()
 	{
-		String classpath = System.getProperty( "java.class.path" );								
+		String classpath = System.getProperty( JAVA_CLASS_PATH_PROP_NAME );								
 		
 		List<String> cpDirList = new ArrayList<>();
 		
@@ -79,7 +82,7 @@ public class FileUtil
 	
 	protected static synchronized List<String> getJarList()
 	{
-		String classpath = System.getProperty( "java.class.path" );
+		String classpath = System.getProperty( JAVA_CLASS_PATH_PROP_NAME );
 								
 		List<String> cpJarFilesList = new ArrayList<>();
 		
@@ -98,28 +101,31 @@ public class FileUtil
 	
 	protected static synchronized JarEntry getJarEntry( JarFile jarFile, String fileName )
 	{
-		tracer.println( "<getJarEntry jarFile=" + jarFile + " fileName=" + 
-						fileName + ">" );
+		log.debug( "<getJarEntry jarFile={} fileName={}>", jarFile, fileName );
 		
-		if( jarFile == null ) return null;
-		
-		Enumeration<JarEntry> entries = jarFile.entries();
-		while( entries.hasMoreElements() )
-		{
-			JarEntry jarEntry = entries.nextElement();
-									
-			if( jarEntry.getName().equals( fileName ) ) 
+		try {
+			
+			if( jarFile == null ) return null;
+			
+			Enumeration<JarEntry> entries = jarFile.entries();
+			while( entries.hasMoreElements() )
 			{
-				tracer.println( "jarEntry.getName()=" + jarEntry.getName() );
-				return jarEntry;
+				JarEntry jarEntry = entries.nextElement();
+				
+				if( jarEntry.getName().equals( fileName ) ) 
+				{
+					log.debug( "jarEntry.getName()={}", jarEntry.getName() );
+					return jarEntry;
+				}
 			}
+			
+			log.warn( "Could not find JarEntry with fileName={}", fileName );		
+			return null;
 		}
-
-		tracer.println( "<message>Could not find JarEntry with fileName=" + 
-						 fileName +"</message>" );		
-		tracer.println( "</getJarEntry>" );
+		finally {			
+			log.debug( "</getJarEntry>");		
+		}
 		
-		return null;
 	}
     	
     /** 
@@ -131,11 +137,11 @@ public class FileUtil
 	{
 		try
 		{
-			tracer.println( "<lookForFileInJars fileName="+fileName +">" );
+			log.debug( "<lookForFileInJars fileName={}>", fileName );
 			
-			String classpath = System.getProperty( "java.class.path" );
+			String classpath = System.getProperty( JAVA_CLASS_PATH_PROP_NAME );
 
-			tracer.println( "classpath="+classpath );
+			log.debug( "classpath={}", classpath );
 						
 			List<String> cpJarFilesList = getJarList();
 						
@@ -143,7 +149,7 @@ public class FileUtil
 			{
 				String jarFileName = cpJarFilesList.get( i );
 				
-				tracer.println( "jarFileName=" + jarFileName );
+				log.debug( "jarFileName={}", jarFileName );
 		
 				JarFile jarFile = new JarFile( new File( jarFileName ) );
 
@@ -157,7 +163,7 @@ public class FileUtil
 		catch( Exception ioe ) { return null; }
 		finally
 		{
-			tracer.println( "</lookForFileInJars>" );
+			log.debug( "</lookForFileInJars>" );
 		}
 	}	
 	
@@ -174,7 +180,7 @@ public class FileUtil
 	 * @param searchInJarFile if true the file will be searched in all the JAR
 	 * files that are located in CLASSPATH
 	 */
-	public synchronized static boolean 
+	public static synchronized boolean 
 	locateFile( String fileName, boolean searchInClassPath, 
 	            boolean searchInJarFile )
 	{
@@ -198,7 +204,7 @@ public class FileUtil
 	 * @param searchInClassPath if true the file will be searched in all 
 	 * directories specified by CLASSPATH
      */
-    public synchronized static File findFile( String fileName, 
+    public static synchronized File findFile( String fileName, 
     											 boolean searchInClassPath )
 	{
 		try
@@ -237,21 +243,20 @@ public class FileUtil
 	loadFile( String fileName, boolean searchInClassPath, boolean searchInJarFile ) 
 	throws IOException
 	{	    
-		tracer.println( "<loadFile fileName=" + fileName + " searchInClassPath=" + 
-						searchInClassPath + " searchInJarFile=" + 
-						searchInJarFile + ">" );
+		log.debug( "<loadFile fileName={} searchInClassPath={} searchInJarFile={}>",
+				fileName, searchInClassPath, searchInJarFile);
 		
 		File locatedFile = findFile( fileName, searchInClassPath );
 		
 		if( locatedFile != null ) return new FileInputStream( locatedFile );
 
-		if( searchInJarFile == false ) 
-			throw new FileNotFoundException( "Could not find file: " + fileName );
+		if( !searchInJarFile ) 
+			throw new FileNotFoundException( "Could not find file classpath resources: " + fileName );
 		
 		JarFile locatedJarFile = lookForFileInJars( fileName );
 		
 		if( locatedJarFile == null ) 
-			throw new FileNotFoundException( "Could not find file: " + fileName );
+			throw new FileNotFoundException( "Could not find file in JAR files: " + fileName );
 		
 		JarEntry locatedJarEntry = getJarEntry( locatedJarFile, fileName );
 
@@ -261,10 +266,4 @@ public class FileUtil
 		throw new FileNotFoundException( "Could not find file: " + fileName );
 	}
 	
-	//-------------------------------------------------------------------------
-	// Class variables
-	//
-	
-	private static Tracer tracer = TracerFactory.getInstance().
-									 createTracer( "FileUtil" );
 }
