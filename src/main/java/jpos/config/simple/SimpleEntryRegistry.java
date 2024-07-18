@@ -23,8 +23,8 @@ import java.io.*;
 
 import jpos.config.*;
 
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a simple implementation for the JposEntryRegistry using a Hashtable 
@@ -35,6 +35,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public class SimpleEntryRegistry implements JposEntryRegistry 
 {
+	private static final Logger log = LoggerFactory.getLogger(SimpleEntryRegistry.class);
+	
     /**
      * One-argument constructor
      * @param populator the JposRegPopulator used by the registry
@@ -89,7 +91,7 @@ public class SimpleEntryRegistry implements JposEntryRegistry
     {
         jposEntries.put( logicalName, newEntry ); 
         
-		tracer.println( "Modified entry.logicalName = " + logicalName );                							    		                 
+		log.debug( "Modified entry.logicalName = {}", logicalName );                							    		                 
 
 		fireJposEntryRegistryEventModified( new JposEntryRegistryEvent( 
 											this, newEntry ) );
@@ -104,7 +106,7 @@ public class SimpleEntryRegistry implements JposEntryRegistry
     { 
         jposEntries.put( logicalName, entry );
         		
-		tracer.println( "Added entry.logicalName = " + logicalName );                							    		         
+		log.debug( "Added entry.logicalName = {}", logicalName );                							    		         
 
 		fireJposEntryRegistryEventAdded( new JposEntryRegistryEvent( 
 										 this, entry ) );
@@ -141,8 +143,7 @@ public class SimpleEntryRegistry implements JposEntryRegistry
                 		jposEntries.remove( entry.getPropertyValue( JposEntry.
                 							    LOGICAL_NAME_PROP_NAME ) );
 
-		        tracer.println( "Removed entry.logicalName = " + 
-                                entry.getLogicalName() );                							    
+		        log.debug( "Removed entry.logicalName = {}", entry.getLogicalName() );                							    
                 							    
                 fireJposEntryRegistryEventRemoved( new JposEntryRegistryEvent( 
                 								   this, removedEntry ) );				
@@ -151,8 +152,7 @@ public class SimpleEntryRegistry implements JposEntryRegistry
             }
         }
         
-        tracer.println( "Could not find entry to remove entry.logicalName = " + 
-                        entry.getLogicalName() );
+        log.debug( "Could not find entry to remove entry.logicalName = {}", entry.getLogicalName() );
     }
 
     /**
@@ -236,7 +236,9 @@ public class SimpleEntryRegistry implements JposEntryRegistry
 
                 jposEntries.put( jposEntry.getLogicalName(), jposEntry );
             }
-            catch( Exception e ) { tracer.print( e ); }
+            catch( Exception e ) { 
+            	log.error( e.getMessage() ); 
+            }
         }
 
 		loaded = true;
@@ -305,9 +307,8 @@ public class SimpleEntryRegistry implements JposEntryRegistry
      */
     protected void fireJposEntryRegistryEventAdded( JposEntryRegistryEvent e )
     {
-    	tracer.println( "fireJposEntryRegistryEventAdded: " + 
-    	                "e.getJposEntry().logicalName = " + 
-    	                e.getJposEntry().getLogicalName() );    	
+    	log.debug( "fireJposEntryRegistryEventAdded: e.getJposEntry().logicalName = {}", 
+    			e.getJposEntry().getLogicalName() );    	
     	
         @SuppressWarnings("unchecked")
 		Vector<JposEntryRegistryListener> listenersClone = (Vector<JposEntryRegistryListener>) listeners.clone();
@@ -327,9 +328,8 @@ public class SimpleEntryRegistry implements JposEntryRegistry
      */
     protected void fireJposEntryRegistryEventRemoved( JposEntryRegistryEvent e )
     {
-    	tracer.println( "fireJposEntryRegistryEventRemoved: " + 
-    	                "e.getJposEntry().logicalName = " + 
-    	                e.getJposEntry().getLogicalName() );
+    	log.debug( "fireJposEntryRegistryEventRemoved: e.getJposEntry().logicalName = {}", 
+    			e.getJposEntry().getLogicalName() );
     	
         @SuppressWarnings("unchecked")
 		Vector<JposEntryRegistryListener> listenersClone = (Vector<JposEntryRegistryListener>) listeners.clone();
@@ -348,9 +348,8 @@ public class SimpleEntryRegistry implements JposEntryRegistry
      */
     protected void fireJposEntryRegistryEventModified( JposEntryRegistryEvent e )
     {
-    	tracer.println( "fireJposEntryRegistryEventModified: " + 
-    	                "e.getJposEntry().logicalName = " + 
-    	                e.getJposEntry().getLogicalName() );    	
+    	log.debug( "fireJposEntryRegistryEventModified: e.getJposEntry().logicalName = {}", 
+    			e.getJposEntry().getLogicalName() );    	
     	
         @SuppressWarnings("unchecked")
 		Vector<JposEntryRegistryListener> listenersClone = (Vector<JposEntryRegistryListener>) listeners.clone();
@@ -370,7 +369,4 @@ public class SimpleEntryRegistry implements JposEntryRegistry
     private final Vector<JposEntryRegistryListener> listeners = new Vector<>();
     private JposRegPopulator regPopulator = null;
 	private boolean loaded = false;
-	
-	private Tracer tracer = TracerFactory.getInstance().
-	                         createTracer( "SimpleEntryRegistry" );
 }

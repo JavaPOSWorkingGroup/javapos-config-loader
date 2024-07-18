@@ -27,8 +27,8 @@ import jpos.config.*;
 import jpos.loader.JposServiceLoader;
 import jpos.util.JposProperties;
 import jpos.util.JposPropertiesConst;
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common abstract superclass to help in the implementation of the 
@@ -39,6 +39,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public abstract class AbstractRegPopulator implements JposRegPopulator 
 {
+	private static final Logger log = LoggerFactory.getLogger(AbstractRegPopulator.class);
+	
     //-------------------------------------------------------------------------
     // Ctor(s)
     //
@@ -115,8 +117,7 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
         { url = new URL( "file", "", file.getAbsolutePath() ); }
         catch( Exception e ) 
         {
-        	tracer.println( "Error creating URL: Exception.message=" +
-        					e.getMessage() );        	
+        	log.error( "Error creating URL: Exception.message={}", e.getMessage() );        	
         }
 
         return url;
@@ -138,8 +139,7 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
         }
         catch( Exception e ) 
         {
-        	tracer.println( "Error creating URL: Exception.message=" +
-        					e.getMessage() ); 
+        	log.error( "Error creating URL: Exception.message={}", e.getMessage() ); 
         }
 
         return url;
@@ -213,8 +213,7 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
             		jposProperties.getPropertyString( 
             				JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME );
 
-			tracer.println( "getPopulatorFileIS(): populatorFileName=" + 
-							populatorFileName );
+			log.debug( "getPopulatorFileIS(): populatorFileName={}", populatorFileName );
 
             populatorIS = new FileInputStream( populatorFileName );
         }
@@ -229,15 +228,14 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
 
             populatorIS = url.openStream();
             
-			tracer.println( "getPopulatorFileIS(): populatorFileURL=" + 
-							populatorFileURL );            
+			log.debug( "getPopulatorFileIS(): populatorFileURL={}", populatorFileURL );            
         }
         else
         {
         	String msg = "jpos.config.populatorFile OR " +
         				 " jpos.config.populatorFileURL properties not defined";
 			
-			tracer.println( msg );        				 
+			log.error( msg );        				 
         				 
             throw new Exception( msg );
         }
@@ -284,7 +282,7 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
         	String msg = "jpos.config.populatorFile OR " + 
         				 "jpos.config.populatorFileURL properties not defined";
         
-        	tracer.println( msg );
+        	log.error( msg );
         	
             throw new Exception( msg );
         }
@@ -338,8 +336,7 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
 			{ 
 				is = null; 
 				
-				tracer.println( "findFileInClasspath: IOException.msg=" +
-								ioe.getMessage() );
+				log.error( "findFileInClasspath: IOException.msg={}", ioe.getMessage() );
 			}
 
 			return is;
@@ -438,8 +435,7 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
             }
             catch( Exception e ) 
             {
-            	tracer.println( "findInJarZipFiles: Exception.message=" +
-            					e.getMessage() );
+            	log.error( "findInJarZipFiles: Exception.message={}", e.getMessage() );
             }
         }
 
@@ -458,7 +454,4 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
 	private String uniqueId = "";
 
 	protected Exception lastLoadException = null;
-	
-	private Tracer tracer = TracerFactory.getInstance().
-							 createTracer( "AbstractRegPopulator" );
 }
