@@ -25,8 +25,8 @@ import jpos.JposConst;
 import jpos.JposException;
 import jpos.loader.*;
 import jpos.config.*;
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a simple implementation of the JposServiceConnection interface
@@ -35,6 +35,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public class SimpleServiceConnection implements JposServiceConnection
 {
+	private static final Logger log = LoggerFactory.getLogger(SimpleServiceConnection.class);
+	
     /**
      * Creates a new SimpleServiceConnection by passing the logicalName, 
      * the associated JposEntry and JposServiceInstanceFactory
@@ -99,10 +101,11 @@ public class SimpleServiceConnection implements JposServiceConnection
         } 
         catch( Exception e ) 
         {
-        	String msg = "Could not connect to service with logicalName = " + 
-      				     logicalName + ": Exception.message=" + e.getMessage();
+        	String msg = String.format(
+        			"Could not connect to service with logicalName = %s: Exception.message= %s", 
+        			logicalName, e.getMessage());
         
-        	tracer.println( msg );
+        	log.error( msg );
         	 
         	throw new JposException( JposConst.JPOS_E_NOSERVICE, msg, e ); 
     	}
@@ -121,7 +124,7 @@ public class SimpleServiceConnection implements JposServiceConnection
 	        service = null;
     	}
         
-        tracer.println( "Disconnected to service OK" );
+        log.info( "Disconnected to service OK" );
     }
 
     /**
@@ -146,7 +149,4 @@ public class SimpleServiceConnection implements JposServiceConnection
     private JposEntry entry = null;
     private String logicalName = null;
     private String siFactoryClassName = null;
-    
-    private Tracer tracer = TracerFactory.getInstance().
-    						 createTracer( "SimpleServiceConnection" );
 }
