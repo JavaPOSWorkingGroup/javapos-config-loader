@@ -22,8 +22,8 @@ import jpos.JposConst;
 import jpos.JposException;
 
 import jpos.util.*;
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.*;
 
@@ -38,12 +38,11 @@ import java.lang.reflect.*;
  */
 public final class JposServiceLoader 
 {
+	private static final Logger log = LoggerFactory.getLogger(JposServiceLoader.class);
+	
     //--------------------------------------------------------------------------
     // Class variables
     //
-
-	private static Tracer tracer = TracerFactory.getInstance().
-									 createTracer( "JposServiceLoader" );
 
     private static JposServiceManager manager = null;
 
@@ -88,8 +87,7 @@ public final class JposServiceLoader
 
         if( customManagerDefined )
         {
-			tracer.println( "Custom manager is defined: className= " +
-							customManagerClassName );        	
+			log.debug( "Custom manager is defined: className= {}", customManagerClassName );        	
         	
             try
             {
@@ -107,12 +105,10 @@ public final class JposServiceLoader
             }
             catch( Exception e ) 
             {
-                tracer.println( "Error creating instance of specified " +
-                                "jpos.config.serviceManagerClass class: " + 
-                                customManagerClassName );
+                log.error( "Error creating instance of specified jpos.config.serviceManagerClass class: {}", 
+                		customManagerClassName );
                                 
-				tracer.println( "Using default manager class: " +
-								"jpos.loader.simple.SimpleServiceManager" );                                
+				log.info( "Using default manager class: jpos.loader.simple.SimpleServiceManager" );                                
 
                 manager = new jpos.loader.simple.
                               SimpleServiceManager( jposProperties ); 
@@ -124,7 +120,7 @@ public final class JposServiceLoader
 
         manager.getEntryRegistry().load();
         
-		tracer.println( "manager.getEntryRegistry().load() OK" );
+		log.debug( "manager.getEntryRegistry().load() OK" );
     }
 
     /**
@@ -138,16 +134,15 @@ public final class JposServiceLoader
     {
         if( manager == null )
         {
-        	String msg = "Did not find a valid " + 
-        	             JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME + 
-        	             " to create";
+        	String msg = String.format("Did not find a valid %s to create",
+        					JposPropertiesConst.JPOS_SERVICE_MANAGER_CLASS_PROP_NAME);
 
-			tracer.println( msg );
+			log.error( msg );
         	        
             throw new JposException( JposConst.JPOS_E_NOSERVICE, msg );
         }
 
-		tracer.println( "findService: " + logicalName );
+		log.info( "findService: {}", logicalName );
 
         return manager.createConnection( logicalName );
     }

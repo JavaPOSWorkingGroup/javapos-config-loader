@@ -2,6 +2,7 @@
 
 ## 4.0.0
 
+- replaced legacy logging implementation by the logging facade SLF4J, see https://www.slf4j.org/ for details on how to integrate
 - jpos.config.DefaultCompositeRegPopulator.load() is throwing more specific IllegalArgument exception instead of RuntimeException
 - added Javax XML parser based XML registry populator implementation (contributed by @mjpcger)
 - removed Xerces based XML registry populator implementations, mainly

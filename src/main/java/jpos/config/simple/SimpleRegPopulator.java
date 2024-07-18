@@ -23,8 +23,8 @@ import java.util.*;
 import java.util.zip.*;
 import java.net.URL;
 
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jpos.config.*;
 
 /**
@@ -41,6 +41,8 @@ import jpos.config.*;
  */
 public class SimpleRegPopulator extends AbstractRegPopulator
 {
+	 private static final Logger log = LoggerFactory.getLogger(SimpleRegPopulator.class);
+	 
     //-------------------------------------------------------------------------
     // Ctor(s)
     //
@@ -124,8 +126,8 @@ public class SimpleRegPopulator extends AbstractRegPopulator
             catch( Exception e ) 
             {
 				lastLoadException = e;
-				tracer.println( "Error loading serialized JposEntry file: " + 
-				                "Exception.message= " + e.getMessage() ); 
+				log.error( "Error loading serialized JposEntry file: Exception.message= {}", 
+						e.getMessage() ); 
 			}
         }
     }
@@ -157,8 +159,8 @@ public class SimpleRegPopulator extends AbstractRegPopulator
         catch( Exception e ) 
         {
 			lastLoadException = e;
-			tracer.println( "Error loading serialized JposEntry file: " + 
-			                "Exception.message=" + e.getMessage() ); 
+			log.error( "Error loading serialized JposEntry file: Exception.message={}", 
+					e.getMessage() ); 
 		}
     }
 
@@ -420,8 +422,7 @@ public class SimpleRegPopulator extends AbstractRegPopulator
 					in = new ObjectInputStream( is );
 
             if( in == null )
-                tracer.println( "Can't find serialized JposEntry file: " + 
-                                serFileName );
+                log.error( "Can't find serialized JposEntry file: {}", serFileName );
             else
                 while( true )
                     entries.add( (JposEntry) in.readObject() );
@@ -429,16 +430,14 @@ public class SimpleRegPopulator extends AbstractRegPopulator
             serFileName = absoluteFileName;
         } 
         catch( EOFException eofe ) {
-        	tracer.println( "ERROR while reading serialized JposEntry file: " + 
-  	              serFileName + " Exception.message=" + 
-  	              eofe.getMessage() ); 
+        	log.error( "ERROR while reading serialized JposEntry file:{} Exception.message={}", 
+        			serFileName, eofe.getMessage() ); 
         	
         }
         catch( Exception e ) 
         { 
-        	tracer.println( "ERROR while reading serialized JposEntry file: " + 
-        	              serFileName + " Exception.message=" + 
-        	              e.getMessage() ); 
+        	log.error( "ERROR while reading serialized JposEntry file:{} Exception.message={}", 
+        			serFileName, e.getMessage() ); 
         }
         return Collections.enumeration(entries);
     }
@@ -505,9 +504,6 @@ public class SimpleRegPopulator extends AbstractRegPopulator
 
     private String absoluteFileName = "";
     private String serFileName = DEFAULT_JPOS_SER_FILE_NAME;
-
-	private final Tracer tracer = TracerFactory.getInstance().
-	                         createTracer( "SimpleRegPopulator" );	
 
     //--------------------------------------------------------------------------
     // Class constants
