@@ -383,8 +383,6 @@ public class JavaxRegPopulator
             else if (qname.equals(XML_TAG_JPOSENTRY))
                 currentEntry = new SimpleEntry(attrs.getValue("logicalName"), JavaxRegPopulator.this);
             else if (currentEntry != null) {
-                String temp;
-
                 if (qname.equals(XML_TAG_CREATION)) {
                     currentEntry.addProperty(JposEntry.SI_FACTORY_CLASS_PROP_NAME, attrs.getValue(XML_ATTR_FACTORYCLASS));
                     currentEntry.addProperty(JposEntry.SERVICE_CLASS_PROP_NAME, attrs.getValue(XML_ATTR_SERVICECLASS));
@@ -399,22 +397,25 @@ public class JavaxRegPopulator
                     currentEntry.addProperty(JposEntry.PRODUCT_DESCRIPTION_PROP_NAME, attrs.getValue(XML_ATTR_DESCRIPTION));
                     addOptionalProperty(JposEntry.PRODUCT_URL_PROP_NAME, attrs.getValue(XML_ATTR_URL));
                 } else if (qname.equals(XML_TAG_PROP)) {
-                    temp = attrs.getValue(XML_ATTR_TYPE);
-                    try {
-                        Class<?> type = temp == null ? String.class : Class.forName("java.lang." + temp);
-                        Object obj = null;
-                        obj = JposEntryUtility.parsePropValue(attrs.getValue(XML_ATTR_VALUE), type);
-                        currentEntry.addProperty(attrs.getValue(XML_ATTR_NAME), obj);
-                    } catch (Exception e) {
-                        currentEntry = null;
-                        String msg = "Invalid prop: name=" + attrs.getValue(XML_ATTR_NAME)
-                                + ":value=" + attrs.getValue(XML_ATTR_VALUE);
-                        tracer.println(": " + msg);
-                        lastLoadException = new SAXException(msg, e);
-                    }
+                    addPropElement(attrs);
                 }
             }
         }
+
+		private void addPropElement(Attributes attrs) {
+			String typeName = attrs.getValue(XML_ATTR_TYPE);
+			try {
+			    Class<?> type = typeName == null ? String.class : Class.forName("java.lang." + typeName);
+			    Object obj = JposEntryUtility.parsePropValue(attrs.getValue(XML_ATTR_VALUE), type);
+			    currentEntry.addProperty(attrs.getValue(XML_ATTR_NAME), obj);
+			} catch (Exception e) {
+			    currentEntry = null;
+			    String msg = "Invalid prop: name=" + attrs.getValue(XML_ATTR_NAME)
+			            + ":value=" + attrs.getValue(XML_ATTR_VALUE);
+			    tracer.println(": " + msg);
+			    lastLoadException = new SAXException(msg, e);
+			}
+		}
 
         private void addOptionalProperty(String name, String value) {
             currentEntry.addProperty(name, value == null ? "" : value);
