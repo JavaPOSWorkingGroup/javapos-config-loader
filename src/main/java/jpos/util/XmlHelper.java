@@ -77,7 +77,7 @@ public class XmlHelper
             File dtdFile = new File( dtdJarFullFileName );
 
             if( dtdFile.exists() )
-				return;            
+            	return;            
             
             if( !dtdPath.exists() )
             {
@@ -94,7 +94,7 @@ public class XmlHelper
 			tracer.println( "Got DTD InputStream from current ClassLoader" );
 
             if( is != null )
-				readAndCreateTempDtdFile( is );
+            	readAndCreateTempDtdFile( is );
         }
         catch( IOException ioe )
         { 
@@ -121,7 +121,7 @@ public class XmlHelper
             if( createdTempDTD )
             {
                 File dtdFile = new File( dtdJarFullFileName );
-                dtdFile.delete();
+                Files.delete(dtdFile.toPath());
 
 				if( createdTempDir )
 					removeDirs( dtdFilePath );
@@ -148,36 +148,25 @@ public class XmlHelper
 	{
 		File dtdFile = new File( dtdJarFullFileName );
 		
-		FileOutputStream fos = new FileOutputStream( dtdFile );
-		OutputStreamWriter osw = new OutputStreamWriter( fos );
-
-		StringBuffer sb = new StringBuffer();
-
-		while( is.available() > 0 )
-		{
-			byte[] buffer = new byte[ is.available() ];
-
-			is.read( buffer );
-
-			sb.append( new String( buffer ) );
+		try ( OutputStreamWriter osw = new OutputStreamWriter( new FileOutputStream( dtdFile ) )) {
+			
+			StringBuilder sb = new StringBuilder();
+			
+			while( is.available() > 0 )
+			{
+				byte[] buffer = new byte[ is.available() ];
+				
+				is.read( buffer );
+				
+				sb.append( new String( buffer ) );
+			}
+			
+			osw.write( sb.toString().trim() );
+			
+			createdTempDTD = true;
+			
+			tracer.println( "Read and created temp " + dtdFilePath + dtdFileName );
 		}
-
-		osw.write( sb.toString().trim() );
-
-		createdTempDTD = true;
-
-		try
-		{ 
-			if( osw != null ) osw.close(); 
-			if( fos != null ) fos.close(); 
-		}
-		catch( IOException ioe ) 
-		{
-			tracer.println( "Error while closing streams: IOExeption.msg=" +
-							ioe.getMessage() );
-		}
-
-		tracer.println( "Read and created temp " + dtdFilePath + dtdFileName );
 	}
 
 	/**
