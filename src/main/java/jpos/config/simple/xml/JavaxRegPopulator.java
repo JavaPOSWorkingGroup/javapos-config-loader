@@ -129,7 +129,7 @@ public class JavaxRegPopulator
     {
     	log.atInfo()
     		.setMessage("saving JavaPOS configuration to file {}")
-    		.addArgument(() -> new File(fileName).getAbsolutePath());
+    		.addArgument(() -> new File(fileName).getAbsolutePath()).log();
         try (FileOutputStream os = new FileOutputStream(fileName)) {
             save(entries, os);
         }
@@ -149,7 +149,7 @@ public class JavaxRegPopulator
     public void load(String fileName) {
     	log.atInfo()
     		.setMessage("loading JavaPOS configuration from file {}")
-    		.addArgument(() -> new File(fileName).getAbsolutePath());
+    		.addArgument(() -> new File(fileName).getAbsolutePath()).log();
         try (InputStream is = new File(fileName).exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
             load(is);
         } catch (Exception e) {
