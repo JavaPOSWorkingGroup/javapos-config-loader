@@ -26,8 +26,8 @@ import jpos.config.*;
 import jpos.config.simple.*;
 import jpos.profile.*;
 import jpos.util.*;
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is a simple implementation of the JposServiceManager interface
@@ -36,6 +36,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public class SimpleServiceManager implements JposServiceManager
 {
+	private static final Logger log = LoggerFactory.getLogger(SimpleServiceManager.class);
+	
 	//--------------------------------------------------------------------------
 	// Ctor(s)
 	//
@@ -97,9 +99,8 @@ public class SimpleServiceManager implements JposServiceManager
             }
             catch( Exception e ) 
 			{
-				tracer.println( "Could not create populator by name: " + 
-				                regPopulatorClassName + " Exception.message= " +
-				                e.getMessage() );
+				log.error( "Could not create populator by name: {} Exception.message= {}", 
+						regPopulatorClassName, e.getMessage() );
 				regPopulator = new SimpleRegPopulator(); 
 			}
         }
@@ -174,14 +175,12 @@ public class SimpleServiceManager implements JposServiceManager
         }
         catch( JposException je )
         {
-        	tracer.println( "createConnection: JposException.msg=" + 
-        				    je.getMessage() );
+        	log.error( "createConnection: JposException.msg={}", je.getMessage() );
         	throw je;
         } 
         catch( Exception e ) 
         { 
-        	tracer.println( "createConnection: Exception.msg=" + 
-        					e.getMessage() );        	
+        	log.error( "createConnection: Exception.msg={}", e.getMessage() );        	
         	throw new JposException( JposConst.JPOS_E_NOSERVICE, 
         							  "Could not find service" ); 
         }
@@ -237,7 +236,7 @@ public class SimpleServiceManager implements JposServiceManager
 
 		getEntryRegistry().load();
 		
-		tracer.println( "Sucessfully reloaded registry" );
+		log.info( "Sucessfully reloaded registry" );
 	}
 
     //--------------------------------------------------------------------------
@@ -252,6 +251,4 @@ public class SimpleServiceManager implements JposServiceManager
 
     private JposProperties jposProperties = new DefaultProperties();
     
-    private Tracer tracer = TracerFactory.getInstance().
-                             createTracer( "SimpleServiceManager" );
 }

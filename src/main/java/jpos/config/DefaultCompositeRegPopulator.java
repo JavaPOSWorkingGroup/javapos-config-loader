@@ -24,8 +24,8 @@ import java.net.URL;
 
 import jpos.loader.*;
 import jpos.util.*;
-import jpos.util.tracing.Tracer;
-import jpos.util.tracing.TracerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of the CompositeRegPopulator interface
@@ -34,6 +34,8 @@ import jpos.util.tracing.TracerFactory;
  */
 public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 {
+	private static final Logger log = LoggerFactory.getLogger(DefaultCompositeRegPopulator.class);
+	
     //-------------------------------------------------------------------------
     // Ctor(s)
     //
@@ -91,27 +93,23 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 		}
 		catch( ClassNotFoundException cnfe )
 		{ 
-			tracer.println( "Could not find populator class with name: " + 
-										  className + " exception message = " + 
-										  cnfe.getMessage() );
+			log.error( "Could not find populator class with name: {} exception message = {}", 
+					className, cnfe.getMessage() );
 		}
 		catch( NoSuchMethodException nsme )
 		{
-			tracer.println( "Populator by class name: " + 
-			                className +
-							" must define a no-arg ctor or a 1-arg ctor with String param as the unique ID" );
+			log.error( "Populator by class name: {} must define a no-arg ctor or a 1-arg ctor with String param as the unique ID", 
+					className );
 		}
 		catch( InstantiationException ie )
 		{
-			tracer.println( "Could not instantiate populator class with name: " + 
-						    className + " exception message = " + 
-							ie.getMessage() );
+			log.error( "Could not instantiate populator class with name: {} exception message = {}", 
+					className, ie.getMessage() );
 		}
 		catch( Exception e )
 		{
-			tracer.println( "Could not instantiate populator class with name: " + 
-							className + " exception message = " + 
-							e.getMessage() );
+			log.error( "Could not instantiate populator class with name: {} exception message = {}", 
+					className, e.getMessage() );
 		}
 
 		return populator;
@@ -187,9 +185,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 				List<JposEntry> entryList = popEntriesMap.get( populator.getUniqueId() );
 				
 				if( entryList == null )
-					tracer.println( "Trying to save entry with logicalName = " +
-							        entry.getLogicalName() + 
-							        " and populator with" );
+					log.debug( "Trying to save entry with logicalName = {} and populator with entry list null", entry.getLogicalName() );
 				else
 					entryList.add( entry );
 			}
@@ -214,8 +210,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 			catch( Exception e )
 			{
 				exception = e;
-				tracer.println( "Error while saving to populator with unique ID:" +
-							    populator.getUniqueId() );
+				log.error( "Error while saving to populator with unique ID: {}", populator.getUniqueId() );
 			}
 		}
 
@@ -254,7 +249,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 
 		if( populatorClassMultiProp == null || populatorClassMultiProp.getNumberOfProperties() == 0 )
 		{
-			tracer.println( "CompositeRegPopulator.load() w/o any defined multi-property" );
+			log.error( "CompositeRegPopulator.load() w/o any defined multi-property" );
 			throw new IllegalArgumentException( "CompositeRegPopulator.load() w/o any defined multi-property" );
 		}
 
@@ -281,8 +276,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 				}
 				else
 				{
-					tracer.println( "Created default populator with name = " + defaultPopName + 
-												  " OK but populator file is null" );
+					log.debug( "Created default populator with name = {} OK but populator file is null", defaultPopName );
 					defaultPopulator.load();
 					lastLoadException = defaultPopulator.getLastLoadException();
 				}
@@ -296,8 +290,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 			setDefaultPopulator( defaultPopulator );
 		}
 		else
-			tracer.println( "Did not add default populator by <name, className>: " +
-										  "<" + defaultPopName + ", " + defaultPopClass + ">" );
+			log.debug( "Did not add default populator by <name, className>: <{}, {}>", defaultPopName, defaultPopClass);
 		while( popClasses.hasNext() )
 		{
 			String popName = popClasses.next();
@@ -316,8 +309,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 				}
 				else
 				{
-					tracer.println( "Created populator with name = " + popName + 
-												  " OK but populator file is null" );
+					log.debug( "Created populator with name = {} OK but populator file is null", popName );
 					populator.load();
 					lastLoadException = populator.getLastLoadException();
 				}
@@ -325,8 +317,7 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
                 add( populator );
 			}
 			else
-				tracer.println( "Did not add populator by <name, className>: " +
-											  "<" + popName + ", " + popClass + ">" );
+				log.debug( "Did not add populator by <name, className>: <{}, {}>", popName, popClass );
 		}
 	}
 
@@ -432,7 +423,4 @@ public class DefaultCompositeRegPopulator implements CompositeRegPopulator
 	private HashMap<String, String> popFileMap = new HashMap<>();
 	private JposRegPopulator defaultPop = null;
 	private Exception lastLoadException = null;
-	
-	private Tracer tracer = TracerFactory.getInstance().
-							 createTracer( "DefaultCompositeRegPopulator" );
 }
