@@ -127,9 +127,7 @@ public class JavaxRegPopulator
     @Override
     public void save(@SuppressWarnings("rawtypes") Enumeration entries, String fileName) throws Exception 
     {
-    	log.atInfo()
-    		.setMessage("saving JavaPOS configuration to file {}")
-    		.addArgument(() -> new File(fileName).getAbsolutePath()).log();
+    	log.info("saving JavaPOS configuration to file '{}'", new File(fileName).getAbsolutePath());
         try (FileOutputStream os = new FileOutputStream(fileName)) {
             save(entries, os);
         }
@@ -147,10 +145,12 @@ public class JavaxRegPopulator
 
     @Override
     public void load(String fileName) {
-    	log.atInfo()
-    		.setMessage("loading JavaPOS configuration from file {}")
-    		.addArgument(() -> new File(fileName).getAbsolutePath()).log();
-        try (InputStream is = new File(fileName).exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
+    	File file = new File(fileName);
+    	if (file.exists())
+    		log.info("loading JavaPOS configuration from file '{}'",  file.getAbsolutePath());
+    	else
+    		log.info("loading JavaPOS configuration from file '{}' from Classpath", fileName);
+		try (InputStream is = file.exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
             load(is);
         } catch (Exception e) {
             log.error("Error while loading populator file Exception.message: {}", e.getMessage());
