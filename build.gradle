@@ -27,7 +27,7 @@ wrapper {
 
 def artifactName = 'javapos-config-loader'
 group='org.javapos'
-version='4.0.0' // if version is going to be changed, first add "-SNAPSHOT" to test publishing to MavenCentral's Snapshot repo
+version='5.0.0-SNAPSHOT' // if version is going to be changed, first add "-SNAPSHOT" to test publishing to MavenCentral's Snapshot repo
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -65,11 +65,11 @@ def testResourceDir = file("${System.properties['java.io.tmpdir']}/javapos-confi
 
 dependencies {
 	api 'org.javapos:javapos-contracts:1.6.0'
-	implementation 'org.slf4j:slf4j-api:2.0.13' 
+	implementation 'org.slf4j:slf4j-api:1.7.36' 
 	
 	testImplementation("junit:junit:4.13.2")
 	
-	testRuntimeOnly 'org.slf4j:slf4j-simple:2.0.13'
+	testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.36'
 	testRuntimeOnly files(testResourceDir)
 }
 
