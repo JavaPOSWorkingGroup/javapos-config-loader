@@ -145,9 +145,9 @@ public class JavaxRegPopulator
     public void load(String fileName) {
     	File file = new File(fileName);
     	if (file.exists())
-        	tracer.println("loading JavaPOS configuration from file "  + file.getAbsolutePath());
+        	tracer.println("trying to load JavaPOS configuration from file "  + file.getAbsolutePath());
     	else
-    		tracer.println("loading JavaPOS configuration from classpath resource file "  + fileName);
+    		tracer.println("because JavaPOS configuration file '" + fileName + "' does not exist, trying to load it as classpath resource");
 		try (InputStream is = file.exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
             load(is);
         } catch (Exception e) {
