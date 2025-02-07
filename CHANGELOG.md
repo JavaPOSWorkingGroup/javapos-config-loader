@@ -1,5 +1,9 @@
 # Change Log for javapos-config-loader
 
+## 4.0.1
+
+- corrected logging output when loading class-path resources (solved GH issue [#11](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/11))
+
 ## 4.0.0
 
 - jpos.config.DefaultCompositeRegPopulator.load() is throwing more specific IllegalArgument exception instead of RuntimeException

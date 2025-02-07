@@ -143,8 +143,12 @@ public class JavaxRegPopulator
 
     @Override
     public void load(String fileName) {
-    	tracer.println("loading JavaPOS configuration from file "  + new File(fileName).getAbsolutePath());
-        try (InputStream is = new File(fileName).exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
+    	File file = new File(fileName);
+    	if (file.exists())
+        	tracer.println("loading JavaPOS configuration from file "  + file.getAbsolutePath());
+    	else
+    		tracer.println("loading JavaPOS configuration from classpath resource file "  + fileName);
+		try (InputStream is = file.exists() ? new FileInputStream(fileName) : findFileInClasspath(fileName)) {
             load(is);
         } catch (Exception e) {
             tracer.println("Error while loading populator file Exception.message: " + e.getMessage());
