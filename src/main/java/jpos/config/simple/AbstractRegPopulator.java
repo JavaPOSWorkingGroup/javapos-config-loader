@@ -412,22 +412,31 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
         {
             String jarZipFileName = jarZipFilesList.get( i );
 
-            try (ZipFile zipFile = new ZipFile( jarZipFileName ))
+            try
             {
-                Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
+            	ZipFile zipFile = new ZipFile( jarZipFileName );
+            	try {
+                
+            		Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
-                while( zipEntries.hasMoreElements() )
-                {
-                    ZipEntry zipEntry = zipEntries.nextElement();
-                    String entryName = zipEntry.getName();
-                    
-					if( entryName.endsWith( fileName ) )
-                    {
-                        is = new BufferedInputStream( zipFile.
-                        	 getInputStream( zipEntry ) );
-                        break;
-                    }
-                }
+	                while( zipEntries.hasMoreElements() )
+	                {
+	                    ZipEntry zipEntry = zipEntries.nextElement();
+	                    String entryName = zipEntry.getName();
+	                    
+						if( entryName.endsWith( fileName ) )
+	                    {
+							is = new BufferedInputStream( zipFile.
+				                        	 getInputStream( zipEntry ) );
+	                        break;
+	                    }
+	                }
+	            }
+            	finally {
+            		if (is == null) {
+            			zipFile.close();
+            		}
+            	}
             }
             catch( Exception e ) 
             {
