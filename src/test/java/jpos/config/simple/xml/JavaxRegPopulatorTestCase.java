@@ -19,7 +19,9 @@ import java.io.*;
 
 import jpos.config.*;
 import jpos.config.simple.*;
+import jpos.loader.JposServiceLoader;
 import jpos.test.*;
+import jpos.util.JposPropertiesConst;
 
 /**
  * A JUnit TestCase for the Loading/saving XML entries
@@ -286,6 +288,108 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 	{
 		emptyTest();
 	}
+
+    public void testLoadDefault() throws Exception
+    {
+        Properties jclProps = new Properties();
+        jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
+        createPropFile( jclProps );
+
+        JposServiceLoader.getManager().getProperties().loadJposProperties();
+
+        javaxRegPopulator.load();
+
+        assertTrue("Default jpos.xml is not found",
+            javaxRegPopulator.getLastLoadException() instanceof FileNotFoundException);
+
+        restorePropFile();
+
+    }
+
+    public void testLoadCustomNonExisting() throws Exception
+    {
+        Properties jclProps = new Properties();
+        jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
+        jclProps.put(JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME, "" + System.currentTimeMillis() + ".xml" );
+        createPropFile( jclProps );
+
+        JposServiceLoader.getManager().getProperties().loadJposProperties();
+
+        javaxRegPopulator.load();
+
+        assertTrue("Default jpos.xml is not found",
+                javaxRegPopulator.getLastLoadException() instanceof FileNotFoundException);
+
+        restorePropFile();
+
+    }
+
+    public void testLoadCustomPopulator() throws Exception
+    {
+        Properties jclProps = new Properties();
+        jclProps.put( "jpos.util.tracing.TurnOnAllNamedTracers", JPOS_UTIL_TRACING_VALUE );
+        jclProps.put(JposPropertiesConst.JPOS_POPULATOR_FILE_PROP_NAME, JCL_JUNIT_XML_FILE_NAME );
+        createPropFile( jclProps );
+
+        JposServiceLoader.getManager().getProperties().loadJposProperties();
+
+        List<JposEntry> v1 = new ArrayList<>();
+        try
+        {
+            javaxRegPopulator.save( Collections.enumeration(v1), JCL_JUNIT_XML_FILE_NAME );
+            javaxRegPopulator.load();
+
+            assertNull(javaxRegPopulator.getLastLoadException());
+
+            @SuppressWarnings("unchecked")
+            Enumeration<JposEntry> entries = javaxRegPopulator.getEntries();
+
+            assertTrue( "Expected an empty set of entries...", JUnitUtility.isIdentical( entries, Collections.enumeration(v1) ) );
+            assertTrue( "Expected an empty set of entries...", JUnitUtility.isEquals( entries, Collections.enumeration(v1) ) );
+
+            //Add some entries and save and load
+            JposEntry entry1 = createJposEntry( "entry1", "com.xyz.jpos.XyzJposServiceInstanceFactory",
+                    "com.xyz.jpos.LineDisplayService", "Xyz, Corp.",
+                    "http://www.javapos.com", "LineDisplay", "1.4a",
+                    "Virtual LineDisplay JavaPOS Service",
+                    "Example virtual LineDisplay JavaPOS Service from virtual Xyz Corporation",
+                    "http://www.javapos.com" );
+
+
+            v1.clear();
+            v1.add( entry1 );
+
+            javaxRegPopulator.save( Collections.enumeration(v1) );
+            javaxRegPopulator.load( );
+
+            assertNull(javaxRegPopulator.getLastLoadException());
+
+            @SuppressWarnings("unchecked")
+            Enumeration<JposEntry> entries2 = javaxRegPopulator.getEntries();
+
+            assertTrue( "Expected 1 entry...", JUnitUtility.isEquals( entries2, Collections.enumeration(v1) ) );
+
+            //Remove entries save and load reg
+            v1.remove( entry1 );
+
+            javaxRegPopulator.save( Collections.enumeration(v1) );
+            javaxRegPopulator.load( );
+
+            assertNull(javaxRegPopulator.getLastLoadException());
+
+            @SuppressWarnings("unchecked")
+            Enumeration<JposEntry> entries3 = javaxRegPopulator.getEntries();
+
+            assertTrue( "Expected 1 entries...", JUnitUtility.isEquals( entries3, Collections.enumeration(v1) ) );
+        }
+        catch( Exception e )
+        {
+            assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true );
+        }
+
+        restorePropFile();
+
+    }
 
 	//-------------------------------------------------------------------------
 	// Instance variables
