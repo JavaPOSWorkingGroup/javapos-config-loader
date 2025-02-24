@@ -408,10 +408,8 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
     {
         InputStream is = null;
 
-        for( int i = 0; i < jarZipFilesList.size(); ++i )
+        for (String jarZipFileName : jarZipFilesList)
         {
-            String jarZipFileName = jarZipFilesList.get( i );
-
             try
             {
             	ZipFile zipFile = new ZipFile( jarZipFileName );
@@ -426,9 +424,9 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
 	                    
 						if( entryName.endsWith( fileName ) )
 	                    {
-							is = new BufferedInputStream( zipFile.
+	                       is = new BufferedInputStream( zipFile.
 				                        	 getInputStream( zipEntry ) );
-	                        break;
+	                       return is;
 	                    }
 	                }
 	            }
@@ -443,8 +441,6 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
             	tracer.println( "findInJarZipFiles: Exception.message=" +
             					e.getMessage() );
             }
-
-            if( is != null ) break;
         }
 
         return is;
