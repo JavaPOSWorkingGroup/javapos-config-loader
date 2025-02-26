@@ -317,7 +317,7 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
 
         javaxRegPopulator.load();
 
-        assertTrue("Default jpos.xml is not found",
+        assertTrue("Custom XML populator file not found",
                 javaxRegPopulator.getLastLoadException() instanceof FileNotFoundException);
 
         restorePropFile();
@@ -384,7 +384,7 @@ public class JavaxRegPopulatorTestCase extends AbstractRegPopulatorTestCase
         }
         catch( Exception e )
         {
-            assertTrue( "Got unexpected Exception from XercesRegPopulator.save method with message = " + e.getMessage(), true );
+            fail( "Unexpected exception message = " + e.getMessage() );
         }
 
         restorePropFile();
