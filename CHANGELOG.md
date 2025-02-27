@@ -1,5 +1,10 @@
 # Change Log for javapos-config-loader
 
+## 4.0.2
+
+- fixed resource loading from JAR file on the class-path (contributed by @art-and-co through [PR #13](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/13))
+- ensured populator file is used if defined (contributed by @art-and-co through [PR #13](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/13))
+
 ## 4.0.1
 
 - corrected logging output when loading class-path resources (solved GH issue [#11](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/11))
