@@ -408,34 +408,39 @@ public abstract class AbstractRegPopulator implements JposRegPopulator
     {
         InputStream is = null;
 
-        for( int i = 0; i < jarZipFilesList.size(); ++i )
+        for (String jarZipFileName : jarZipFilesList)
         {
-            String jarZipFileName = jarZipFilesList.get( i );
-
-            try (ZipFile zipFile = new ZipFile( jarZipFileName ))
+            try
             {
-                Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
+            	ZipFile zipFile = new ZipFile( jarZipFileName );
+            	try {
+                
+            		Enumeration<? extends ZipEntry> zipEntries = zipFile.entries();
 
-                while( zipEntries.hasMoreElements() )
-                {
-                    ZipEntry zipEntry = zipEntries.nextElement();
-                    String entryName = zipEntry.getName();
-                    
-					if( entryName.endsWith( fileName ) )
-                    {
-                        is = new BufferedInputStream( zipFile.
-                        	 getInputStream( zipEntry ) );
-                        break;
-                    }
-                }
+	                while( zipEntries.hasMoreElements() )
+	                {
+	                    ZipEntry zipEntry = zipEntries.nextElement();
+	                    String entryName = zipEntry.getName();
+	                    
+						if( entryName.endsWith( fileName ) )
+	                    {
+	                       is = new BufferedInputStream( zipFile.
+				                        	 getInputStream( zipEntry ) );
+	                       return is;
+	                    }
+	                }
+	            }
+            	finally {
+            		if (is == null) {
+            			zipFile.close();
+            		}
+            	}
             }
             catch( Exception e ) 
             {
             	tracer.println( "findInJarZipFiles: Exception.message=" +
             					e.getMessage() );
             }
-
-            if( is != null ) break;
         }
 
         return is;

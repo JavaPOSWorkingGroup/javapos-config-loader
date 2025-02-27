@@ -133,7 +133,7 @@ public class JavaxRegPopulator
 
     @Override
     public void load() {
-        try (InputStream is = isPopulatorFileDefined() ? new FileInputStream(DEFAULT_XML_FILE_NAME) : getPopulatorFileIS()) {
+        try (InputStream is = isPopulatorFileDefined() ? getPopulatorFileIS() : new FileInputStream(DEFAULT_XML_FILE_NAME) ) {
             load(is);
         } catch (Exception e) {
             tracer.println("Error while loading populator file Exception.message: " + e.getMessage());
