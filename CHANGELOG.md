@@ -1,5 +1,9 @@
 # Change Log for javapos-config-loader
 
+## 5.0.0
+
+- replaced legacy logging implementation by the logging facade SLF4J version 1, see https://www.slf4j.org/ for details on how to integrate
+
 ## 4.0.2
 
 - fixed resource loading from JAR file on the class-path (contributed by @art-and-co through [PR #13](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/issues/13))
