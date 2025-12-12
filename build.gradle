@@ -26,8 +26,8 @@ wrapper {
 ///////////////////////////////////////////////////////////////////////////////
 
 def artifactName = 'javapos-config-loader'
-group='org.javapos'
-version='5.0.0-SNAPSHOT' // if version is going to be changed, first add "-SNAPSHOT" to test publishing to MavenCentral's Snapshot repo
+group = 'org.javapos'
+version = '5.0.0-SNAPSHOT' // if version is going to be changed, first add "-SNAPSHOT" to test publishing to MavenCentral's Snapshot repo
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ repositories {
     {
    		logger.warn("WARN: Seems not to be a release, so Maven Central SNAPSHOT repository is fetched!");
 	    maven {
-	        url 'https://oss.sonatype.org/content/repositories/snapshots'
+	        url = 'https://oss.sonatype.org/content/repositories/snapshots'
 	    }
     }
 
