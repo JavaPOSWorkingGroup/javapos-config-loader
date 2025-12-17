@@ -25,10 +25,9 @@ def includeBuildProject(projectName) {
 }
 
 // enabling Gradle scan by agreeing to term of service
-
 develocity {
     buildScan {
-        publishing.onlyIf { System.getenv("CI") != null }
+        publishing.onlyIf { isRunningOnBuildServer }
         termsOfUseUrl = "https://gradle.com/terms-of-service"
         termsOfUseAgree = "yes"
     }
