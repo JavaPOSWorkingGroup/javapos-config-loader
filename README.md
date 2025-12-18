@@ -1,7 +1,7 @@
 [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/JavaPOSWorkingGroup/javapos-config-loader)
 [![CI](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions/workflows/build.yml/badge.svg)](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions/workflows/build.yml)
 [![Release Build](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions/workflows/release.yml/badge.svg)](https://github.com/JavaPOSWorkingGroup/javapos-config-loader/actions/workflows/release.yml)
-[![Maven Central](https://img.shields.io/maven-central/v/org.javapos/javapos-config-loader)](https://img.shields.io/maven-central/v/org.javapos/javapos-config-loader)
+[![Maven Central](https://img.shields.io/maven-central/v/org.javapos/javapos-config-loader)](https://central.sonatype.com/artifact/org.javapos/javapos-config-loader)
 
 
 
